@@ -6,7 +6,7 @@
 #include <Vector2.h>
 #include <SceneMng.h>
 #include <Obj.h>
-
+#include <Player.h>
 GameScene::GameScene()
 {	
 	//funcInit();
@@ -31,8 +31,10 @@ GameScene::GameScene()
 //	}
 		
 	
-// •`‰æ‚ğ‘‰Á
-	//_objList.emplace_back(new Player({ 0,0 }, { 30,30 }));
+	// •`‰æ‚ğ‘‰Á
+	IpImageMng.GetID("ƒvƒŒƒCƒ„[", "image/player.png", { 48,49 }, { 3,4 });
+
+	_objList.emplace_back(new Player({ 400,300 }, { 30,30 }));
 
 	_shakeCount = 0;
 }

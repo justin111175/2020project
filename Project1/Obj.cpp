@@ -80,6 +80,17 @@ bool Obj::state(const STATE state)
 }
 
 
+bool Obj::SetAlive(bool alive)
+{
+	_alive = alive;
+	if (!_alive)
+	{
+		state(STATE::DETH);
+	}
+
+	return true;
+}
+
 bool Obj::SetAnim(const STATE state, AnimVector& data)
 {
 	return (_animMap.try_emplace(state, std::move(data))).second;

@@ -20,9 +20,8 @@ enum class STATE
 	STAY,						// 止まる
 	RIGHT,						// 右
 	LEFT,						// 左
-	JUMP_R,						// ジャンプ-右
-	JUMP_L,						// ジャンプ-左
-	MOVE,						// 移動
+	UP,
+	DOWN,
 	DETH,						// 爆発(死亡)
 	MAX
 };
@@ -69,16 +68,17 @@ public:
 	bool state(const STATE state);										// ゲット関数-どのアニメションを再生するか指定する
 	UNIT_ID _unitID;													// ユニットID
 
+	virtual bool SetAlive(bool alive);									// 生きているかどうか設定
 
 	bool SetAnim(const STATE state,AnimVector& data);					// アニメの設定
 	bool isAlive(void) { return _alive; }								// 生きている管理
 	bool isDead(void) { return _dead; }									// 死んでいる管理
 	bool isAnimEnd(void);												// アニメがおわったかどうか
+	Vector2Dbl _pos;													// 座標
 
 private:
 
 	
-	Vector2Dbl _pos;													// 座標
 
 
 	std::map <STATE, AnimVector> _animMap;								// キー、アニメフレーム
@@ -87,6 +87,7 @@ private:
 	unsigned int _animCount;											// アニメカント
 
 protected:
+
 	bool DestroyPrpc(void);												// 爆発アニメが終わったかどうか確認、終わったら、消滅する
 	bool _alive;														// アライブー＞生きているかグラフ
 	bool _dead;															// 死亡－＞死んでいるかグラフ
