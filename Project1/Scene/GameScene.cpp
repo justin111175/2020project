@@ -7,6 +7,7 @@
 #include <SceneMng.h>
 #include <Obj.h>
 #include <Player.h>
+#include <Enemy.h>
 GameScene::GameScene()
 {	
 	//funcInit();
@@ -30,11 +31,28 @@ GameScene::GameScene()
 //		break;
 //	}
 		
-	
 	// 描画を増加
-	IpImageMng.GetID("プレイヤー", "image/player.png", { 48,49 }, { 3,4 });
+	IpImageMng.GetID("プレイヤー歩く", "image/Player/walk.png", { 48,49 }, { 3,4 });
+	IpImageMng.GetID("プレイヤー死ぬ", "image/Player/dead.png", { 50,55 }, { 3,1 });
+	
+	IpImageMng.GetID("モンスター歩く", "image/Monsters/walk.png", { 48,48 }, { 3,32 });
 
-	_objList.emplace_back(new Player({ 400,300 }, { 30,30 }));
+
+
+	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }));
+
+	IpSceneMng.AddDrawQue({ IMAGE_ID("モンスター歩く")[0], 400 ,300,0,0,0,0,LAYER::BG });
+
+
+	EnemyState data = { ENEMY_TYPE::コウモリ,{400.0,300.0}, { 48,48 } };
+	_objList.emplace_back(new Enemy(data));
+
+	EnemyState data1 = { ENEMY_TYPE::オーク,{500.0,300.0}, { 48,48 } };
+	_objList.emplace_back(new Enemy(data1));
+
+	IpImageMng.GetID("ウェポン", "image/weapons.png", { 98,68 }, { 3,5 });
+
+	IpSceneMng.AddDrawQue({ IMAGE_ID("ウェポン")[0],400,300,0,0,0,0,LAYER::BG });
 
 	_shakeCount = 0;
 }
@@ -64,6 +82,7 @@ unique_Base GameScene::Update(unique_Base own)
 		(*data).Draw();
 	}
 		
+
 	//IpSceneMng.AddDrawQue({ IMAGE_ID("背景")[0], 4096/2 - _mapPos.x ,800 / 2,0,0,0,LAYER::BG });
 
 	//switch (IpSceneMng._classCnt)

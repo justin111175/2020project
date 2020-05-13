@@ -12,6 +12,7 @@ enum class DRAW_QUE
 	IMAGE,										// イメージ
 	X,											// 座標X
 	Y,											// 座標Y
+	SIZE_X,										// サイズX
 	SIZE_Y,										// サイズY
 	RAD,										// 角度
 	ZODER,										// Zオーダー（レイヤーの前後順番-数値の低い方が奥）
@@ -39,8 +40,7 @@ enum class DRAW_QUE
 
 class Obj;
 
-//ID、X、Y、サイズY、回転、Zオーダー（レイヤーの前後順番）、レイヤーID
-using DrawQueT = std::tuple<int, double, double, int, double, int, LAYER>;
+using DrawQueT = std::tuple<int, double, double, int,int, double, int, LAYER>;
 
 // デファイン
 #define IpSceneMng SceneMng::GetInstance()
@@ -103,7 +103,6 @@ private:
 
 	~SceneMng();
 	SceneMng();
-	void GetKeyState(void);										// キー情報
 	bool SysInit(void);											// システム初期化
 };
 

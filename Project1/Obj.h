@@ -16,25 +16,27 @@ enum class MOVE_TYPE
 
 // 状態管理
 enum class STATE
-{
-	STAY,						// 止まる
-	RIGHT,						// 右
-	LEFT,						// 左
-	UP,
+{	
 	DOWN,
+	LEFT,						// 左
+	RIGHT,						// 右
+	UP,
+	
+	STAY,						// 止まる
+	NORMAL,
 	DETH,						// 爆発(死亡)
 	MAX
 };
+
+
+
 
 enum class UNIT_ID
 {
 	NON,						// 何もなし
 	PLAYER,						// プレイヤー
 	ENEMY,						// 敵
-	COIN,						// コイン
-	END,						// エンド
-	BRICK,						// レンガ
-	FLOOR						// ゆか
+	PLaS						// プレイヤー近距離攻撃
 };
 
 enum class ACT
@@ -77,9 +79,6 @@ public:
 	Vector2Dbl _pos;													// 座標
 
 private:
-
-	
-
 
 	std::map <STATE, AnimVector> _animMap;								// キー、アニメフレーム
 	STATE _state;														// 状態
