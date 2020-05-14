@@ -1,10 +1,11 @@
 #pragma once
 
+
 #include <BaseScene.h>
 #include <map>
 
-// 弾管理用-関数オブジェクト
-struct FuncBullet
+
+struct FuncSlash
 {
 	bool operator()(ActQueT &actQue, void* scene);
 

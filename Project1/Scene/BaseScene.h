@@ -9,7 +9,8 @@ class BaseScene;
 enum class ACT_QUE
 {
 	NON,																// ‰½‚à‚µ‚È‚¢
-	SHOT
+	SHOT,
+	SLASH
 };
 
 enum class ACT_STATE

@@ -8,28 +8,12 @@
 #include <Obj.h>
 #include <Player.h>
 #include <Enemy.h>
+
 GameScene::GameScene()
 {	
 	funcInit();
 	
-//	switch (IpSceneMng._classCnt)
-//	{
-//	case 1:
-//		MapInit_1();
-////		PlaySoundMem(IMAGE_SOUND("BGM1")[0], DX_PLAYTYPE_LOOP);
-//		break;
-//	case 2:
-//		MapInit_2();
-////		PlaySoundMem(IMAGE_SOUND("BGM2")[0], DX_PLAYTYPE_LOOP);
-//		break;
-//	case 3:
-//		MapInit_3();
-////		PlaySoundMem(IMAGE_SOUND("BGM3")[0], DX_PLAYTYPE_LOOP);
-//		break;
-//	default:
-//		AST();
-//		break;
-//	}
+
 		
 	// 描画を増加
 	IpImageMng.GetID("プレイヤー歩く", "image/Player/walk.png", { 48,49 }, { 3,4 });
@@ -38,12 +22,14 @@ GameScene::GameScene()
 	IpImageMng.GetID("モンスター歩く", "image/Monsters/walk.png", { 48,48 }, { 3,32 });
 
 	IpImageMng.GetID("弾", "image/shot.png", { 43,11 }, { 1,1 });
+	IpImageMng.GetID("斬撃", "image/slash.png", { 39,37 }, { 1,1 });
 
 
-	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }));
 
 	IpSceneMng.AddDrawQue({ IMAGE_ID("モンスター歩く")[0], 400 ,300,0,0,0,0,LAYER::BG });
 
+	
+	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }));
 
 	EnemyState data = { ENEMY_TYPE::コウモリ,{400.0,300.0}, { 48,48 } };
 	_objList.emplace_back(new Enemy(data));
@@ -53,7 +39,6 @@ GameScene::GameScene()
 
 	IpImageMng.GetID("ウェポン", "image/weapons.png", { 98,68 }, { 3,5 });
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("ウェポン")[0],400,300,0,0,0,0,LAYER::BG });
 
 	_shakeCount = 0;
 }
@@ -252,19 +237,12 @@ void GameScene::MapInit_1(void)
 //
 //}
 
-// ファンク初期化
-//void GameScene::funcInit(void)
-//{
-//	funcQue[ACT_QUE::CHECK_SELF] = FuncCheckSelf();
-//	funcQue[ACT_QUE::CHECK_DOWN] = FuncCheckDown();
-//	funcQue[ACT_QUE::CHECK_RIFGT] = FuncCheckRight();
-//	funcQue[ACT_QUE::CHECK_LEFT] = FuncCheckLeft();
-//	funcQue[ACT_QUE::CHECK_ON] = FuncCheckOn();
-//}
+
 
 
 void GameScene::funcInit(void)
 {
 	funcQue[ACT_QUE::SHOT] = FuncBullet();
+	funcQue[ACT_QUE::SLASH] = FuncSlash();
 
 }

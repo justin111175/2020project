@@ -78,6 +78,7 @@ public:
 	bool isDead(void) { return _dead; }									// 死んでいる管理
 	bool isAnimEnd(void);												// アニメがおわったかどうか
 	Vector2Dbl _pos;													// 座標
+	Vector2 _size;														// サイズ
 
 private:
 
@@ -93,5 +94,4 @@ protected:
 	bool _dead;															// 死亡－＞死んでいるかグラフ
 	double _rad;														// 角度
 	int _zorder;														// 描画優先度用
-	Vector2 _size;														// サイズ
 };

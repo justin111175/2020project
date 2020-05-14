@@ -11,7 +11,7 @@ class Player :
 public:
 	Player();
 	Player(Vector2Dbl pos, Vector2 size);
-	void Update(void) override;						// 更新
+	void Update(void) override;									// 更新
 	~Player();
 
 private:

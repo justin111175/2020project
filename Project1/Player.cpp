@@ -7,6 +7,7 @@
 #include <SceneMng.h>
 #include <Obj.h>
 #include <algorithm>
+
 Player::Player()
 {
 	Init();
@@ -31,6 +32,11 @@ void Player::Update()
 	if (CheckHitKey(KEY_INPUT_X))
 	{
 		IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+	}
+	
+	if (CheckHitKey(KEY_INPUT_C))
+	{
+		IpSceneMng.AddActQue({ ACT_QUE::SLASH , *this });
 	}
 
 
