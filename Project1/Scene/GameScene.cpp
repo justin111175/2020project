@@ -23,6 +23,9 @@ GameScene::GameScene()
 
 	IpImageMng.GetID("’e", "image/shot.png", { 43,11 }, { 1,1 });
 	IpImageMng.GetID("ŽaŒ‚", "image/slash.png", { 39,37 }, { 1,1 });
+	IpImageMng.GetID("ŽaŒ‚1", "image/slash1.png", { 37,38 }, { 1,1 });
+	IpImageMng.GetID("weapons", "image/weapons.png", { 98,65 }, { 3,4 });
+
 
 
 

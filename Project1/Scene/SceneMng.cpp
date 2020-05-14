@@ -55,17 +55,20 @@ void SceneMng::Draw(void)
 		case LAYER::PUTTOM:
 			// ボタン描画表示するブレント
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs(250 * sin(_frames / 25.0)));
-			DrawRotaGraph(static_cast<int>(x)+size.x/2 , static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
+			DrawRotaGraph(static_cast<int>(x)/*+size.x/2*/ , static_cast<int>(y) /*+ size.y / 2*/, 1.0, rad, id, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			break;
 		case LAYER::EX:
 			// シン変更するときブレント用
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, IpSceneMng._blendCnt);
-			DrawRotaGraph(static_cast<int>(x)+size.x/2, static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
+			DrawRotaGraph(static_cast<int>(x)/*+size.x/2*/, static_cast<int>(y) /*+ size.y / 2*/, 1.0, rad, id, true);
 			SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 			break;
 		default:
-			DrawRotaGraph(static_cast<int>(x)+size.x/2 , static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
+			//DrawRotaGraph(static_cast<int>(x)+size.x/2 , static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
+			DrawRotaGraph3(static_cast<int>(x) , static_cast<int>(y),
+				0,0,
+				1.0,1.0, rad, id, true);
 			break;
 		}
 	}

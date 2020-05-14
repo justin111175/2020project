@@ -15,34 +15,43 @@ Slash::Slash()
 Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2 size, MOVE_TYPE movetype)
 {
 	_unitID = unitID;
+	//_pos = pos;
 	_size = { 43,11 };
 
 	switch (movetype)
 	{
 	case MOVE_TYPE::UP:
-		_pos.x = pos.x+size.x/2-_size.x/2;
-		_pos.y = pos.y-_size.y/2;
+		_pos.x = pos.x + size.x / 2;
+		_pos.y = pos.y+size.y/2;
 
-		_rad = 270 * DEG;
+		_rad = 0 * DEG;
+
 		break;
 	case MOVE_TYPE::DOWN:
-		_pos.x = pos.x + size.x / 2 - _size.x / 2;
-		_pos.y = pos.y+size.y;
-
-		_rad = 90 * DEG;
-		break;
-	case MOVE_TYPE::LEFT:
-		_pos.x = pos.x-size.x/2;
-		_pos.y = pos.y + size.y/2-_size.y/2;
+		_pos.x = pos.x + size.x / 2;
+		_pos.y = pos.y+size.y*2/3;
 
 		_rad = 180 * DEG;
 		break;
+	case MOVE_TYPE::LEFT:
+		//_pos.x = pos.x-size.x/2;
+		//_pos.y = pos.y + size.y/2-_size.y/2;
+		_pos.x = pos.x+size.x/2;
+		_pos.y = pos.y+size.y/2;
+
+		_rad = 270 * DEG;
+		//_rad = 180 * DEG;
+		break;
 	case MOVE_TYPE::RIGHT:
-		_pos.x = pos.x + size.x ;
-		_pos.y = pos.y + size.y / 2 - _size.y / 2;
+		//_pos.x = pos.x + size.x ;
+		//_pos.y = pos.y + size.y / 2 - _size.y / 2;
 
+		_pos.x = pos.x + size.x / 2;
+		_pos.y = pos.y + size.y / 2;
 
-		_rad = 0 * DEG;
+		_rad = 90 * DEG;
+
+		//_rad = 0 * DEG;
 		break;
 	default:
 		break;
@@ -62,11 +71,19 @@ Slash::~Slash()
 
 void Slash::Update()
 {
-	Cntbool = true;
-	if (Cntbool)
+	if (IpSceneMng.frames()%10)
 	{
-		cnt+=1;
+		cnt += 1;
 		_rad -= cnt * DEG;
+		//if (_rad > 90 * DEG)
+		//{
+		//	_rad -= cnt * DEG;
+		//}
+		//else
+		//{
+		//	_rad += cnt * DEG;
+		//}
+
 	}
 
 
@@ -87,8 +104,14 @@ void Slash::Init(void)
 	cnt = 0;
 	AnimVector data;
 	data.reserve(1);
-	data.emplace_back(IMAGE_ID("aŒ‚")[0], 0);
+	data.emplace_back(IMAGE_ID("aŒ‚1")[0], 0);
 	SetAnim(STATE::NORMAL, data);
+
+	//data.emplace_back(IMAGE_ID("weapons")[0], 10);
+	//data.emplace_back(IMAGE_ID("weapons")[1], 20);
+	//data.emplace_back(IMAGE_ID("weapons")[2], 30);
+	SetAnim(STATE::NORMAL, data);
+
 
 	data.reserve(1);
 	data.emplace_back(-1, 40);
@@ -101,7 +124,7 @@ void Slash::Init(void)
 
 bool Slash::DestroyPrpc(void)
 {
-	if (cnt>12)
+	if (cnt>20||cnt<-20)
 	{
 
 		_alive = false;
