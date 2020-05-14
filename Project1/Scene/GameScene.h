@@ -3,6 +3,8 @@
 #include <vector>
 #include <BaseScene.h>
 #include <Obj.h>
+#include <FuncBullet.h>
+
 
 // ファンク
 using funcAct = std::function<bool(ActQueT&, void*)>;				
@@ -25,7 +27,10 @@ private:
 	//friend FuncCheckLRHit;
 	//friend FuncCheckOn;
 
-	//void funcInit(void);											// ファンク初期化
+	friend FuncBullet;
+
+
+	void funcInit(void);											// ファンク初期化
 	void RunActQue(std::vector<ActQueT> actList) override;			// ファンク活動キュー
 	std::vector<sharedObj> _objList;								// シェアポインタ-Obj
 	std::map<ACT_QUE, funcAct> funcQue;								// ファンク活動キュー

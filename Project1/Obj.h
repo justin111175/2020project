@@ -8,10 +8,10 @@
 
 enum class MOVE_TYPE
 {
-	LR,							// 左右移動
-	DOWN,						// 下移動
-	UP,							// 上移動
-	DOWNUP						// 上下移動
+	DOWN,
+	LEFT,						// 左
+	RIGHT,						// 右
+	UP,
 };
 
 // 状態管理
@@ -36,7 +36,8 @@ enum class UNIT_ID
 	NON,						// 何もなし
 	PLAYER,						// プレイヤー
 	ENEMY,						// 敵
-	PLaS						// プレイヤー近距離攻撃
+	PLaS,						// プレイヤー近距離攻撃
+	PLaB
 };
 
 enum class ACT
@@ -69,7 +70,7 @@ public:
 
 	bool state(const STATE state);										// ゲット関数-どのアニメションを再生するか指定する
 	UNIT_ID _unitID;													// ユニットID
-
+	MOVE_TYPE movetype;
 	virtual bool SetAlive(bool alive);									// 生きているかどうか設定
 
 	bool SetAnim(const STATE state,AnimVector& data);					// アニメの設定

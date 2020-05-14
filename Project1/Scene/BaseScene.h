@@ -9,11 +9,7 @@ class BaseScene;
 enum class ACT_QUE
 {
 	NON,																// 何もしない
-	CHECK_ON,															// チェック上
-	CHECK_SELF,															// チェック自身
-	CHECK_DOWN,															// チェック下
-	CHECK_RIFGT,														// チェック右
-	CHECK_LEFT															// チェック左
+	SHOT
 };
 
 enum class ACT_STATE

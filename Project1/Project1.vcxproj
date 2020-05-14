@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\common;$(SolutionDir)\_debug;$(IncludePath)</IncludePath>
-    <LibraryPath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\common;$(SolutionDir)\_debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(IncludePath)</IncludePath>
+    <LibraryPath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -128,8 +128,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Scene\func\FuncBullet.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -141,10 +143,12 @@
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="common\detail\Vector2.h" />
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Scene\func\FuncBullet.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\BaseScene.h" />

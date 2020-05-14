@@ -10,7 +10,7 @@
 #include <Enemy.h>
 GameScene::GameScene()
 {	
-	//funcInit();
+	funcInit();
 	
 //	switch (IpSceneMng._classCnt)
 //	{
@@ -37,6 +37,7 @@ GameScene::GameScene()
 	
 	IpImageMng.GetID("ÉÇÉìÉXÉ^Å[ï‡Ç≠", "image/Monsters/walk.png", { 48,48 }, { 3,32 });
 
+	IpImageMng.GetID("íe", "image/shot.png", { 43,11 }, { 1,1 });
 
 
 	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }));
@@ -262,3 +263,8 @@ void GameScene::MapInit_1(void)
 //}
 
 
+void GameScene::funcInit(void)
+{
+	funcQue[ACT_QUE::SHOT] = FuncBullet();
+
+}

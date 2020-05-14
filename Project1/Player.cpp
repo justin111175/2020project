@@ -28,15 +28,24 @@ void Player::Update()
 
 	}
 
+	if (CheckHitKey(KEY_INPUT_X))
+	{
+		IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+	}
+
+
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
 		state(STATE::UP);
+		movetype = MOVE_TYPE::UP;
 		_pos.y-=5;
 	}
 
 	if (CheckHitKey(KEY_INPUT_DOWN))
 	{
 		state(STATE::DOWN);
+		movetype = MOVE_TYPE::DOWN;
+
 		_pos.y+=5;
 	}
 	
@@ -44,12 +53,16 @@ void Player::Update()
 	if (CheckHitKey(KEY_INPUT_LEFT))
 	{
 		state(STATE::LEFT);
+		movetype = MOVE_TYPE::LEFT;
+
 		_pos.x-=5;
 	}
 	
 	if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
 		state(STATE::RIGHT);
+		movetype = MOVE_TYPE::RIGHT;
+
 		_pos.x+=5;
 	}
 
