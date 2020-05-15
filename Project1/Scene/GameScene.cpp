@@ -247,5 +247,6 @@ void GameScene::funcInit(void)
 {
 	funcQue[ACT_QUE::SHOT] = FuncBullet();
 	funcQue[ACT_QUE::SLASH] = FuncSlash();
+	funcQue[ACT_QUE::CHECK] = FuncCheck();
 
 }

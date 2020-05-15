@@ -10,7 +10,8 @@ enum class ACT_QUE
 {
 	NON,																// ‰½‚à‚µ‚È‚¢
 	SHOT,
-	SLASH
+	SLASH,
+	CHECK
 };
 
 enum class ACT_STATE

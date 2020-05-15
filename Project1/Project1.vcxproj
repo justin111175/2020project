@@ -131,6 +131,8 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="level.cpp" />
+    <ClCompile Include="Scene\func\FuncCheck.cpp" />
     <ClCompile Include="Input\InputState.cpp" />
     <ClCompile Include="Input\INPUT_ID.cpp" />
     <ClCompile Include="Input\KeyState.cpp" />
@@ -153,6 +155,8 @@
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="level.h" />
+    <ClInclude Include="Scene\func\FuncCheck.h" />
     <ClInclude Include="Input\InputState.h" />
     <ClInclude Include="Input\INPUT_ID.h" />
     <ClInclude Include="Input\KeyState.h" />

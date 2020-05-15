@@ -8,6 +8,7 @@
 #include <Obj.h>
 #include <algorithm>
 #include <KeyState.h>
+#include <level.h>
 
 Player::Player()
 {
@@ -25,23 +26,26 @@ Player::Player(Vector2Dbl pos, Vector2 size)
 void Player::Update(sharedObj plObj)
 {		
 
-	TRACE("%d\n", level[levelCnt]);
+	TRACE("ç≈ëÂHP  %d\n", _level._sutetasu[sutetasu::HP]);
 
 	(*_input).Update();
 
 
 
-
-	if (CheckHitKey(KEY_INPUT_A))
+	if ((*_input).state(INPUT_ID::BTN_4).first && !(*_input).state(INPUT_ID::BTN_4).second)
 	{
-		if (levelCnt < 10)
+		_level.experience[_level.levelCnt] -= 30;
+		if (_level.experience[_level.levelCnt] <= 0)
 		{
-			levelCnt++;
+			_level.levelCnt++;
+			_level._sutetasu[sutetasu::HP] = 100 + (_level.levelCnt * 100)*0.3;
+
+
 		}
 
 	}
 
-
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 
 
@@ -119,6 +123,8 @@ bool Player::SetAlive(bool alive)
 // èâä˙âª
 void Player::Init(void)
 {
+
+
 	_alive = true;
 	_dead = false;
 	_unitID = UNIT_ID::PLAYER;
@@ -157,20 +163,7 @@ void Player::Init(void)
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
 
-	levelCnt = 1;
-	for (int x = 1; x <= 10; x++)
-	{
-		level[x] = x;
-
-	}
-
-	for (int x = 1; x < 10; x++)
-	{
-		a[x] = 100;
-	}
-
-
-	HP = 100;
+	_level.Init();
 
 	state(STATE::UP);
 	_input = std::make_shared<KeyState>();

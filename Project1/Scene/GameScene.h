@@ -5,6 +5,7 @@
 #include <Obj.h>
 #include <FuncBullet.h>
 #include <FuncSlash.h>
+#include <FuncCheck.h>
 
 // ファンク
 using funcAct = std::function<bool(ActQueT&, void*)>;				
@@ -29,6 +30,7 @@ private:
 
 	friend FuncBullet;
 	friend FuncSlash;
+	friend FuncCheck;
 
 
 	void funcInit(void);											// ファンク初期化

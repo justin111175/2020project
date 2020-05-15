@@ -22,14 +22,8 @@ private:
 
 	void PlayerMove(void);										// ƒvƒŒƒCƒ„[‚ÌˆÚ“®
 	void Init(void);											// ‰Šú‰»
-	std::shared_ptr<InputState>_input;				// ²İÌß¯Ä‚ÌÕÆ°¸Îß²İÀéŒ¾
+	std::shared_ptr<InputState>_input;							// ²İÌß¯Ä‚ÌÕÆ°¸Îß²İÀéŒ¾
+	
 
-
-	int levelCnt;
-
-
-	int level[10];
-	int a[9];
-	int HP;
 };
 

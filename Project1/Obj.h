@@ -4,6 +4,7 @@
 #include <Vector2.h>
 #include <map>
 #include <memory>
+#include <level.h>
 
 
 enum class MOVE_TYPE
@@ -80,6 +81,7 @@ public:
 	Vector2Dbl _pos;													// 座標
 	Vector2Dbl _posOld;
 	Vector2 _size;														// サイズ
+	level _level;
 
 private:
 
