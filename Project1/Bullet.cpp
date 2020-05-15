@@ -48,7 +48,7 @@ Bullet::~Bullet()
 
 
 
-void Bullet::Update()
+void Bullet::Update(sharedObj plObj)
 {
 
 	_pos.x += cos(_rad)*BulletSpeed;

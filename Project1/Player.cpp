@@ -7,6 +7,7 @@
 #include <SceneMng.h>
 #include <Obj.h>
 #include <algorithm>
+#include <KeyState.h>
 
 Player::Player()
 {
@@ -21,24 +22,45 @@ Player::Player(Vector2Dbl pos, Vector2 size)
 }
 
 // çXêV
-void Player::Update()
+void Player::Update(sharedObj plObj)
 {		
+
+	TRACE("%d\n", level[levelCnt]);
+
+	(*_input).Update();
+
+
+
+
+	if (CheckHitKey(KEY_INPUT_A))
+	{
+		if (levelCnt < 10)
+		{
+			levelCnt++;
+		}
+
+	}
+
+
+
+
+
 	if (CheckHitKey(KEY_INPUT_Z))
 	{
 		state(STATE::DETH);
 
 	}
 
-	if (CheckHitKey(KEY_INPUT_X))
+	if ((*_input).state(INPUT_ID::BTN_2).first && !(*_input).state(INPUT_ID::BTN_2).second)
 	{
 		IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 	}
 	
-	if (CheckHitKey(KEY_INPUT_C))
+	if ((*_input).state(INPUT_ID::BTN_3).first && !(*_input).state(INPUT_ID::BTN_3).second)
 	{
+		_posOld = _pos;
 		IpSceneMng.AddActQue({ ACT_QUE::SLASH , *this });
 	}
-
 
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
@@ -71,6 +93,10 @@ void Player::Update()
 
 		_pos.x+=5;
 	}
+	
+
+
+
 
 
 }
@@ -95,7 +121,6 @@ void Player::Init(void)
 {
 	_alive = true;
 	_dead = false;
-
 	_unitID = UNIT_ID::PLAYER;
 
 	AnimVector data;
@@ -132,8 +157,24 @@ void Player::Init(void)
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
 
+	levelCnt = 1;
+	for (int x = 1; x <= 10; x++)
+	{
+		level[x] = x;
+
+	}
+
+	for (int x = 1; x < 10; x++)
+	{
+		a[x] = 100;
+	}
+
+
+	HP = 100;
 
 	state(STATE::UP);
+	_input = std::make_shared<KeyState>();
+
 
 }
 

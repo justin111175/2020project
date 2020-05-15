@@ -63,7 +63,7 @@ class Obj
 {
 public:
 	Obj();
-	virtual void Update()=0;								// 純粋仮想関数
+	virtual void Update(sharedObj plObj)=0;								// 純粋仮想関数
 	void Draw(void);
 	void Draw(int id);
 	virtual ~Obj();
@@ -78,6 +78,7 @@ public:
 	bool isDead(void) { return _dead; }									// 死んでいる管理
 	bool isAnimEnd(void);												// アニメがおわったかどうか
 	Vector2Dbl _pos;													// 座標
+	Vector2Dbl _posOld;
 	Vector2 _size;														// サイズ
 
 private:

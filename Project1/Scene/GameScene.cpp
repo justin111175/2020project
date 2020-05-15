@@ -55,13 +55,13 @@ GameScene::~GameScene()
 unique_Base GameScene::Update(unique_Base own)
 {
 	// •`‰æ
-	//auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
+	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)
 		{
-			(*data).Update();
+			(*data).Update(*PlObj);
 		}
 	}
 

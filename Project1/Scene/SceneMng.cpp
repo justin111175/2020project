@@ -7,6 +7,8 @@
 #include <_DebugDispOut.h>
 #include <ImageMng.h>
 #include <algorithm>
+#include <KeyState.h>
+
 //動的シングルトン
 SceneMng *SceneMng::sInstance = nullptr;
 
@@ -108,6 +110,7 @@ void SceneMng::Run(void)
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		// moveはコピーしません、所有権を渡すだけ
 		(*_activeScene).RunActQue(std::move(_actList));
+		(*_input).Update();
 
 		Draw();
 
@@ -160,6 +163,8 @@ bool SceneMng::SysInit(void)
 	{
 		return false;
 	}
+	
+	_input = std::make_shared<KeyState>();
 
 
 	// true:アルファチャンネルの透明

@@ -21,7 +21,7 @@ Enemy::Enemy(EnemyState& state)
 }
 
 // XV
-void Enemy::Update(void)
+void Enemy::Update(sharedObj plObj)
 {
 
 

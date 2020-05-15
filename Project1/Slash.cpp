@@ -15,7 +15,7 @@ Slash::Slash()
 Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2 size, MOVE_TYPE movetype)
 {
 	_unitID = unitID;
-	//_pos = pos;
+
 	_size = { 43,11 };
 
 	switch (movetype)
@@ -23,7 +23,6 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2 size, MOVE_TYPE movetype)
 	case MOVE_TYPE::UP:
 		_pos.x = pos.x + size.x / 2;
 		_pos.y = pos.y+size.y/2;
-
 		_rad = 0 * DEG;
 
 		break;
@@ -34,8 +33,7 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2 size, MOVE_TYPE movetype)
 		_rad = 180 * DEG;
 		break;
 	case MOVE_TYPE::LEFT:
-		//_pos.x = pos.x-size.x/2;
-		//_pos.y = pos.y + size.y/2-_size.y/2;
+
 		_pos.x = pos.x+size.x/2;
 		_pos.y = pos.y+size.y/2;
 
@@ -43,20 +41,17 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2 size, MOVE_TYPE movetype)
 		//_rad = 180 * DEG;
 		break;
 	case MOVE_TYPE::RIGHT:
-		//_pos.x = pos.x + size.x ;
-		//_pos.y = pos.y + size.y / 2 - _size.y / 2;
+
 
 		_pos.x = pos.x + size.x / 2;
 		_pos.y = pos.y + size.y / 2;
 
 		_rad = 90 * DEG;
-
-		//_rad = 0 * DEG;
 		break;
 	default:
 		break;
 	}
-
+	_posOld = _pos;
 	Init();
 
 }
@@ -69,11 +64,19 @@ Slash::~Slash()
 
 
 
-void Slash::Update()
+void Slash::Update(sharedObj plObj)
 {
-	if (IpSceneMng.frames()%10)
+
+	if ((*plObj)._pos!= (*plObj)._posOld)
 	{
-		cnt += 1;
+		_pos = (*plObj)._pos - (*plObj)._posOld + _posOld;
+
+	}
+
+
+	if (IpSceneMng.frames()%60)
+	{
+		cnt += 3;
 		_rad -= cnt * DEG;
 		//if (_rad > 90 * DEG)
 		//{
@@ -124,7 +127,7 @@ void Slash::Init(void)
 
 bool Slash::DestroyPrpc(void)
 {
-	if (cnt>20||cnt<-20)
+	if (cnt>30||cnt<-30)
 	{
 
 		_alive = false;

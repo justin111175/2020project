@@ -6,6 +6,8 @@
 #include <tuple>										//要素が三つ以上を管理する時を使う
 #include "Layer_id.h"
 #include <map>
+#include <InputState.h>
+
 
 enum class DRAW_QUE
 {
@@ -82,6 +84,8 @@ public:
 
 	const Vector2 ScreenSize;									// 全画面サイズ
 	const Vector2 GameScreenSize;								// 全画面サイズの4分の１
+	
+	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報
 
 
 	int _blendCnt;												// ブレンド用カント
