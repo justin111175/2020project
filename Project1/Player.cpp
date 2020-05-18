@@ -26,10 +26,101 @@ Player::Player(Vector2Dbl pos, Vector2 size)
 void Player::Update(sharedObj plObj)
 {		
 
-	TRACE("最大HP  %d\n", _level._sutetasu[sutetasu::HP]);
+	TRACE("最大HP  %d\n", _level._status[STATUS::HP]);
 
 	(*_input).Update();
 
+	if (!meanFlag)
+	{
+
+		PlayerMove();
+		if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
+		{
+			meanFlag = true;
+
+		}
+	}
+	else
+	{
+
+		if (MeanState == MEAN_OUT)
+		{
+			if ((*_input).state(INPUT_ID::LEFT).first && !(*_input).state(INPUT_ID::LEFT).second)
+			{
+				if (meanId > ステータス)
+				{
+					meanId = (MEAN_ID)(meanId - 1);
+				}
+				else
+				{
+					meanId = ゲーム終了;
+				}
+			}
+			if ((*_input).state(INPUT_ID::RIGHT).first && !(*_input).state(INPUT_ID::RIGHT).second)
+			{
+				if (meanId < ゲーム終了)
+				{
+					meanId = (MEAN_ID)(meanId + 1);
+				}
+				else
+				{
+					meanId = ステータス;
+				}
+			}
+
+			if ((*_input).state(INPUT_ID::BTN_1).first && !(*_input).state(INPUT_ID::BTN_1).second)
+			{
+				switch (meanId)
+				{
+				case ステータス:
+
+					MeanState = MEAN_IN;
+
+					break;
+				case 装備:
+					MeanState = MEAN_IN;
+
+					break;
+				case 保存:
+					break;
+				case オプション:
+					break;
+				case ゲーム終了:
+					break;
+				default:
+					break;
+				}
+			}
+
+			if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
+			{
+				//MeanState = MEAN_OUT;
+				meanFlag = false;
+
+			}
+		}
+		else
+		{
+			if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
+			{
+				MeanState = MEAN_OUT;
+				//meanFlag = false;
+
+			}
+		}
+
+
+
+		MeanDraw();
+
+	}
+
+}
+
+// プレイヤー移動
+void Player::PlayerMove(void)
+{
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 
 	if ((*_input).state(INPUT_ID::BTN_4).first && !(*_input).state(INPUT_ID::BTN_4).second)
@@ -38,16 +129,12 @@ void Player::Update(sharedObj plObj)
 		if (_level.experience[_level.levelCnt] <= 0)
 		{
 			_level.levelCnt++;
-			_level._sutetasu[sutetasu::HP] = 100 + (_level.levelCnt * 100)*0.3;
+			_level._status[STATUS::HP] = 100 + (_level.levelCnt * 100)*0.3;
 
 
 		}
 
 	}
-
-	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
-
-
 
 	if (CheckHitKey(KEY_INPUT_Z))
 	{
@@ -59,7 +146,7 @@ void Player::Update(sharedObj plObj)
 	{
 		IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 	}
-	
+
 	if ((*_input).state(INPUT_ID::BTN_3).first && !(*_input).state(INPUT_ID::BTN_3).second)
 	{
 		_posOld = _pos;
@@ -70,7 +157,7 @@ void Player::Update(sharedObj plObj)
 	{
 		state(STATE::UP);
 		movetype = MOVE_TYPE::UP;
-		_pos.y-=5;
+		_pos.y -= 5;
 	}
 
 	if (CheckHitKey(KEY_INPUT_DOWN))
@@ -78,36 +165,27 @@ void Player::Update(sharedObj plObj)
 		state(STATE::DOWN);
 		movetype = MOVE_TYPE::DOWN;
 
-		_pos.y+=5;
+		_pos.y += 5;
 	}
-	
+
 
 	if (CheckHitKey(KEY_INPUT_LEFT))
 	{
 		state(STATE::LEFT);
 		movetype = MOVE_TYPE::LEFT;
 
-		_pos.x-=5;
+		_pos.x -= 5;
 	}
-	
+
 	if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
 		state(STATE::RIGHT);
 		movetype = MOVE_TYPE::RIGHT;
 
-		_pos.x+=5;
+		_pos.x += 5;
 	}
-	
 
 
-
-
-
-}
-
-// プレイヤー移動
-void Player::PlayerMove(void)
-{
 }
 
 Player::~Player()
@@ -167,6 +245,49 @@ void Player::Init(void)
 
 	state(STATE::UP);
 	_input = std::make_shared<KeyState>();
+	meanFlag = false;
+
+}
+
+void Player::MeanDraw(void)
+{
+
+
+	switch (MeanState)
+	{
+	case MEAN_OUT:
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], 0 ,0,0,0,0,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 60+161*meanId ,350+sin(IpSceneMng.frames()/5)*10.0,0,0,0,0,LAYER::UI });
+		break;
+	case MEAN_IN:
+		switch (meanId)
+		{
+		case ステータス:
+			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0], 0 ,0,0,0,0,0,LAYER::UI });
+			break;
+		case 装備:
+			IpSceneMng.AddDrawQue({ IMAGE_ID("装備")[0], 0 ,0,0,0,0,0,LAYER::UI });
+
+			break;
+		case 保存:
+			break;
+		case オプション:
+			break;
+		case ゲーム終了:
+			break;
+		default:
+			break;
+		}
+
+		break;
+	default:
+		break;
+	}
+	if (MeanState==MEAN_IN)
+	{
+
+	}
+
 
 
 }

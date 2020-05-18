@@ -1,7 +1,7 @@
 #pragma once
 
 
-enum sutetasu
+enum STATUS
 {
 	HP,
 	MP,
@@ -26,7 +26,7 @@ public:
 
 	int experience[10];   //åoå±íl
 
-	int _sutetasu[sutetasu::MAX];
+	int _status[STATUS::MAX];
 
 
 };

@@ -67,7 +67,7 @@ void SceneMng::Draw(void)
 			SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 			break;
 		default:
-			//DrawRotaGraph(static_cast<int>(x)+size.x/2 , static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
+//			DrawRotaGraph(static_cast<int>(x)+size.x/2 , static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
 			DrawRotaGraph3(static_cast<int>(x) , static_cast<int>(y),
 				0,0,
 				1.0,1.0, rad, id, true);
@@ -101,7 +101,7 @@ void SceneMng::Run(void)
 	//　スマートポインタ-代入演算子-タイトルシンへ行く
 	_activeScene = std::make_unique<GameScene>();
 
-	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
+	while (ProcessMessage() == 0 /*&& CheckHitKey(KEY_INPUT_ESCAPE) == 0*/)
 	{
 		// clear：全ての要素を削除する
 		_drawList.clear();

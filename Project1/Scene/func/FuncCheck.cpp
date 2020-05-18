@@ -22,7 +22,7 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 				actQue.second._pos.y<(*obj)._pos.y+(*obj)._size.y&&
 				actQue.second._pos.y+ actQue.second._size.y>(*obj)._pos.y)
 			{
-				actQue.second._level._sutetasu[sutetasu::HP] -= 20;
+				actQue.second._level._status[STATUS::HP] -= 20;
 				return true;
 			}
 			//else

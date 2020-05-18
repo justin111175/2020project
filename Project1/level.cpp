@@ -15,7 +15,7 @@ void level::Init(void)
 
 	//vitality = 0;
 
-	_sutetasu[sutetasu::HP] = 100;
+	_status[STATUS::HP] = 100;
 	
 
 }

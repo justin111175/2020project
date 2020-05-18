@@ -8,6 +8,7 @@
 #include <Obj.h>
 #include <Player.h>
 #include <Enemy.h>
+#include <KeyState.h>
 
 GameScene::GameScene()
 {	
@@ -25,11 +26,17 @@ GameScene::GameScene()
 	IpImageMng.GetID("斬撃", "image/slash.png", { 39,37 }, { 1,1 });
 	IpImageMng.GetID("斬撃1", "image/slash1.png", { 37,38 }, { 1,1 });
 	IpImageMng.GetID("weapons", "image/weapons.png", { 98,65 }, { 3,4 });
+	
 
 
+	IpImageMng.GetID("メニュー", "image/mean.png", { 800,600 }, { 1,1 });
+	IpImageMng.GetID("メッセージ", "image/messagecursor.png", { 50,78 }, { 1,1 });
+	IpImageMng.GetID("ステータス", "image/status.png", { 800,600 }, { 1,1 });
+	
+	
+	IpImageMng.GetID("装備", "image/Equipment.png", { 800,600 }, { 1,1 });
 
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("モンスター歩く")[0], 400 ,300,0,0,0,0,LAYER::BG });
 
 	
 	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }));
@@ -41,6 +48,9 @@ GameScene::GameScene()
 	_objList.emplace_back(new Enemy(data1));
 
 	IpImageMng.GetID("ウェポン", "image/weapons.png", { 98,68 }, { 3,5 });
+
+
+	_input = std::make_shared<KeyState>();
 
 
 	_shakeCount = 0;
@@ -70,12 +80,19 @@ unique_Base GameScene::Update(unique_Base own)
 
 		(*data).Draw();
 	}
-		
+	
+	(*_input).Update();
+
+
+	//if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
+	//{
+	//	return std::make_unique<MeanScene>();
+	//}
 
 	//IpSceneMng.AddDrawQue({ IMAGE_ID("背景")[0], 4096/2 - _mapPos.x ,800 / 2,0,0,0,LAYER::BG });
 
 	//switch (IpSceneMng._classCnt)
-	//{
+	//{0
 	//case 1:
 	//	IpSceneMng.AddDrawQue({ IMAGE_ID("背景")[0], 4096*1.5 - _mapPos.x,800 / 2,0,0,0,LAYER::BG});
 	//	IpSceneMng.AddDrawQue({ IMAGE_ID("エンド飾り_木")[0], 5960 - _mapPos.x,800 / 2,0,0,0,LAYER::BG });
