@@ -3,6 +3,7 @@
 #include <memory>
 #include <Vector2.h>
 #include <InputState.h>
+#include <Number.h>
 
 #define PLSPEED 4												// プレイヤーの最大値スピード（左右）
 
@@ -19,7 +20,6 @@ enum ME_ST
 {
 	MEAN_OUT,
 	MEAN_IN,
-
 
 };
 
@@ -45,8 +45,14 @@ private:
 
 	MEAN_ID meanId;
 	ME_ST MeanState;
+
+	STATUS_UP statusupId;
 	void MeanDraw(void);
+	void StatusUpdate(void);
 	bool meanFlag;
+	
+	Number number;
+
 
 };
 

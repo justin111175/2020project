@@ -10,6 +10,7 @@
 #include <KeyState.h>
 #include <level.h>
 
+
 Player::Player()
 {
 	Init();
@@ -26,7 +27,7 @@ Player::Player(Vector2Dbl pos, Vector2 size)
 void Player::Update(sharedObj plObj)
 {		
 
-	TRACE("最大HP  %d\n", _level._status[STATUS::HP]);
+	TRACE("最大HP  %d\n", _level._statusUp[STATUS_UP::強化_攻撃力]);
 
 	(*_input).Update();
 
@@ -70,26 +71,16 @@ void Player::Update(sharedObj plObj)
 
 			if ((*_input).state(INPUT_ID::BTN_1).first && !(*_input).state(INPUT_ID::BTN_1).second)
 			{
-				switch (meanId)
+
+				if (meanId == ゲーム終了)
 				{
-				case ステータス:
-
-					MeanState = MEAN_IN;
-
-					break;
-				case 装備:
-					MeanState = MEAN_IN;
-
-					break;
-				case 保存:
-					break;
-				case オプション:
-					break;
-				case ゲーム終了:
-					break;
-				default:
-					break;
+					DxLib_End();
 				}
+				else
+				{
+					MeanState = MEAN_IN;
+				}
+
 			}
 
 			if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
@@ -101,6 +92,7 @@ void Player::Update(sharedObj plObj)
 		}
 		else
 		{
+			StatusUpdate();
 			if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
 			{
 				MeanState = MEAN_OUT;
@@ -125,11 +117,11 @@ void Player::PlayerMove(void)
 
 	if ((*_input).state(INPUT_ID::BTN_4).first && !(*_input).state(INPUT_ID::BTN_4).second)
 	{
-		_level.experience[_level.levelCnt] -= 30;
-		if (_level.experience[_level.levelCnt] <= 0)
+		_level.experience[_level._status[STATUS::レベル]] -= 30;
+		if (_level.experience[_level._status[STATUS::レベル]] <= 0)
 		{
-			_level.levelCnt++;
-			_level._status[STATUS::HP] = 100 + (_level.levelCnt * 100)*0.3;
+			_level._status[STATUS::レベル]++;
+			_level._status[STATUS::HP] = 100 + (_level._status[STATUS::レベル] * 100)*0.3;
 
 
 		}
@@ -243,6 +235,11 @@ void Player::Init(void)
 
 	_level.Init();
 
+
+	number.Init();
+
+
+
 	state(STATE::UP);
 	_input = std::make_shared<KeyState>();
 	meanFlag = false;
@@ -257,13 +254,34 @@ void Player::MeanDraw(void)
 	{
 	case MEAN_OUT:
 		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], 0 ,0,0,0,0,0,LAYER::UI });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 60+161*meanId ,350+sin(IpSceneMng.frames()/5)*10.0,0,0,0,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255*meanId ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,0,0,LAYER::UI });
+		number.Draw(270, 80, _level._status[STATUS::レベル], true);
+		number.Draw(700, 80, _level._status[STATUS::お金], true);
+		number.Draw(1150, 320,_level.experience[_level._status[STATUS::レベル]] ,false);
+
 		break;
 	case MEAN_IN:
 		switch (meanId)
 		{
 		case ステータス:
 			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0], 0 ,0,0,0,0,0,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], 1010 ,205+ statusupId *53,0,0,0,0,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 750+sin(IpSceneMng.frames() / 5)*10.0 ,205 + statusupId * 53,0,0,0,0,LAYER::UI });
+
+			number.Draw(240, 300,_level._status[STATUS::攻撃力],true );
+			number.Draw(240, 370,_level._status[STATUS::防御力], true);
+			number.Draw(570, 300,_level._status[STATUS::敏捷], true);
+			number.Draw(570, 370,_level._status[STATUS::敏捷], true);
+			
+			number.Draw(1100, 215,_level._statusUp[STATUS_UP::強化_攻撃力], true);
+			number.Draw(1100, 270,_level._statusUp[STATUS_UP::強化_防御力], true);
+			number.Draw(1100, 325,_level._statusUp[STATUS_UP::強化_敏捷], true);
+			number.Draw(1100, 375,_level._statusUp[STATUS_UP::強化_回復], true);
+			number.Draw(1100, 430,_level._statusUp[STATUS_UP::強化_最大HP], true);
+			number.Draw(1100, 480,_level._statusUp[STATUS_UP::強化_最大MP], true);
+			
+			number.Draw(1200, 565, _level._statusUp[STATUS_UP::残るボーナスポイント],true);
+
 			break;
 		case 装備:
 			IpSceneMng.AddDrawQue({ IMAGE_ID("装備")[0], 0 ,0,0,0,0,0,LAYER::UI });
@@ -283,12 +301,98 @@ void Player::MeanDraw(void)
 	default:
 		break;
 	}
-	if (MeanState==MEAN_IN)
+
+
+}
+
+void Player::StatusUpdate(void)
+{
+
+
+
+	auto UpDown = [](std::weak_ptr<InputState> keyData, const INPUT_ID id,level& _level, const STATUS_UP status_up, const int num) {
+	
+		if (!keyData.expired())
+		{
+			if ((*keyData.lock()).state(id).first && !(*keyData.lock()).state(id).second)
+			{
+				_level._statusUp[status_up] += num;
+				_level._statusUp[STATUS_UP::残るボーナスポイント]-=num;
+			}
+		}
+	};
+	switch (meanId)
 	{
+	case ステータス:
+		if ((*_input).state(INPUT_ID::UP).first && !(*_input).state(INPUT_ID::UP).second)
+		{
+			if (statusupId > 強化_攻撃力)
+			{
+				statusupId = (STATUS_UP)(statusupId - 1);
+			}
+			else
+			{
+				statusupId = 強化_最大MP;
+			}
+		}
+		if ((*_input).state(INPUT_ID::DOWN).first && !(*_input).state(INPUT_ID::DOWN).second)
+		{
+			if (statusupId < 強化_最大MP)
+			{
+				statusupId = (STATUS_UP)(statusupId + 1);
+			}
+			else
+			{
+				statusupId = 強化_攻撃力;
+			}
+		}
 
+
+		switch (statusupId)
+		{
+		case 強化_攻撃力:
+			UpDown(_input, INPUT_ID::LEFT,  _level,強化_攻撃力, -1);
+			UpDown(_input, INPUT_ID::RIGHT,_level, 強化_攻撃力,  1);
+
+			break;
+		case 強化_防御力:
+			UpDown(_input, INPUT_ID::LEFT, _level, 強化_防御力, -1);
+			UpDown(_input, INPUT_ID::RIGHT, _level, 強化_防御力, 1);
+			break;
+		case 強化_敏捷:
+			UpDown(_input, INPUT_ID::LEFT, _level, 強化_敏捷, -1);
+			UpDown(_input, INPUT_ID::RIGHT, _level, 強化_敏捷, 1);
+			break;
+		case 強化_回復:
+			UpDown(_input, INPUT_ID::LEFT, _level, 強化_回復, -1);
+			UpDown(_input, INPUT_ID::RIGHT, _level, 強化_回復, 1);
+			break;
+		case 強化_最大HP:
+			UpDown(_input, INPUT_ID::LEFT, _level, 強化_最大HP, -1);
+			UpDown(_input, INPUT_ID::RIGHT, _level, 強化_最大HP, 1);
+			break;
+		case 強化_最大MP:
+			UpDown(_input, INPUT_ID::LEFT, _level, 強化_最大MP, -1);
+			UpDown(_input, INPUT_ID::RIGHT, _level, 強化_最大MP, 1);
+			break;
+		case 残るボーナスポイント:
+			break;
+		default:
+			break;
+		}
+
+		break;
+	case 装備:
+		break;
+	case 保存:
+		break;
+	case オプション:
+		break;
+	case ゲーム終了:
+		break;
+	default:
+		break;
 	}
-
-
 
 }
 

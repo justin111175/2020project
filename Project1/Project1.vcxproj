@@ -132,6 +132,7 @@
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="level.cpp" />
+    <ClCompile Include="Number.cpp" />
     <ClCompile Include="Scene\func\FuncCheck.cpp" />
     <ClCompile Include="Input\InputState.cpp" />
     <ClCompile Include="Input\INPUT_ID.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="level.h" />
+    <ClInclude Include="Number.h" />
     <ClInclude Include="Scene\func\FuncCheck.h" />
     <ClInclude Include="Input\InputState.h" />
     <ClInclude Include="Input\INPUT_ID.h" />

@@ -12,7 +12,7 @@
 //動的シングルトン
 SceneMng *SceneMng::sInstance = nullptr;
 
-SceneMng::SceneMng() :ScreenSize{ 800,600 }, GameScreenSize{ ScreenSize / 2 }					// 初期化
+SceneMng::SceneMng() :ScreenSize{ 1280,720 }, GameScreenSize{ ScreenSize / 2 }					// 初期化
 {
 }
 
@@ -84,6 +84,33 @@ void SceneMng::Draw(void)
 		DrawRotaGraph(GameScreenSize.x, GameScreenSize.y, 1.0, 0, _screenID[layer_id], true);
 	}
 	_dbgDrawFPS();
+
+	//DrawString(0, 0, "今日もいい天気だ", GetColor(255, 255, 255));
+
+	//// 文字列の長さを取得
+	//int StrLen = strlen("今日もいい天気だ");
+
+	//// 描画時の文字列の幅を取得
+	//int StrWidth = GetDrawStringWidth("今日もいい天気だ", StrLen);
+
+	//// 「今日もいい天気だ」の直後に新たな文字列を描画
+	//DrawString(StrWidth, 100, "明日も晴れると良いなあ", GetColor(255, 255, 255));
+
+
+	//DrawBox(0, 0, 640, 480, GetColor(128, 128, 0), TRUE);
+
+	// サイズを４０に変更
+	SetFontSize(40);
+
+	// 『ＤＸライブラリ』と描画
+	DrawString(100, 100, "ＤＸライブラリ", GetColor(255, 255, 255));
+
+	// フォントのタイプをエッジつきアンチエイリアスフォントに変更
+	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
+
+	// 『ＤＸライブラリ』と描画
+	DrawString(100, 160, "ＤＸライブラリ", GetColor(255, 255, 255), GetColor(0, 0, 0));
+
 	ScreenFlip();
 }
 

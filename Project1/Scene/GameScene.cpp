@@ -9,7 +9,7 @@
 #include <Player.h>
 #include <Enemy.h>
 #include <KeyState.h>
-
+#include <Number.h>
 GameScene::GameScene()
 {	
 	funcInit();
@@ -29,12 +29,14 @@ GameScene::GameScene()
 	
 
 
-	IpImageMng.GetID("メニュー", "image/mean.png", { 800,600 }, { 1,1 });
+	IpImageMng.GetID("メニュー", "image/mean.png", { 1280,720 }, { 1,1 });
 	IpImageMng.GetID("メッセージ", "image/messagecursor.png", { 50,78 }, { 1,1 });
-	IpImageMng.GetID("ステータス", "image/status.png", { 800,600 }, { 1,1 });
+	IpImageMng.GetID("ステータス", "image/status.png", { 1280,720 }, { 1,1 });
 	
 	
-	IpImageMng.GetID("装備", "image/Equipment.png", { 800,600 }, { 1,1 });
+	IpImageMng.GetID("装備", "image/Equipment.png", { 1280,720 }, { 1,1 });
+	IpImageMng.GetID("加減", "image/1.png", { 186,50 }, { 1,1 });
+	IpImageMng.GetID("messagecursorD3", "image/messagecursorD3.png", { 56,40 }, { 1,1 });
 
 
 
@@ -82,6 +84,7 @@ unique_Base GameScene::Update(unique_Base own)
 	}
 	
 	(*_input).Update();
+
 
 
 	//if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
