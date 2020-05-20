@@ -39,7 +39,7 @@ void SceneMng::Draw(void)
 	{
 		double x, y, rad;
 		int id;
-		Vector2 size;
+		Vector2Dbl size;
 		LAYER layer_id;
 
 		// ‚¢‚ç‚È‚¢‚±‚Æ‚ð”ò‚Î‚·

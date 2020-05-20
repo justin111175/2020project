@@ -17,14 +17,51 @@ Enemy::Enemy(EnemyState& state)
 	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state);
 	_pos = std::move(std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state));
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
+	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(state), true);
 	Init();
 }
 
 // 更新
 void Enemy::Update(sharedObj plObj)
 {
+	if (DestroyPrpc())
+	{
+		return;
+	}
+
+	//IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 
+	_moveCtl.Update(plObj);
+	
+	TRACE(" %d\n", movetype);
+
+	switch (movetype)
+	{
+	case MOVE_TYPE::DOWN:
+		state(STATE::DOWN);
+
+		_pos.y++;
+		break;
+	case MOVE_TYPE::LEFT:
+		state(STATE::LEFT);
+
+		_pos.x--;
+		break;
+	case MOVE_TYPE::RIGHT:
+		state(STATE::RIGHT);
+
+		_pos.x++;
+
+		break;
+	case MOVE_TYPE::UP:
+		state(STATE::UP);
+
+		_pos.y--;
+		break;
+	default:
+		break;
+	}
 
 }
 
@@ -79,6 +116,13 @@ void Enemy::Init(void)
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 11], 30);
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 10], 40);
 	SetAnim(STATE::UP, data);
+
+	for (int i = 0; i < 24; i++)
+	{
+		data.emplace_back(IMAGE_ID("blast")[i], i);
+	}
+	data.emplace_back(-1, 35);
+	SetAnim(STATE::DETH, data);
 
 
 	//switch (_type)

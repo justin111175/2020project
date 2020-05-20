@@ -131,6 +131,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyMove.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Scene\func\FuncCheck.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyMove.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Scene\func\FuncCheck.h" />

@@ -12,7 +12,7 @@ Slash::Slash()
 	Init();
 }
 
-Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2 size, MOVE_TYPE movetype)
+Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, MOVE_TYPE movetype)
 {
 	_unitID = unitID;
 
@@ -66,6 +66,10 @@ Slash::~Slash()
 
 void Slash::Update(sharedObj plObj)
 {
+	DestroyPrpc();
+
+
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 	if ((*plObj)._pos!= (*plObj)._posOld)
 	{
@@ -90,12 +94,23 @@ void Slash::Update(sharedObj plObj)
 	}
 
 
-	DestroyPrpc();
+
 	//_pos.x += cos(_rad);
 	//_pos.y += sin(_rad)*BulletSpeed;
 
 	//IpSceneMng.AddActQue({ ACT_QUE::CHECK_HIT, *this });
 
+}
+
+bool Slash::SetAlive(bool alive)
+{
+	if (!alive)
+	{
+		// ‰æ–Ê—h‚ç‚µ‚ÌQUE‚ğ“Š‚°‚é
+		//IpSceneMng.AddActQue({ ACT_QUE::SHAKE, *this });
+	}
+
+	return Obj::SetAlive(alive);
 }
 
 
@@ -104,16 +119,16 @@ void Slash::Init(void)
 {
 	_alive = true;
 	Cntbool = false;
+
+	_unitID = UNIT_ID::PLaS;
+
 	cnt = 0;
 	AnimVector data;
 	data.reserve(1);
 	data.emplace_back(IMAGE_ID("aŒ‚1")[0], 0);
 	SetAnim(STATE::NORMAL, data);
 
-	//data.emplace_back(IMAGE_ID("weapons")[0], 10);
-	//data.emplace_back(IMAGE_ID("weapons")[1], 20);
-	//data.emplace_back(IMAGE_ID("weapons")[2], 30);
-	SetAnim(STATE::NORMAL, data);
+
 
 
 	data.reserve(1);
@@ -127,11 +142,9 @@ void Slash::Init(void)
 
 bool Slash::DestroyPrpc(void)
 {
-	if (cnt>30||cnt<-30)
+	if (cnt > 30 || cnt < -30)
 	{
-
-		_alive = false;
-		state(STATE::DETH);
+		SetAlive(false);
 	}
 	if (Obj::DestroyPrpc())
 	{

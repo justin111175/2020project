@@ -12,12 +12,14 @@ class Slash :
 {
 public:
 	Slash();
-	Slash(UNIT_ID unitID, Vector2Dbl pos,Vector2 size, MOVE_TYPE movetype);
+	Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, MOVE_TYPE movetype);
 	~Slash();
 
 private:
 	void Init(void);
 	void Update(sharedObj plObj) override;
+	bool SetAlive(bool alive);										// ê∂Ç´ÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
+
 	bool DestroyPrpc(void);
 	bool Cntbool;
 	double cnt;

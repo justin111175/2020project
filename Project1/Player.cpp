@@ -16,7 +16,7 @@ Player::Player()
 	Init();
 }
 
-Player::Player(Vector2Dbl pos, Vector2 size)
+Player::Player(Vector2Dbl pos, Vector2Dbl size)
 {
 	_pos = pos;
 	_size = size;
@@ -27,7 +27,11 @@ Player::Player(Vector2Dbl pos, Vector2 size)
 void Player::Update(sharedObj plObj)
 {		
 
-	TRACE("最大HP  %d\n", _level._statusUp[STATUS_UP::強化_攻撃力]);
+	if (DestroyPrpc())
+	{
+		return;
+	}
+	//TRACE("最大HP  %d\n", _level._statusUp[STATUS_UP::強化_攻撃力]);
 
 	(*_input).Update();
 
@@ -112,7 +116,7 @@ void Player::Update(sharedObj plObj)
 // プレイヤー移動
 void Player::PlayerMove(void)
 {
-	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+	//IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 
 	if ((*_input).state(INPUT_ID::BTN_4).first && !(*_input).state(INPUT_ID::BTN_4).second)
@@ -230,7 +234,7 @@ void Player::Init(void)
 	data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[0], 10);
 	data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[1], 20);
 	data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[2], 30);
-	data.emplace_back(-1, 40);
+	
 	SetAnim(STATE::DETH, data);
 
 	_level.Init();

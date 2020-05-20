@@ -12,7 +12,8 @@ enum class MOVE_TYPE
 	DOWN,
 	LEFT,						// 左
 	RIGHT,						// 右
-	UP,
+	UP
+	
 };
 
 // 状態管理
@@ -80,7 +81,7 @@ public:
 	bool isAnimEnd(void);												// アニメがおわったかどうか
 	Vector2Dbl _pos;													// 座標
 	Vector2Dbl _posOld;
-	Vector2 _size;														// サイズ
+	Vector2Dbl _size;														// サイズ
 	level _level;
 
 private:

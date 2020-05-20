@@ -10,6 +10,9 @@
 #include <Enemy.h>
 #include <KeyState.h>
 #include <Number.h>
+
+
+
 GameScene::GameScene()
 {	
 	funcInit();
@@ -37,17 +40,41 @@ GameScene::GameScene()
 	IpImageMng.GetID("装備", "image/Equipment.png", { 1280,720 }, { 1,1 });
 	IpImageMng.GetID("加減", "image/1.png", { 186,50 }, { 1,1 });
 	IpImageMng.GetID("messagecursorD3", "image/messagecursorD3.png", { 56,40 }, { 1,1 });
+	
+	
+	
+	IpImageMng.GetID("blast", "image/blast.png", { 40,40 }, { 6,4 });
 
 
 
 	
 	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }));
 
-	EnemyState data = { ENEMY_TYPE::コウモリ,{400.0,300.0}, { 48,48 } };
-	_objList.emplace_back(new Enemy(data));
+	auto EnemyAdd = []( ENEMY_TYPE E_type, std::vector<sharedObj>& _objList,Vector2Dbl pos, Vector2Dbl size) {
+		MoveState tmpMoveState;
+		tmpMoveState.emplace_back(MOVE_TYPE::RIGHT, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(MOVE_TYPE::DOWN, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(MOVE_TYPE::LEFT, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(MOVE_TYPE::UP, Vector2Dbl{ 0,0 });
 
-	EnemyState data1 = { ENEMY_TYPE::オーク,{500.0,300.0}, { 48,48 } };
-	_objList.emplace_back(new Enemy(data1));
+
+
+
+		EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },tmpMoveState };
+		_objList.emplace_back(new Enemy(data));
+
+	};
+
+	for (int x = 0; x < 5; x++)
+	{
+		for (int y = 0; y < 5; y++)
+		{
+			EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400.0+x*30,300.0+y*30 }, { 48.0,48.0 });
+
+		}
+	}
+	//EnemyAdd( ENEMY_TYPE::オーク, _objList, { 500.0,300.0 }, { 48,48 });
+
 
 	IpImageMng.GetID("ウェポン", "image/weapons.png", { 98,68 }, { 3,5 });
 
@@ -84,6 +111,32 @@ unique_Base GameScene::Update(unique_Base own)
 	}
 	
 	(*_input).Update();
+
+	auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size) {
+		MoveState tmpMoveState;
+		tmpMoveState.emplace_back(MOVE_TYPE::RIGHT, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(MOVE_TYPE::DOWN, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(MOVE_TYPE::LEFT, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(MOVE_TYPE::UP, Vector2Dbl{ 0,0 });
+
+
+
+
+		EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },tmpMoveState };
+		_objList.emplace_back(new Enemy(data));
+
+	};
+	if ((*_input).state(INPUT_ID::BTN_1).first && !(*_input).state(INPUT_ID::BTN_1).second)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			for (int y = 0; y < 5; y++)
+			{
+				EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400.0 + x * 30,300.0 + y * 30 }, { 48.0,48.0 });
+
+			}
+		}
+	}
 
 
 
