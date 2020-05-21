@@ -5,6 +5,7 @@ enum class LAYER
 	BG,											// 背景
 	CHAR,										// キャラクター
 	UI,											// UI
+	NUMBER,
 	PUTTOM,										// パタン
 	EX,											// 一番前用
 	MAX

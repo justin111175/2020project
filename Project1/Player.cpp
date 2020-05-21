@@ -64,6 +64,7 @@ void Player::Update(sharedObj plObj)
 	}
 	else
 	{
+		MeanDraw();
 
 		if (MeanState == MEAN_OUT)
 		{
@@ -124,7 +125,6 @@ void Player::Update(sharedObj plObj)
 
 
 
-		MeanDraw();
 
 	}
 
@@ -142,7 +142,7 @@ void Player::PlayerMove(void)
 		if (_level.experience[_level._status[STATUS::レベル]] <= 0)
 		{
 			_level._status[STATUS::レベル]++;
-			_level._status[STATUS::HP] = 100 + (_level._status[STATUS::レベル] * 100)*0.3;
+			_level._status[STATUS::HP] = 100 + (_level._status[STATUS::レベル] * 100)*3/10;
 
 
 		}
@@ -272,12 +272,14 @@ void Player::MeanDraw(void)
 	{
 	case MEAN_OUT:
 		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], 0 ,0,0,0,0,0,LAYER::UI });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255*meanId ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,0,0,LAYER::UI });
-		number.Draw(270, 80, _level._status[STATUS::レベル], true);
-		number.Draw(700, 80, _level._status[STATUS::お金], true);
+
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255*meanId ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,0,1,LAYER::UI });
+		
+		number.Draw(270, 80, _level._status[STATUS::レベル]);
+		number.Draw(700, 80, _level._status[STATUS::お金]);
 		
 		
-		//number.Draw(1150, 320,_level.experience[_level._status[STATUS::レベル]] ,false);
+		number.Draw(1150, 320,_level.experience[static_cast<int>(_level._status[STATUS::レベル])]);
 
 		break;
 	case MEAN_IN:
@@ -285,22 +287,22 @@ void Player::MeanDraw(void)
 		{
 		case ステータス:
 			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0], 0 ,0,0,0,0,0,LAYER::UI });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], 1010 ,205+ statusupId *53,0,0,0,0,LAYER::UI });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 750+sin(IpSceneMng.frames() / 5)*10.0 ,205 + statusupId * 53,0,0,0,0,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], 1010 ,205+ statusupId *53,0,0,0,1,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 750+sin(IpSceneMng.frames() / 5)*10.0 ,205 + statusupId * 53,0,0,0,1,LAYER::UI });
 
-			number.Draw(240, 300,_level._status[STATUS::攻撃力],true );
-			number.Draw(240, 370,_level._status[STATUS::防御力], true);
-			number.Draw(570, 300,_level._status[STATUS::敏捷], true);
-			number.Draw(570, 370,_level._status[STATUS::敏捷], true);
+			number.Draw(240, 300,_level._status[STATUS::攻撃力] );
+			number.Draw(240, 370,_level._status[STATUS::防御力]);
+			number.Draw(570, 300,_level._status[STATUS::敏捷]);
+			number.Draw(570, 370,_level._status[STATUS::敏捷]);
 			
-			number.Draw(1100, 215,_level._statusUp[STATUS_UP::強化_攻撃力], true);
-			number.Draw(1100, 270,_level._statusUp[STATUS_UP::強化_防御力], true);
-			number.Draw(1100, 325,_level._statusUp[STATUS_UP::強化_敏捷], true);
-			number.Draw(1100, 375,_level._statusUp[STATUS_UP::強化_回復], true);
-			number.Draw(1100, 430,_level._statusUp[STATUS_UP::強化_最大HP], true);
-			number.Draw(1100, 480,_level._statusUp[STATUS_UP::強化_最大MP], true);
+			number.Draw(1100, 215,_level._statusUp[STATUS_UP::強化_攻撃力]);
+			number.Draw(1100, 270,_level._statusUp[STATUS_UP::強化_防御力]);
+			number.Draw(1100, 325,_level._statusUp[STATUS_UP::強化_敏捷]);
+			number.Draw(1100, 375,_level._statusUp[STATUS_UP::強化_回復]);
+			number.Draw(1100, 430,_level._statusUp[STATUS_UP::強化_最大HP]);
+			number.Draw(1100, 480,_level._statusUp[STATUS_UP::強化_最大MP]);
 			
-			number.Draw(1200, 565, _level._statusUp[STATUS_UP::残るボーナスポイント],true);
+			number.Draw(1200, 565, _level._statusUp[STATUS_UP::残るボーナスポイント]);
 
 			break;
 		case 装備:
