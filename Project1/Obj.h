@@ -39,7 +39,8 @@ enum class UNIT_ID
 	PLAYER,						// プレイヤー
 	ENEMY,						// 敵
 	PLaS,						// プレイヤー近距離攻撃
-	PLaB
+	PLaB,
+	文字
 };
 
 enum class ACT

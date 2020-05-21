@@ -4,7 +4,7 @@
 #include <Vector2.h>
 #include <InputState.h>
 #include <Number.h>
-
+#include <Letter.h>
 #define PLSPEED 4												// プレイヤーの最大値スピード（左右）
 
 enum MEAN_ID
@@ -50,8 +50,11 @@ private:
 	void MeanDraw(void);
 	void StatusUpdate(void);
 	bool meanFlag;
+	bool LetterFlag;
 	
 	Number number;
+	Letter letter;
+
 
 
 };

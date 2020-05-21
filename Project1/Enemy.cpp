@@ -34,7 +34,7 @@ void Enemy::Update(sharedObj plObj)
 
 	_moveCtl.Update(plObj);
 	
-	TRACE(" %d\n", movetype);
+	//TRACE(" %d\n", movetype);
 
 	switch (movetype)
 	{

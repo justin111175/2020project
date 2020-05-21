@@ -7,7 +7,6 @@
 #include <FuncSlash.h>
 #include <FuncCheck.h>
 #include <InputState.h>
-
 // ファンク
 using funcAct = std::function<bool(ActQueT&, void*)>;				
 
@@ -32,7 +31,6 @@ private:
 	friend FuncBullet;
 	friend FuncSlash;
 	friend FuncCheck;
-
 
 	void funcInit(void);											// ファンク初期化
 	void RunActQue(std::vector<ActQueT> actList) override;			// ファンク活動キュー

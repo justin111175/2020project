@@ -44,6 +44,8 @@ GameScene::GameScene()
 	
 	
 	IpImageMng.GetID("blast", "image/blast.png", { 40,40 }, { 6,4 });
+	
+	IpImageMng.GetID("•¶Žš", "image/letter.png", { 1280,720 }, { 1,1 });
 
 
 
@@ -126,17 +128,9 @@ unique_Base GameScene::Update(unique_Base own)
 		_objList.emplace_back(new Enemy(data));
 
 	};
-	if ((*_input).state(INPUT_ID::BTN_1).first && !(*_input).state(INPUT_ID::BTN_1).second)
-	{
-		for (int x = 0; x < 5; x++)
-		{
-			for (int y = 0; y < 5; y++)
-			{
-				EnemyAdd(ENEMY_TYPE::ƒRƒEƒ‚ƒŠ, _objList, { 400.0 + x * 30,300.0 + y * 30 }, { 48.0,48.0 });
 
-			}
-		}
-	}
+
+	
 
 
 
@@ -319,6 +313,7 @@ void GameScene::MapInit_1(void)
 void GameScene::funcInit(void)
 {
 	funcQue[ACT_QUE::SHOT] = FuncBullet();
+
 	funcQue[ACT_QUE::SLASH] = FuncSlash();
 	funcQue[ACT_QUE::CHECK] = FuncCheck();
 

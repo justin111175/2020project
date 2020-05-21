@@ -14,13 +14,13 @@ void level::Init(void)
 
 	_status[STATUS::HP] = 100;
 	_status[STATUS::ƒŒƒxƒ‹] = 1;
-	_status[STATUS::‚¨‹à] = 999999;
+	_status[STATUS::‚¨‹à] = 3445;
 	_status[STATUS::UŒ‚—Í] = 0;
 	_status[STATUS::–hŒä—Í] = 0;
 	_status[STATUS::•q·] = 0;
 	_status[STATUS::‰ñ•œ] = 0;
 
-	_statusUp[STATUS_UP::‹­‰»_‰ñ•œ] = 99;
+	_statusUp[STATUS_UP::‹­‰»_‰ñ•œ] = 10;
 	_statusUp[STATUS_UP::‹­‰»_UŒ‚—Í] =99;
 	_statusUp[STATUS_UP::‹­‰»_Å‘åHP] =99;
 	_statusUp[STATUS_UP::‹­‰»_Å‘åMP] = 99;

@@ -31,19 +31,36 @@ void Player::Update(sharedObj plObj)
 	{
 		return;
 	}
-	//TRACE("最大HP  %d\n", _level._statusUp[STATUS_UP::強化_攻撃力]);
+	TRACE("%d\n", _level.experience[1]);
 
 	(*_input).Update();
 
 	if (!meanFlag)
 	{
-
-		PlayerMove();
-		if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
+		if (!LetterFlag)
 		{
-			meanFlag = true;
+			PlayerMove();
+			if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
+			{
+				meanFlag = true;
 
+			}
+			if ((*_input).state(INPUT_ID::BTN_1).first && !(*_input).state(INPUT_ID::BTN_1).second)
+			{
+				LetterFlag = true;
+
+			}
 		}
+		else
+		{
+			if ((*_input).state(INPUT_ID::BTN_1).first && !(*_input).state(INPUT_ID::BTN_1).second)
+			{
+				LetterFlag = false;
+
+			}
+			letter.LetterDraw();
+		}
+
 	}
 	else
 	{
@@ -132,11 +149,8 @@ void Player::PlayerMove(void)
 
 	}
 
-	if (CheckHitKey(KEY_INPUT_Z))
-	{
-		state(STATE::DETH);
 
-	}
+
 
 	if ((*_input).state(INPUT_ID::BTN_2).first && !(*_input).state(INPUT_ID::BTN_2).second)
 	{
@@ -247,7 +261,7 @@ void Player::Init(void)
 	state(STATE::UP);
 	_input = std::make_shared<KeyState>();
 	meanFlag = false;
-
+	LetterFlag = false;
 }
 
 void Player::MeanDraw(void)
@@ -261,7 +275,9 @@ void Player::MeanDraw(void)
 		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255*meanId ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,0,0,LAYER::UI });
 		number.Draw(270, 80, _level._status[STATUS::レベル], true);
 		number.Draw(700, 80, _level._status[STATUS::お金], true);
-		number.Draw(1150, 320,_level.experience[_level._status[STATUS::レベル]] ,false);
+		
+		
+		//number.Draw(1150, 320,_level.experience[_level._status[STATUS::レベル]] ,false);
 
 		break;
 	case MEAN_IN:
@@ -325,6 +341,8 @@ void Player::StatusUpdate(void)
 			}
 		}
 	};
+
+
 	switch (meanId)
 	{
 	case ステータス:

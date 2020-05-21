@@ -33,7 +33,7 @@ struct level
 public:
 	void Init(void);											// ‰Šú‰»
 
-
+	void Updata(void);
 
 
 
