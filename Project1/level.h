@@ -27,6 +27,10 @@ enum STATUS_UP
 };
 
 #define LevelMax 99
+#define BaseHP 100
+#define BaseMP 100
+
+
 
 struct level
 {

@@ -11,7 +11,7 @@ void Number::Init(void)
 }
 
 // 描画
-void Number::Draw(int pos_x, int pos_y, int score/*,bool size*/)
+void Number::Draw(int pos_x, int pos_y, int score,bool size)
 {
 	// 初期値1桁目
 	numLen = 1;
@@ -23,22 +23,22 @@ void Number::Draw(int pos_x, int pos_y, int score/*,bool size*/)
 	}
 
 	//数字描画
-	//if (size)
-	//{
+	if (size)
+	{
 		for (int i = 0; i < numLen; i++)
 		{
 			IpSceneMng.AddDrawQue({ IMAGE_ID("数字1")[score % 10], pos_x - 27 * i,pos_y ,0,0,0,0,LAYER::NUMBER });
 			score /= 10;
 		}
-	//}
-	//else
-	//{
-	//	for (int i = 0; i < numLen; i++)
-	//	{
-	//		IpSceneMng.AddDrawQue({ IMAGE_ID("数字2")[score % 10], pos_x - 45 * i,pos_y ,0,0,0,0,LAYER::UI });
-	//		score /= 10;
-	//	}
-	//}
+	}
+	else
+	{
+		for (int i = 0; i < numLen; i++)
+		{
+			IpSceneMng.AddDrawQue({ IMAGE_ID("数字2")[score % 10], pos_x - 45 * i,pos_y ,0,0,0,0,LAYER::UI });
+			score /= 10;
+		}
+	}
 
 
 	// scoreの値で事前チェック

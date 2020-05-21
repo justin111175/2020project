@@ -13,20 +13,36 @@ void level::Init(void)
 	}
 
 	_status[STATUS::HP] = 100;
+	_status[STATUS::MP] = 100;
 	_status[STATUS::レベル] = 1;
-	_status[STATUS::お金] = 999999;
+	_status[STATUS::お金] = 9999;
 	_status[STATUS::攻撃力] = 0;
 	_status[STATUS::防御力] = 0;
 	_status[STATUS::敏捷] = 0;
 	_status[STATUS::回復] = 0;
 
 	_statusUp[STATUS_UP::強化_回復] = 10;
-	_statusUp[STATUS_UP::強化_攻撃力] =99;
-	_statusUp[STATUS_UP::強化_最大HP] =99;
-	_statusUp[STATUS_UP::強化_最大MP] = 99;
-	_statusUp[STATUS_UP::強化_敏捷] = 99;
-	_statusUp[STATUS_UP::強化_防御力] = 99;
-	_statusUp[STATUS_UP::残るボーナスポイント] = 99;
+	_statusUp[STATUS_UP::強化_攻撃力] =0;
+	_statusUp[STATUS_UP::強化_最大HP] =0;
+	_statusUp[STATUS_UP::強化_最大MP] = 0;
+	_statusUp[STATUS_UP::強化_敏捷] = 0;
+	_statusUp[STATUS_UP::強化_防御力] = 0;
+	_statusUp[STATUS_UP::残るボーナスポイント] = 5;
+
+}
+
+void level::Updata(void)
+{
+	_status[STATUS::攻撃力] = _statusUp[STATUS_UP::強化_攻撃力]*1.3;
+	_status[STATUS::防御力] = _statusUp[STATUS_UP::強化_防御力] * 1.3;
+	
+
+	_status[STATUS::HP] = BaseHP + ((_status[STATUS::レベル] * 100) * 3 / 10)+_statusUp[STATUS_UP::強化_最大HP] * 30;
+	_status[STATUS::MP] = BaseMP + _statusUp[STATUS_UP::強化_最大MP] * 30;
+	
+	_status[STATUS::回復] = _statusUp[STATUS_UP::強化_回復] * 1.3;
+
+	_status[STATUS::敏捷] = _statusUp[STATUS_UP::強化_敏捷] * 1.3;
 
 }
 
