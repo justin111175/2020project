@@ -17,7 +17,9 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, MOVE_TYPE movetype
 	_unitID = unitID;
 
 	_size = { 43,11 };
-
+	//_size = { 380,384 };
+	//_pos.x = pos.x-_size.x/2;
+	//_pos.y = pos.y - _size.y / 2;
 	switch (movetype)
 	{
 	case MOVE_TYPE::UP:
@@ -95,10 +97,6 @@ void Slash::Update(sharedObj plObj)
 
 
 
-	//_pos.x += cos(_rad);
-	//_pos.y += sin(_rad)*BulletSpeed;
-
-	//IpSceneMng.AddActQue({ ACT_QUE::CHECK_HIT, *this });
 
 }
 
@@ -125,7 +123,13 @@ void Slash::Init(void)
 	cnt = 0;
 	AnimVector data;
 	data.reserve(1);
-	data.emplace_back(IMAGE_ID("ŽaŒ‚1")[0], 0);
+	data.emplace_back(IMAGE_ID("ŽaŒ‚2")[0], 0);
+	//for (int i = 0; i < 7; i++)
+	//{
+	//	data.emplace_back(IMAGE_ID("ŽaŒ‚3")[i], i*5);
+	//}
+	//data.emplace_back(-1, 40);
+
 	SetAnim(STATE::NORMAL, data);
 
 

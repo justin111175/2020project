@@ -32,7 +32,7 @@ void Player::Update(sharedObj plObj)
 		return;
 	}
 
-	TRACE("%d\n", _level._status[STATUS::HP]);
+	TRACE("%d\n", _level.experience[_level.level]);
 
 	(*_input).Update();
 
@@ -119,7 +119,6 @@ void Player::Update(sharedObj plObj)
 			if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
 			{
 				MeanState = MEAN_OUT;
-				//meanFlag = false;
 
 			}
 		}
@@ -139,10 +138,10 @@ void Player::PlayerMove(void)
 
 	if ((*_input).state(INPUT_ID::BTN_4).first && !(*_input).state(INPUT_ID::BTN_4).second)
 	{
-		_level.experience[_level._status[STATUS::レベル]] -= 30;
-		if (_level.experience[_level._status[STATUS::レベル]] <= 0)
+		_level.experience[_level.level] -= 30;
+		if (_level.experience[_level.level] <= 0)
 		{
-			_level._status[STATUS::レベル]++;
+			_level.level++;
 			//_level._status[STATUS::HP] = 100 + (_level._status[STATUS::レベル] * 100)*3/10;
 
 
@@ -252,7 +251,71 @@ void Player::Init(void)
 	
 	SetAnim(STATE::DETH, data);
 
-	_level.Init();
+	for (int x = 1; x <= LevelMax; x++)
+	{
+		_level.experience[x] = 100 * x;
+	}
+
+
+	//FILE* fp = NULL;
+	//if (fopen_s(&fp, "Dat/status.dat", "rb") != 0)
+	//{	
+	//	_level.Init();
+
+	//	////for (int i = 0; i < STATUS::MAX; i++)
+	//	////{
+	//	//	fread(&_level._status[0], sizeof(&_level._status[0])*7, 1, fp);
+
+	//	////}
+	//	//fclose(fp);
+	//}
+	//else
+	//{		
+	//	for (int i = 0; i < STATUS::MAX; i++)
+	//	{
+	//		fread(&_level._status[0], sizeof(&_level._status[0])*i, 1, fp);
+
+	//	}
+	//	fclose(fp);
+	//}
+
+	//FILE* fp1 = NULL;
+
+	//if (fopen_s(&fp1, "Dat/statusUp.dat", "rb") != 0)
+	//{
+	//	_level.Init();
+
+	//}
+	//else
+	//{
+	//	for (int i = 0; i < STATUS_UP::強化_MAX; i++)
+	//	{
+	//		fread(&_level._statusUp[0], sizeof(&_level._statusUp[0])*i, 1, fp1);
+
+	//	}
+	//	fclose(fp1);
+	//}
+
+	FILE* fp = NULL;
+	if (fopen_s(&fp, "Dat/player.dat", "rb") != 0)
+	{
+		_level.Init();
+	}
+	else
+	{
+
+			fread(&_level._statusUp, sizeof(&_level._statusUp),3 , fp);
+			fread(&_level._status, sizeof(&_level._status),7, fp);
+			fread(&_level.level, sizeof(&_level.level), 3, fp);
+
+		
+
+
+		fclose(fp);
+		
+	}
+
+	
 
 
 	number.Init();
@@ -276,11 +339,11 @@ void Player::MeanDraw(void)
 
 		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255*meanId ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,0,1,LAYER::UI });
 		
-		number.Draw(270, 80, _level._status[STATUS::レベル],true);
+		number.Draw(270, 80, _level.level,true);
 		number.Draw(700, 80, _level._status[STATUS::お金],true);
 		
 		
-		number.Draw(1150, 320,_level.experience[static_cast<int>(_level._status[STATUS::レベル])],false);
+		number.Draw(1150, 320, _level.experience[_level.level],true);
 
 		break;
 	case MEAN_IN:
@@ -359,6 +422,8 @@ void Player::StatusUpdate(void)
 		}
 	};
 
+	//FILE* fp = NULL;
+	FILE* fp = NULL;
 
 	switch (meanId)
 	{
@@ -385,8 +450,6 @@ void Player::StatusUpdate(void)
 				statusupId = 強化_攻撃力;
 			}
 		}
-
-
 		switch (statusupId)
 		{
 		case 強化_攻撃力:
@@ -419,15 +482,29 @@ void Player::StatusUpdate(void)
 		default:
 			break;
 		}
-
 		break;
 	case 装備:
 		break;
 	case 保存:
+
+
+		if (fopen_s(&fp, "Dat/player.dat", "wb") == 0)
+		{
+
+			fwrite(&_level._statusUp, sizeof(&_level._statusUp), 3, fp);
+			fwrite(&_level._status, sizeof(&_level._status), 7, fp);
+			fwrite(&_level.level, sizeof(&_level.level), 3, fp);
+
+			
+			
+			fclose(fp);
+		}
+
 		break;
 	case オプション:
 		break;
 	case ゲーム終了:
+		DxLib_End();
 		break;
 	default:
 		break;

@@ -1,9 +1,9 @@
 #pragma once
 
 
+
 enum STATUS
 {
-	レベル,
 	HP,
 	MP,
 	攻撃力,
@@ -23,6 +23,7 @@ enum STATUS_UP
 	強化_最大HP,
 	強化_最大MP,
 	残るボーナスポイント,
+	強化_MAX
 
 };
 
@@ -30,7 +31,7 @@ enum STATUS_UP
 #define BaseHP 100
 #define BaseMP 100
 
-
+#define s1 (STATUS::MAX)(STATUS::MAX-1)
 
 struct level
 {
@@ -42,7 +43,7 @@ public:
 
 
 	//int vitality;			//活力
-
+	int level;
 	int experience[LevelMax];   //経験値
 
 	int _status[STATUS::MAX];

@@ -7,7 +7,7 @@
 #include "Layer_id.h"
 #include <map>
 #include <InputState.h>
-
+#include <level.h>
 
 enum class DRAW_QUE
 {
@@ -104,6 +104,7 @@ private:
 	std::map<LAYER, int> _screenID;								// 
 	std::vector<DrawQueT> _drawList;							// 描画リスト
 	std::vector<ActQueT> _actList;								// 活動リスト
+
 
 	~SceneMng();
 	SceneMng();

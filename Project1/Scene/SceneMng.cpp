@@ -193,6 +193,8 @@ bool SceneMng::SysInit(void)
 	_screenID.try_emplace(LAYER::EX, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 
 	_frames = 0;
+
+
 	//testmode=false;
 
 
