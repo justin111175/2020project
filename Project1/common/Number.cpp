@@ -35,7 +35,7 @@ void Number::Draw(int pos_x, int pos_y, int score,bool size)
 	{
 		for (int i = 0; i < numLen; i++)
 		{
-			IpSceneMng.AddDrawQue({ IMAGE_ID("”Žš2")[score % 10], pos_x - 45 * i,pos_y ,0,0,0,0,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("”Žš2")[score % 10], pos_x - 45 * i,pos_y ,0,0,0,0,LAYER::NUMBER });
 			score /= 10;
 		}
 	}

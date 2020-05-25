@@ -49,7 +49,7 @@ using DrawQueT = std::tuple<int, double, double, int,int, double, int, LAYER>;
 
 //#define _mapPos SceneMng::GetInstance().MapPos
 //#define _mapSize SceneMng::GetInstance().MapSize
-//#define _Input SceneMng::GetInstance()._input
+#define _Input SceneMng::GetInstance()._input
 
 
 class SceneMng

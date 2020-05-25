@@ -6,6 +6,7 @@ enum class LAYER
 	CHAR,										// キャラクター
 	UI,											// UI
 	NUMBER,
+	LETTER,
 	PUTTOM,										// パタン
 	EX,											// 一番前用
 	MAX

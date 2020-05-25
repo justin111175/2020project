@@ -8,6 +8,8 @@
 #include <ImageMng.h>
 #include <algorithm>
 #include <KeyState.h>
+#include <TitleScene.h>
+
 
 //動的シングルトン
 SceneMng *SceneMng::sInstance = nullptr;
@@ -53,7 +55,6 @@ void SceneMng::Draw(void)
 
 		switch (layer_id)
 		{
-
 		case LAYER::PUTTOM:
 			// ボタン描画表示するブレント
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs(250 * sin(_frames / 25.0)));
@@ -113,7 +114,7 @@ void SceneMng::Run(void)
 	SysInit();
 
 	//　スマートポインタ-代入演算子-タイトルシンへ行く
-	_activeScene = std::make_unique<GameScene>();
+	_activeScene = std::make_unique<TitleScene>();
 
 	while (ProcessMessage() == 0 /*&& CheckHitKey(KEY_INPUT_ESCAPE) == 0*/)
 	{
@@ -124,6 +125,7 @@ void SceneMng::Run(void)
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		// moveはコピーしません、所有権を渡すだけ
 		(*_activeScene).RunActQue(std::move(_actList));
+
 		(*_input).Update();
 
 		Draw();

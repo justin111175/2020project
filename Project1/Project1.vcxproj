@@ -149,6 +149,7 @@
     <ClCompile Include="Scene\Layer_id.cpp" />
     <ClCompile Include="Scene\SceneMng.cpp" />
     <ClCompile Include="Slash.cpp" />
+    <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="_debug\_DeBugConOut.cpp" />
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
@@ -175,6 +176,7 @@
     <ClInclude Include="Scene\Layer_id.h" />
     <ClInclude Include="Scene\SceneMng.h" />
     <ClInclude Include="Slash.h" />
+    <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="_debug\_DeBugConOut.h" />
     <ClInclude Include="_debug\_DebugDispOut.h" />
   </ItemGroup>

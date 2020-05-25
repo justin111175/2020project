@@ -343,7 +343,7 @@ void Player::MeanDraw(void)
 		number.Draw(700, 80, _level._status[STATUS::‚¨‹à],true);
 		
 		
-		number.Draw(1150, 320, _level.experience[_level.level],true);
+		number.Draw(1150, 320, _level.experience[_level.level],false);
 
 		break;
 	case MEAN_IN:
