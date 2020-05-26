@@ -83,6 +83,7 @@ public:
 	Vector2Dbl _pos;													// 座標
 	Vector2Dbl _posOld;
 	Vector2Dbl _size;														// サイズ
+	Vector2Dbl _exrate;
 	level _level;
 
 private:

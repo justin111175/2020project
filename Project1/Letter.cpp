@@ -7,7 +7,7 @@
 void Letter::LetterDraw(void)
 {
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("•¶Žš")[0], 0,0,0,0,0,0,LAYER::UI});
+	IpSceneMng.AddDrawQue({ IMAGE_ID("•¶Žš")[0], 0,0,0,0,0,0,0,0,LAYER::UI});
 
 
 }

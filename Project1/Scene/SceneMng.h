@@ -16,6 +16,8 @@ enum class DRAW_QUE
 	Y,											// 座標Y
 	SIZE_X,										// サイズX
 	SIZE_Y,										// サイズY
+	EXRATE_X,
+	EXRATE_Y,
 	RAD,										// 角度
 	ZODER,										// Zオーダー（レイヤーの前後順番-数値の低い方が奥）
 	LAYER,										// レイヤーID（数値の低い方が奥）
@@ -42,7 +44,7 @@ enum class DRAW_QUE
 
 class Obj;
 
-using DrawQueT = std::tuple<int, double, double, int,int, double, int, LAYER>;
+using DrawQueT = std::tuple<int, double, double, int,int,double,double, double, int, LAYER>;
 
 // デファイン
 #define IpSceneMng SceneMng::GetInstance()

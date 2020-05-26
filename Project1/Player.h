@@ -30,7 +30,7 @@ class Player :
 {	
 public:
 	Player();
-	Player(Vector2Dbl pos, Vector2Dbl size);
+	Player(Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate);
 	void Update(sharedObj plObj) override;									// çXêV
 	~Player();
 

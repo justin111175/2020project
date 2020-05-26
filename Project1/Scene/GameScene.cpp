@@ -44,6 +44,11 @@ GameScene::GameScene()
 	IpImageMng.GetID("â¡å∏", "image/1.png", { 186,50 }, { 1,1 });
 	IpImageMng.GetID("messagecursorD3", "image/messagecursorD3.png", { 56,40 }, { 1,1 });
 	
+	IpImageMng.GetID("Bar", "image/bar.png", { 510,66 }, { 1,1 });
+
+	IpImageMng.GetID("HP", "image/gaugeB.png", { 325,22 }, { 1,1 });
+	IpImageMng.GetID("MP", "image/gaugeB (1).png", { 325,22 }, { 1,1 });
+	
 	
 	
 	IpImageMng.GetID("blast", "image/blast.png", { 40,40 }, { 6,4 });
@@ -53,9 +58,9 @@ GameScene::GameScene()
 
 
 	
-	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }));
+	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }, {1.0f,1.0f}));
 
-	auto EnemyAdd = []( ENEMY_TYPE E_type, std::vector<sharedObj>& _objList,Vector2Dbl pos, Vector2Dbl size) {
+	auto EnemyAdd = []( ENEMY_TYPE E_type, std::vector<sharedObj>& _objList,Vector2Dbl pos, Vector2Dbl size,Vector2Dbl exrate) {
 		MoveState tmpMoveState;
 		tmpMoveState.emplace_back(MOVE_TYPE::RIGHT, Vector2Dbl{ 0,0 });
 		tmpMoveState.emplace_back(MOVE_TYPE::DOWN, Vector2Dbl{ 0,0 });
@@ -65,7 +70,7 @@ GameScene::GameScene()
 
 
 
-		EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },tmpMoveState };
+		EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
 		_objList.emplace_back(new Enemy(data));
 
 	};
@@ -74,7 +79,7 @@ GameScene::GameScene()
 	{
 		for (int y = 0; y < 5; y++)
 		{
-			EnemyAdd(ENEMY_TYPE::ÉRÉEÉÇÉä, _objList, { 400.0+x*30,300.0+y*30 }, { 48.0,48.0 });
+			EnemyAdd(ENEMY_TYPE::ÉRÉEÉÇÉä, _objList, { 400.0 + x * 30,300.0 + y * 30 }, { 48.0,48.0 }, {1.0f,1.0f});
 
 		}
 	}
@@ -117,32 +122,15 @@ unique_Base GameScene::Update(unique_Base own)
 	
 	(*_input).Update();
 
-	auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size) {
-		MoveState tmpMoveState;
-		tmpMoveState.emplace_back(MOVE_TYPE::RIGHT, Vector2Dbl{ 0,0 });
-		tmpMoveState.emplace_back(MOVE_TYPE::DOWN, Vector2Dbl{ 0,0 });
-		tmpMoveState.emplace_back(MOVE_TYPE::LEFT, Vector2Dbl{ 0,0 });
-		tmpMoveState.emplace_back(MOVE_TYPE::UP, Vector2Dbl{ 0,0 });
+	//auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size) {
+	//	MoveState tmpMoveState;
+	//	tmpMoveState.emplace_back(MOVE_TYPE::RIGHT, Vector2Dbl{ 0,0 });
+	//	tmpMoveState.emplace_back(MOVE_TYPE::DOWN, Vector2Dbl{ 0,0 });
+	//	tmpMoveState.emplace_back(MOVE_TYPE::LEFT, Vector2Dbl{ 0,0 });
+	//	tmpMoveState.emplace_back(MOVE_TYPE::UP, Vector2Dbl{ 0,0 });
 
 
 
-
-		EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },tmpMoveState };
-		_objList.emplace_back(new Enemy(data));
-
-	};
-
-
-	
-
-
-
-	//if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
-	//{
-	//	return std::make_unique<MeanScene>();
-	//}
-
-	//IpSceneMng.AddDrawQue({ IMAGE_ID("îwåi")[0], 4096/2 - _mapPos.x ,800 / 2,0,0,0,LAYER::BG });
 
 	//switch (IpSceneMng._classCnt)
 	//{0

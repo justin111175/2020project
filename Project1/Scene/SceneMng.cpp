@@ -42,11 +42,12 @@ void SceneMng::Draw(void)
 		double x, y, rad;
 		int id;
 		Vector2Dbl size;
+		Vector2Dbl ExRate;
 		LAYER layer_id;
-
+		
 		// いらないことを飛ばす
 		// tie:同期する出力ストリームオブジェクトを取得・設定する
-		std::tie(id, x, y, size.x,size.y, rad, std::ignore, layer_id) = dQue;
+		std::tie(id, x, y, size.x,size.y,ExRate.x,ExRate.y, rad, std::ignore, layer_id) = dQue;
 
 		if (_screenID[layer_id] != GetDrawScreen())
 		{
@@ -71,7 +72,7 @@ void SceneMng::Draw(void)
 //			DrawRotaGraph(static_cast<int>(x)+size.x/2 , static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
 			DrawRotaGraph3(static_cast<int>(x) , static_cast<int>(y),
 				0,0,
-				1.0,1.0, rad, id, true);
+				ExRate.x, ExRate.y, rad, id, true);
 			break;
 		}
 	}

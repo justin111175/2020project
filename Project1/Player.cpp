@@ -16,8 +16,9 @@ Player::Player()
 	Init();
 }
 
-Player::Player(Vector2Dbl pos, Vector2Dbl size)
+Player::Player(Vector2Dbl pos, Vector2Dbl size,Vector2Dbl exrate)
 {
+	_exrate = exrate;
 	_pos = pos;
 	_size = size;
 	Init();
@@ -335,48 +336,65 @@ void Player::MeanDraw(void)
 	switch (MeanState)
 	{
 	case MEAN_OUT:
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], 0 ,0,0,0,0,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::UI });
+		
+		
+		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 300 ,250,0,0,0.7f,0.7f,0,2,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], 400 ,265,0,0,0.7f,0.7f,0,1,LAYER::UI });
+		
+		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 350 ,300,0,0,0.7f,0.7f,0,2,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], 450 ,315,0,0,0.7f,0.7f,0,1,LAYER::UI });
 
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255*meanId ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255*meanId ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,1.0f,1.0f,0,1,LAYER::UI });
 		
-		number.Draw(270, 80, _level.level,true);
-		number.Draw(700, 80, _level._status[STATUS::お金],true);
+		number.Draw({ 260, 80 }, { 0.4f, 0.3f }, _level.level);
+		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _level._status[STATUS::お金]);
 		
 		
-		number.Draw(1150, 320, _level.experience[_level.level],false);
+		number.Draw({ 1150, 280 }, {1.0f, 1.0f }, _level.experience[_level.level]);
 
 		break;
 	case MEAN_IN:
 		switch (meanId)
 		{
 		case ステータス:
-			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0], 0 ,0,0,0,0,0,LAYER::UI });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], 1010 ,205+ statusupId *53,0,0,0,1,LAYER::UI });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 750+sin(IpSceneMng.frames() / 5)*10.0 ,205 + statusupId * 53,0,0,0,1,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], 1010 ,205+ statusupId *53,0,0,1.0f,1.0f,0,1,LAYER::UI });
 
-			number.Draw(240, 300,_level._status[STATUS::攻撃力],true );
-			number.Draw(240, 370,_level._status[STATUS::防御力],true);
-			number.Draw(570, 300,_level._status[STATUS::敏捷],true);
-			number.Draw(570, 370,_level._status[STATUS::回復],true);
+			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 200 ,150,0,0,0.7f,0.7f,0,2,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], 300 ,165,0,0,0.7f,0.7f,0,1,LAYER::UI });
+
+			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 250 ,200,0,0,0.7f,0.7f,0,2,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], 350 ,215,0,0,0.7f,0.7f,0,1,LAYER::UI });
+
+
+
+			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 750+sin(IpSceneMng.frames() / 5)*10.0 ,205 + statusupId * 53,0,0,1.0f,1.0f,0,1,LAYER::UI });
+
+
+			number.Draw({ 240,300 }, {0.4f,0.4f},_level._status[STATUS::攻撃力]);
+			number.Draw({ 240, 370 }, { 0.4f,0.4f }, _level._status[STATUS::防御力]);
+			number.Draw({ 570, 300 }, { 0.4f,0.4f }, _level._status[STATUS::敏捷]);
+			number.Draw({ 570, 370 }, { 0.4f,0.4f }, _level._status[STATUS::回復]);
 			
-			number.Draw(1100, 215,_level._statusUp[STATUS_UP::強化_攻撃力],true);
-			number.Draw(1100, 270,_level._statusUp[STATUS_UP::強化_防御力], true);
-			number.Draw(1100, 325,_level._statusUp[STATUS_UP::強化_敏捷], true);
-			number.Draw(1100, 375,_level._statusUp[STATUS_UP::強化_回復], true);
-			number.Draw(1100, 430,_level._statusUp[STATUS_UP::強化_最大HP], true);
-			number.Draw(1100, 480,_level._statusUp[STATUS_UP::強化_最大MP], true);
+			number.Draw({ 1100, 210 }, { 0.4f,0.4f }, _level._statusUp[STATUS_UP::強化_攻撃力]);
+			number.Draw({ 1100, 265 }, { 0.4f,0.4f },_level._statusUp[STATUS_UP::強化_防御力]);
+			number.Draw({ 1100, 320 }, { 0.4f,0.4f }, _level._statusUp[STATUS_UP::強化_敏捷]);
+			number.Draw({ 1100, 370 }, { 0.4f,0.4f }, _level._statusUp[STATUS_UP::強化_回復]);
+			number.Draw({ 1100, 425 }, { 0.4f,0.4f }, _level._statusUp[STATUS_UP::強化_最大HP]);
+			number.Draw({ 1100, 480 }, { 0.4f,0.4f }, _level._statusUp[STATUS_UP::強化_最大MP]);
 			if (_level._statusUp[STATUS_UP::残るボーナスポイント] >= 10)
 			{
-				number.Draw(1190, 555, _level._statusUp[STATUS_UP::残るボーナスポイント],false);
+				number.Draw({ 1190, 555 }, { 0.5f, 0.5f }, _level._statusUp[STATUS_UP::残るボーナスポイント]);
 			}
 			else
 			{
-				number.Draw(1175, 555, _level._statusUp[STATUS_UP::残るボーナスポイント], false);
+				number.Draw({ 1175, 555 }, { 0.5f, 0.5f }, _level._statusUp[STATUS_UP::残るボーナスポイント]);
 			}
 
 			break;
 		case 装備:
-			IpSceneMng.AddDrawQue({ IMAGE_ID("装備")[0], 0 ,0,0,0,0,0,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("装備")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::UI });
 
 			break;
 		case 保存:

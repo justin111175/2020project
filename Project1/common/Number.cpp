@@ -5,13 +5,12 @@
 // 初期化
 void Number::Init(void)
 {
-	IpImageMng.GetID("数字1", "image/Number/Number1.png", { 27,30 }, { 10,1 });
-	IpImageMng.GetID("数字2", "image/Number/Number2.png", { 45,50 }, { 10,1 });
+	IpImageMng.GetID("数字1", "image/Number/Number2.png", { 90,100 }, { 10,1 });
 	numLen = 1;
 }
 
 // 描画
-void Number::Draw(int pos_x, int pos_y, int score,bool size)
+void Number::Draw(Vector2 pos,Vector2Dbl exrate, int score)
 {
 	// 初期値1桁目
 	numLen = 1;
@@ -23,22 +22,13 @@ void Number::Draw(int pos_x, int pos_y, int score,bool size)
 	}
 
 	//数字描画
-	if (size)
+	for (int i = 0; i < numLen; i++)
 	{
-		for (int i = 0; i < numLen; i++)
-		{
-			IpSceneMng.AddDrawQue({ IMAGE_ID("数字1")[score % 10], pos_x - 27 * i,pos_y ,0,0,0,0,LAYER::NUMBER });
-			score /= 10;
-		}
+		IpSceneMng.AddDrawQue({ IMAGE_ID("数字1")[score % 10], pos.x - 90* exrate.x * i,pos.y ,0,0,exrate.x,exrate.y,0,0,LAYER::NUMBER });
+		score /= 10;
 	}
-	else
-	{
-		for (int i = 0; i < numLen; i++)
-		{
-			IpSceneMng.AddDrawQue({ IMAGE_ID("数字2")[score % 10], pos_x - 45 * i,pos_y ,0,0,0,0,LAYER::NUMBER });
-			score /= 10;
-		}
-	}
+	
+
 
 
 	// scoreの値で事前チェック

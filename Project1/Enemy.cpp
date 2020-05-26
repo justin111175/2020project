@@ -17,6 +17,7 @@ Enemy::Enemy(EnemyState& state)
 	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state);
 	_pos = std::move(std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state));
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
+	_exrate = std::move(std::get<static_cast<int>(ENEMY_STATE::EXRATE)>(state));
 	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(state), true);
 	Init();
 }
