@@ -33,7 +33,7 @@ enum STATUS_UP
 
 #define s1 (STATUS::MAX)(STATUS::MAX-1)
 
-struct level
+struct Level
 {
 public:
 	void Init(void);											// ‰Šú‰»

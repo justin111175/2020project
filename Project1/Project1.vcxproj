@@ -132,6 +132,7 @@
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Letter.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="common\Number.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="Letter.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="common\Number.h" />

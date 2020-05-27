@@ -33,8 +33,6 @@ void Player::Update(sharedObj plObj)
 		return;
 	}
 
-	TRACE("%d\n", _level.experience[_level.level]);
-
 	(*_input).Update();
 
 	if (!meanFlag)
@@ -156,6 +154,7 @@ void Player::PlayerMove(void)
 	if ((*_input).state(INPUT_ID::BTN_2).first && !(*_input).state(INPUT_ID::BTN_2).second)
 	{
 		IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+		_level._statusUp[STATUS_UP::ã≠âª_âÒïú]++;
 	}
 
 	if ((*_input).state(INPUT_ID::BTN_3).first && !(*_input).state(INPUT_ID::BTN_3).second)
@@ -297,29 +296,41 @@ void Player::Init(void)
 	//	fclose(fp1);
 	//}
 
-	FILE* fp = NULL;
-	if (fopen_s(&fp, "Dat/player.dat", "rb") != 0)
-	{
-		_level.Init();
-	}
-	else
-	{
 
-			fread(&_level._statusUp, sizeof(&_level._statusUp),3 , fp);
-			fread(&_level._status, sizeof(&_level._status),7, fp);
-			fread(&_level.level, sizeof(&_level.level), 3, fp);
-
-		
-
-
-		fclose(fp);
-		
-	}
 
 	
 
 
 	number.Init();
+	FILE* fp = NULL;
+	
+	switch (_TitleId)
+	{
+	case TITLE_ID::êVÇµÇ¢ÉQÅ[ÉÄ:
+		_level.Init();
+		break;
+	case TITLE_ID::ÉfÅ[É^ì«Ç›çûÇﬁ:
+		if (fopen_s(&fp, "Dat/player.dat", "rb") != 0)
+		{
+			_level.Init();
+		}
+		else
+		{
+
+			fread(&_level._statusUp, sizeof(&_level._statusUp), 3, fp);
+			fread(&_level._status, sizeof(&_level._status), 7, fp);
+			fread(&_level.level, sizeof(&_level.level), 3, fp);
+
+
+
+
+			fclose(fp);
+
+		}
+		break;
+	default:
+		break;
+	}
 
 
 
@@ -420,7 +431,7 @@ void Player::StatusUpdate(void)
 
 	_level.Updata();
 
-	auto UpDown = [](std::weak_ptr<InputState> keyData, const INPUT_ID id,level& _level, const STATUS_UP status_up, const int num) {
+	auto UpDown = [](std::weak_ptr<InputState> keyData, const INPUT_ID id,Level& _level, const STATUS_UP status_up, const int num) {
 	
 		if (!keyData.expired())
 		{
@@ -471,7 +482,7 @@ void Player::StatusUpdate(void)
 		switch (statusupId)
 		{
 		case ã≠âª_çUåÇóÕ:
-			UpDown(_input, INPUT_ID::LEFT,  _level,ã≠âª_çUåÇóÕ, -1);
+			UpDown(_input, INPUT_ID::LEFT, _level,ã≠âª_çUåÇóÕ, -1);
 			UpDown(_input, INPUT_ID::RIGHT,_level, ã≠âª_çUåÇóÕ,  1);
 
 			break;

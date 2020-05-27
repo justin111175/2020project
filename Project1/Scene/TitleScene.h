@@ -6,12 +6,6 @@
 #include <functional>
 
 
-enum MEAN_ID
-{
-	新しいゲーム,
-	データ読み込む,
-	ゲーム終了
-};
 
 
 
@@ -27,12 +21,10 @@ public:
 
 private:
 
-
 	void funcInit(void);											// ファンク初期化
 	void RunActQue(std::vector<ActQueT> actList) override;			// ファンク活動キュー
 	std::vector<sharedObj> _objList;								// シェアポインタ-Obj
 	std::map<ACT_QUE, funcAct> funcQue;							// ファンク活動キュー
-	MEAN_ID meanID;
 	//std::shared_ptr<InputState>_input;							// ｲﾝﾌﾟｯﾄのﾕﾆｰｸﾎﾟｲﾝﾀ宣言
 
 };

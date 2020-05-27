@@ -9,7 +9,7 @@ TitleScene::TitleScene()
 {
 	IpImageMng.GetID("タイトル", "image/title.png", { 1280,720 }, { 1,1 });
 	IpImageMng.GetID("選択", "image/textplate.png", { 486,150 }, { 1,1 });
-	meanID = 新しいゲーム;
+	_TitleId = 新しいゲーム;
 }
 
 TitleScene::~TitleScene()
@@ -29,6 +29,7 @@ unique_Base TitleScene::Update(unique_Base own)
 	
 	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
+	auto _level = [](sharedObj& plobj) {return (*plobj)._level; };
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)
@@ -48,36 +49,35 @@ unique_Base TitleScene::Update(unique_Base own)
 
 
 
-
 	IpSceneMng.AddDrawQue({ IMAGE_ID("タイトル")[0],0,0,0,0,1.0f,1.0f,0,0,LAYER::BG });
-	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],400,370+76*meanID,0,0,1.0f,1.0f,0,0,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],400,370+76* _TitleId,0,0,1.0f,1.0f,0,0,LAYER::UI });
 
 
 	if ((*_Input).state(INPUT_ID::UP).first && !(*_Input).state(INPUT_ID::UP).second)
 	{
-		if (meanID > 新しいゲーム)
+		if (_TitleId > 新しいゲーム)
 		{
-			meanID = (MEAN_ID)(meanID - 1);
+			_TitleId = (TITLE_ID)(_TitleId - 1);
 		}
 		else
 		{
-			meanID = ゲーム終了;
+			_TitleId = 終了;
 		}
 	}
 	if ((*_Input).state(INPUT_ID::DOWN).first && !(*_Input).state(INPUT_ID::DOWN).second)
 	{
-		if (meanID < ゲーム終了)
+		if (_TitleId < 終了)
 		{
-			meanID = (MEAN_ID)(meanID + 1);
+			_TitleId = (TITLE_ID)(_TitleId + 1);
 		}
 		else
 		{
-			meanID = 新しいゲーム;
+			_TitleId = 新しいゲーム;
 		}
 	}
 
-
-	switch (meanID)
+	FILE* fp = NULL;
+	switch (_TitleId)
 	{
 	case 新しいゲーム:
 
@@ -88,8 +88,22 @@ unique_Base TitleScene::Update(unique_Base own)
 		}
 		break;
 	case データ読み込む:
+
+
+		
+		if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
+		{
+			if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
+			{
+				return std::make_unique<GameScene>();
+
+
+			}
+
+
+		}
 		break;
-	case ゲーム終了:
+	case 終了:
 		if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
 		{
 			DxLib_End();

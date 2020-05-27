@@ -21,12 +21,7 @@ public:
 
 private:
 	// ファンク-フレンド
-	//friend FuncCheckSelf;
-	//friend FuncCheckDown;
-	//friend FuncCheckRight;
-	//friend FuncCheckLeft;
-	//friend FuncCheckLRHit;
-	//friend FuncCheckOn;
+
 
 	friend FuncBullet;
 	friend FuncSlash;

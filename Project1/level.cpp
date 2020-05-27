@@ -3,7 +3,7 @@
 
 
 
-void level::Init(void)
+void Level::Init(void)
 {
 
 
@@ -28,7 +28,7 @@ void level::Init(void)
 
 }
 
-void level::Updata(void)
+void Level::Updata(void)
 {
 	_status[STATUS::UŒ‚—Í] = _statusUp[STATUS_UP::‹­‰»_UŒ‚—Í]*1.3;
 	_status[STATUS::–hŒä—Í] = _statusUp[STATUS_UP::‹­‰»_–hŒä—Í] * 1.3;

@@ -15,7 +15,7 @@ Slash::Slash()
 Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, MOVE_TYPE movetype)
 {
 	_unitID = unitID;
-
+	_exrate = { 1.0f,1.0f };
 	_size = { 43,11 };
 	//_size = { 380,384 };
 	//_pos.x = pos.x-_size.x/2;

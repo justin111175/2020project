@@ -16,6 +16,7 @@ Bullet::Bullet(UNIT_ID unitID, Vector2Dbl pos, MOVE_TYPE movetype, Vector2Dbl si
 {
 	_unitID = unitID;
 	_size = { 43,11 };
+	_exrate = { 1.0f,1.0f };
 
 
 

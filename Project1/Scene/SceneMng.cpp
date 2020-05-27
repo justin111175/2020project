@@ -197,7 +197,14 @@ bool SceneMng::SysInit(void)
 
 	_frames = 0;
 
-
+	for (int y = 0; y < 50; y++)
+	{
+		for (int x = 0; x < 50; x++)
+		{
+			IpSceneMng.mapNow[y][x] = 0;
+		}
+	}
+			
 	//testmode=false;
 
 

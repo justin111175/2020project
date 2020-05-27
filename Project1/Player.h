@@ -55,7 +55,6 @@ private:
 	Number number;
 	Letter letter;
 
-	unsigned int s[STATUS::MAX];
 
 };
 

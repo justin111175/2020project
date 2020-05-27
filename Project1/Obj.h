@@ -40,7 +40,7 @@ enum class UNIT_ID
 	ENEMY,						// 敵
 	PLaS,						// プレイヤー近距離攻撃
 	PLaB,
-	文字
+	FLOOR
 };
 
 enum class ACT
@@ -61,6 +61,8 @@ using AnimVector = std::vector<std::pair<int, unsigned int>>;
 
 //shared_ptr：		指定されたリソースへの所有権(ownership)を共有(share)するスマートポインタである。
 using sharedObj = std::shared_ptr<Obj>;									// shared_ptr 側だけコビーできます
+
+
 
 class Obj
 {
@@ -84,7 +86,7 @@ public:
 	Vector2Dbl _posOld;
 	Vector2Dbl _size;														// サイズ
 	Vector2Dbl _exrate;
-	level _level;
+	Level _level;
 
 private:
 

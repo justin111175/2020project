@@ -42,6 +42,14 @@ enum class DRAW_QUE
 //	bool X[TRG_MAX];
 //};
 
+
+enum TITLE_ID
+{
+	新しいゲーム,
+	データ読み込む,
+	終了
+};
+
 class Obj;
 
 using DrawQueT = std::tuple<int, double, double, int,int,double,double, double, int, LAYER>;
@@ -52,7 +60,7 @@ using DrawQueT = std::tuple<int, double, double, int,int,double,double, double, 
 //#define _mapPos SceneMng::GetInstance().MapPos
 //#define _mapSize SceneMng::GetInstance().MapSize
 #define _Input SceneMng::GetInstance()._input
-
+#define _TitleId SceneMng::GetInstance().titleID
 
 class SceneMng
 {
@@ -79,6 +87,8 @@ public:
 		sInstance = nullptr;
 	}
 	void Run(void);
+	
+	int mapNow[50][50];										
 
 
 	bool AddDrawQue(DrawQueT dQue);								// 描画を増加する
@@ -89,6 +99,7 @@ public:
 	
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報
 
+	TITLE_ID titleID;
 
 	int _blendCnt;												// ブレンド用カント
 

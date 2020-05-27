@@ -10,7 +10,7 @@
 #include <Enemy.h>
 #include <KeyState.h>
 #include <Number.h>
-
+#include <Floor.h>
 
 
 GameScene::GameScene()
@@ -57,6 +57,8 @@ GameScene::GameScene()
 
 
 
+
+
 	
 	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }, {1.0f,1.0f}));
 
@@ -67,12 +69,8 @@ GameScene::GameScene()
 		tmpMoveState.emplace_back(MOVE_TYPE::LEFT, Vector2Dbl{ 0,0 });
 		tmpMoveState.emplace_back(MOVE_TYPE::UP, Vector2Dbl{ 0,0 });
 
-
-
-
 		EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
 		_objList.emplace_back(new Enemy(data));
-
 	};
 
 	for (int x = 0; x < 5; x++)
@@ -83,10 +81,10 @@ GameScene::GameScene()
 
 		}
 	}
-	//EnemyAdd( ENEMY_TYPE::オーク, _objList, { 500.0,300.0 }, { 48,48 });
 
-
-	IpImageMng.GetID("ウェポン", "image/weapons.png", { 98,68 }, { 3,5 });
+	MapInit_1();
+	
+	
 
 
 	_input = std::make_shared<KeyState>();
@@ -122,15 +120,9 @@ unique_Base GameScene::Update(unique_Base own)
 	
 	(*_input).Update();
 
-	//auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size) {
-	//	MoveState tmpMoveState;
-	//	tmpMoveState.emplace_back(MOVE_TYPE::RIGHT, Vector2Dbl{ 0,0 });
-	//	tmpMoveState.emplace_back(MOVE_TYPE::DOWN, Vector2Dbl{ 0,0 });
-	//	tmpMoveState.emplace_back(MOVE_TYPE::LEFT, Vector2Dbl{ 0,0 });
-	//	tmpMoveState.emplace_back(MOVE_TYPE::UP, Vector2Dbl{ 0,0 });
 
-
-
+	//IpSceneMng.AddDrawQue({ IMAGE_ID("Outside_A5")[76], 100.0,100.0,0,0,1.0f,1.0f,0,1,LAYER::UI });
+		
 
 	//switch (IpSceneMng._classCnt)
 	//{0
@@ -193,93 +185,62 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 void GameScene::MapInit_1(void)
 {
 	// 描画を読み込む
-	//IpImageMng.GetID("UI", "image/UI.png", { 800,72 }, { 1,1 });
-	//IpImageMng.GetID("プレイヤー1", "image/player1.png", { 40,40 }, { 3,4 });
-	//
-	//IpImageMng.GetID("背景", "image/BG.png", { 4096,800 }, { 1,1 });
-	//IpImageMng.GetID("ブロック", "image/block.png", { 30,30 }, { 9,2 });
-	//
-	//IpImageMng.GetID("スライム", "image/enemy/slime.png", { 55,30 }, { 3,1 });
-	//IpImageMng.GetID("コイン", "image/coin.png", { 25,24 }, { 4,1 });
-	//
-	//IpImageMng.GetID("end1", "image/end1.png", { 116,150 }, { 1,1 });
-	//IpImageMng.GetID("end2", "image/end2.png", { 116,150 }, { 1,1 });
-	//IpImageMng.GetID("end3", "image/end3.png", { 115,150 }, { 1,1 });
-	//IpImageMng.GetID("end4", "image/end4.png", { 116,150 }, { 1,1 });
-	//IpImageMng.GetID("end5", "image/end5.png", { 116,150 }, { 1,1 });
-	//IpImageMng.GetID("end6", "image/end6.png", { 116,150 }, { 1,1 });
-	//IpImageMng.GetID("end7", "image/end7.png", { 116,150 }, { 1,1 });
-	//IpImageMng.GetID("end8", "image/end8.png", { 116,150 }, { 1,1 });
-	//
-	//IpImageMng.GetID("エンド飾り_木", "image/end_tree.png", { 453,600 }, { 1,1 });
-	//_mapPos = { 0,0 };
-	//
+	
+	//IpImageMng.GetID("Outside_A2", "image/chip/Outside_A2.png", { 768,576 }, { 16,12 });
+
+	IpImageMng.GetID("Outside_A5", "image/chip/Outside_A5.png", { 48,48 }, { 8,16 });
+
+
 	// csvファイルを読み込む
-	//int type = NULL;
-	//int y = 0;
-	//int x = 0;
-	//FILE* fp = NULL;
-	//fopen_s(&fp, "csv/1-1.csv", "rb");
-	//while (fscanf_s(fp, "%d", &type) != EOF)
-	//{
-	//	IpSceneMng.mapNow[y][x] = type;
-	//	x++;
-	//}
+	int type = NULL;
+	int y = 0;
+	int x = 0;
+	FILE* fp = NULL;
+	fopen_s(&fp, "csv/test1.csv", "rb");
+	while (fscanf_s(fp, "%d", &type) != EOF)
+	{
+		IpSceneMng.mapNow[y][x] = type;
+		x++;
+	}
 	
 	
-	//FloorState Flrdata;
+	FloorState Flrdata;
+
+
 	//MoveState tmpMoveState;
-	//
-	//for (int y = 0; y < 20; y++)
-	//{
-	//	for (int x = 0; x < 220; x++)
-	//	{
-	//		switch (IpSceneMng.mapNow[y][x])
-	//		{
-	//		case 4:
-	//			Flrdata = { FLOOR_TYPE::床1_草原,{_mapSize.x / 2 - _mapPos.x + _mapSize.x * x,_mapSize.y / 2 - _mapPos.y + _mapSize.y * y + 15},{30,30} };
-	//			_objList.emplace_back(new Floor(Flrdata));
-	//			break;
-	//		case 5:
-	//			Flrdata = { FLOOR_TYPE::床2_草原,{_mapSize.x / 2 - _mapPos.x + _mapSize.x * x,_mapSize.y / 2 - _mapPos.y + _mapSize.y * y + 15},{30,20} };
-	//			_objList.emplace_back(new Floor(Flrdata));
-	//			break;
-	//		case 6:
-	//			Flrdata = { FLOOR_TYPE::階段_光,{_mapSize.x / 2 - _mapPos.x + _mapSize.x * x,_mapSize.y / 2 - _mapPos.y + _mapSize.y * y + 15},{30,30} };
-	//			_objList.emplace_back(new Floor(Flrdata));
-	//			break;
-	//		case 13:
-	//			Flrdata = { FLOOR_TYPE::レンガ,{_mapSize.x / 2 - _mapPos.x + _mapSize.x * x,_mapSize.y / 2 - _mapPos.y + _mapSize.y * y + 25},{30,25} };
-	//			_objList.emplace_back(new Floor(Flrdata));
-	//			break;
+	
+	for (int y = 0; y < 50; y++)
+	{
+		for (int x = 0; x < 50; x++)
+		{
+			switch (IpSceneMng.mapNow[y][x])
+			{
+			case 76:
 
-	//		default:
-	//			break;
-	//		}
+				Flrdata = { FLOOR_TYPE::ドラゴン_左_1,{48.0*x,48.0*y},{48.0,48.0} };
+				_objList.emplace_back(new Floor(Flrdata));
+				break;
 
-	//		if (IpSceneMng.mapNow[y][x] == 26)
-	//		{
-	//			MoveState tmpMoveState;
-	//			tmpMoveState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 0,0 });
-	//			EnemyState data = { ENEMY_TYPE::スライム,{_mapSize.x / 2 - _mapPos.x + _mapSize.x * x,_mapSize.y / 2 - _mapPos.y + _mapSize.y * y}, { 43,20 },tmpMoveState };
-	//			_objList.emplace_back(new Enemy(data));
-	//		}
-	//		if (IpSceneMng.mapNow[y][x] == 22)
-	//		{
-	//			MoveState tmpMoveState;
-	//			IteamState data = { ITEAM_TYPE::コイン,{_mapSize.x / 2 - _mapPos.x + _mapSize.x * x,_mapSize.y / 2 - _mapPos.y + _mapSize.y * y}, { 25,24 } ,tmpMoveState };
-	//			_objList.emplace_back(new iteam(data));
+			case 77:
+				Flrdata = { FLOOR_TYPE::ドラゴン_左_2,{48.0*x,48.0*y},{48.0,48.0} };
+				_objList.emplace_back(new Floor(Flrdata));		
+				break;
+			case 76+8:
+				Flrdata = { FLOOR_TYPE::ドラゴン_左_3,{48.0*x,48.0*y},{48.0,48.0} };
+				_objList.emplace_back(new Floor(Flrdata));		
+				break;
+			case 77+8:
+				Flrdata = { FLOOR_TYPE::ドラゴン_左_4,{48.0*x,48.0*y},{48.0,48.0} };
+				_objList.emplace_back(new Floor(Flrdata));
 
-	//		}
-	//		if (IpSceneMng.mapNow[y][x] == 25)
-	//		{
-	//			MoveState tmpMoveState;
-	//			IteamState data = { ITEAM_TYPE::エンド,{_mapSize.x / 2 - _mapPos.x + _mapSize.x * x,_mapSize.y / 2 - _mapPos.y + _mapSize.y * y+30}, { 116,150 } ,tmpMoveState };
-	//			_objList.emplace_back(new iteam(data));
+				break;
 
-	//		}
-	//	}
-	//}
+			default:
+				break;
+			}
+
+		}
+	}
 }
 
 
