@@ -61,6 +61,9 @@ using DrawQueT = std::tuple<int, double, double, int,int,double,double, double, 
 //#define _mapSize SceneMng::GetInstance().MapSize
 #define _Input SceneMng::GetInstance()._input
 #define _TitleId SceneMng::GetInstance().titleID
+#define TESTMAX 2500
+
+
 
 class SceneMng
 {
@@ -88,7 +91,7 @@ public:
 	}
 	void Run(void);
 	
-	int mapNow[50][50];										
+	int mapNow[50][50];
 
 
 	bool AddDrawQue(DrawQueT dQue);								// •`‰æ‚ð‘‰Á‚·‚é

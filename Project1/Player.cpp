@@ -33,6 +33,14 @@ void Player::Update(sharedObj plObj)
 		return;
 	}
 
+
+	//DrawFormatString(0, 0, GetColor(255, 255, 255), "GameCounter = %d", gameCounter);
+	//DrawFormatString(0, 32, GetColor(255, 255, 255), "map : %d,  %d", _pos.x, _pos.y);
+	//_dbgDrawFormatString(0, 32, GetColor(255, 255, 255), "map : %d,  %d", _pos.x, _pos.y);
+	//_dbgDrawString(0, 0, "map:", GetColor(0, 0, 0));
+
+	//_dbgDrawString(0, 0);
+	//	int x, int y, char* String, unsigned int Color
 	(*_input).Update();
 
 	if (!meanFlag)

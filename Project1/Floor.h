@@ -1,18 +1,10 @@
 #pragma once
 #include "Obj.h"
+#include <Outside_A1_ID.h>
 
 enum class FLOOR_TYPE
 {
-	ドラゴン_左_1,
-	ドラゴン_左_2,
-	ドラゴン_左_3,
-	ドラゴン_左_4,
-	ドラゴン_右_1,
-	ドラゴン_右_2,
-	ドラゴン_右_3,
-	ドラゴン_右_4,
-
-
+	Outside_A1_ID,
 };
 
 enum class FLOOR_STATE
@@ -20,11 +12,12 @@ enum class FLOOR_STATE
 	TYPE,					// 種類
 	VECTOR,					// 座標
 	SIZE,					// 大きさ
+	ID,
 	MAX
 };
 
 
-using FloorState = std::tuple<FLOOR_TYPE, Vector2Dbl, Vector2Dbl>;
+using FloorState = std::tuple<FLOOR_TYPE, Vector2Dbl, Vector2Dbl, Outside_A1_ID>;
 
 class Floor;
 
@@ -41,5 +34,6 @@ public:
 private:
 	void Init(void);												// 初期化
 	FLOOR_TYPE _type;												// 種類
+	Outside_A1_ID A1_ID;
 };
 

@@ -3,6 +3,7 @@
 enum class LAYER
 {		
 	BG,											// 背景
+	CHIP,
 	CHAR,										// キャラクター
 	UI,											// UI
 	NUMBER,

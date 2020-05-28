@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <KeyState.h>
 #include <TitleScene.h>
+#include <Floor.h>
 
 
 //動的シングルトン
@@ -56,6 +57,18 @@ void SceneMng::Draw(void)
 
 		switch (layer_id)
 		{
+		//case LAYER::CHIP:
+		//	DrawRectGraph(
+		//		size.x *8,
+		//		size.y *16,
+		//		size.x *(pzData[y][x] % divTable[divID]),
+		//		size.y *(pzData[y][x] / divTable[divID]),
+		//		size.x,
+		//		size.y,
+		//		id,
+		//		false,
+		//		false);
+		//	break;
 		case LAYER::PUTTOM:
 			// ボタン描画表示するブレント
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs(250 * sin(_frames / 25.0)));
@@ -80,6 +93,7 @@ void SceneMng::Draw(void)
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
+
 	// 全部のレイヤー表示する
 	for (auto layer_id : LAYER())
 	{
@@ -92,13 +106,18 @@ void SceneMng::Draw(void)
 	SetFontSize(40);
 
 	//// 『ＤＸライブラリ』と描画
-	//DrawString(100, 100, "ＤＸライブラリ", GetColor(255, 255, 255));
+	DrawFormatString(100, 100,  GetColor(255, 255, 255),"%d",IpSceneMng.frames());
 
 	// フォントのタイプをエッジつきアンチエイリアスフォントに変更
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
 
 	//// 『ＤＸライブラリ』と描画
 	//DrawString(100, 160, "ＤＸライブラリ", GetColor(255, 255, 255), GetColor(0, 0, 0));
+
+
+	//DrawString(int x, int y, char *String, unsigned int Color);
+
+
 
 	ScreenFlip();
 }
@@ -197,6 +216,7 @@ bool SceneMng::SysInit(void)
 
 	_frames = 0;
 
+
 	for (int y = 0; y < 50; y++)
 	{
 		for (int x = 0; x < 50; x++)
@@ -204,6 +224,7 @@ bool SceneMng::SysInit(void)
 			IpSceneMng.mapNow[y][x] = 0;
 		}
 	}
+
 			
 	//testmode=false;
 

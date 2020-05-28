@@ -118,8 +118,36 @@ unique_Base GameScene::Update(unique_Base own)
 		(*data).Draw();
 	}
 	
+
+
+
 	(*_input).Update();
 
+
+
+	//for (auto i : Outside_A1_ID())
+	//{
+
+	//	for (int x = 0; x < TESTMAX; x++)
+	//	{
+
+	//		if (IpSceneMng.mapNow[x] == static_cast<int>(i))
+	//		{
+	//			DrawRectGraph(
+	//				chipSize.x*x,
+	//				chipSize.y*y,
+	//				chipSize.x *(pzData[y][x] % divTable[divID]),
+	//				chipSize.y *(pzData[y][x] / divTable[divID]),
+	//				chipSize.x,
+	//				chipSize.y,
+	//				puzzleImg[pzlImageID[PZL_SEL_NOW]],
+	//				false,
+	//				false);
+	//		}
+
+	//	}
+
+	//}
 
 	//IpSceneMng.AddDrawQue({ IMAGE_ID("Outside_A5")[76], 100.0,100.0,0,0,1.0f,1.0f,0,1,LAYER::UI });
 		
@@ -188,8 +216,7 @@ void GameScene::MapInit_1(void)
 	
 	//IpImageMng.GetID("Outside_A2", "image/chip/Outside_A2.png", { 768,576 }, { 16,12 });
 
-	IpImageMng.GetID("Outside_A5", "image/chip/Outside_A5.png", { 48,48 }, { 8,16 });
-
+	IpImageMng.GetID("Outside_A1", "image/chip/Outside_A1.png", { 48,48 }, { 8,16 });
 
 	// csvÉtÉ@ÉCÉãÇì«Ç›çûÇﬁ
 	int type = NULL;
@@ -207,41 +234,30 @@ void GameScene::MapInit_1(void)
 	FloorState Flrdata;
 
 
-	//MoveState tmpMoveState;
-	
-	for (int y = 0; y < 50; y++)
+	MoveState tmpMoveState;
+	for (auto i : Outside_A1_ID())
 	{
-		for (int x = 0; x < 50; x++)
+
+		for (int x = 0; x < 25; x++)
 		{
-			switch (IpSceneMng.mapNow[y][x])
+			for (int y = 0; y < 25; y++)
 			{
-			case 76:
 
-				Flrdata = { FLOOR_TYPE::ÉhÉâÉSÉì_ç∂_1,{48.0*x,48.0*y},{48.0,48.0} };
-				_objList.emplace_back(new Floor(Flrdata));
-				break;
-
-			case 77:
-				Flrdata = { FLOOR_TYPE::ÉhÉâÉSÉì_ç∂_2,{48.0*x,48.0*y},{48.0,48.0} };
-				_objList.emplace_back(new Floor(Flrdata));		
-				break;
-			case 76+8:
-				Flrdata = { FLOOR_TYPE::ÉhÉâÉSÉì_ç∂_3,{48.0*x,48.0*y},{48.0,48.0} };
-				_objList.emplace_back(new Floor(Flrdata));		
-				break;
-			case 77+8:
-				Flrdata = { FLOOR_TYPE::ÉhÉâÉSÉì_ç∂_4,{48.0*x,48.0*y},{48.0,48.0} };
-				_objList.emplace_back(new Floor(Flrdata));
-
-				break;
-
-			default:
-				break;
+				if (IpSceneMng.mapNow[y][x] == static_cast<int>(i))
+				{
+					Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,i };
+					_objList.emplace_back(new Floor(Flrdata));
+				}
 			}
-
 		}
+		
 	}
+
+
+
 }
+
+
 
 
 

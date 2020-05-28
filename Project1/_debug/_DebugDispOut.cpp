@@ -104,7 +104,7 @@ int _DebugDispOut::DrawString(int x, int y, char* String, unsigned int Color)
 	RevScreen();
 	return rtnFlag;
 }
-//
+
 //int _DebugDispOut::DrawFormatString(int x, int y, unsigned int Color, std::string FormatString, ...)
 //{
 //	va_list arglist;

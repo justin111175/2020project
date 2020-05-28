@@ -35,7 +35,8 @@ public:
 	int DrawGraph(int x, int y, int GrHandle, int TransFlag);
 	int DrawBox(int x1, int y1, int x2, int y2, unsigned int Color, int FillFlag);
 	int DrawString(int x, int y, char* String, unsigned int Color);
-//	int DrawFormatString(int x, int y, unsigned int Color, std::string FormatString, ...);
+	//int DrawFormatString(int x, int y, unsigned int Color, std::string FormatString, ...);
+
 	int DrawLine(int x1, int y1, int x2, int y2, unsigned int Color);
 	int DrawCircle(int x, int y, int r, unsigned int Color, int FillFlag);
 	int DrawPixel(int x, int y, unsigned int Color);	

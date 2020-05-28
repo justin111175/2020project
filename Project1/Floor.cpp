@@ -16,6 +16,7 @@ Floor::Floor(FloorState & state)
 	_type = std::get<static_cast<int>(FLOOR_STATE::TYPE)>(state);
 	_pos = std::move(std::get<static_cast<int>(FLOOR_STATE::VECTOR)>(state));
 	_size = std::move(std::get<static_cast<int>(FLOOR_STATE::SIZE)>(state));
+	A1_ID= std::get<static_cast<int>(FLOOR_STATE::ID)>(state);
 	Init();
 
 
@@ -23,7 +24,6 @@ Floor::Floor(FloorState & state)
 
 void Floor::Update(sharedObj plObj)
 {
-	TRACE("%f,%f\n", _pos.x,_pos.y);
 
 
 
@@ -37,38 +37,31 @@ void Floor::Init(void)
 {
 	_unitID = UNIT_ID::FLOOR;
 	AnimVector data;
-
+	_zorder = -1;
 
 	switch (_type)
 	{
-	case FLOOR_TYPE::ドラゴン_左_1:
-		data.emplace_back(IMAGE_ID("Outside_A5")[76], 30);
-		SetAnim(STATE::NORMAL, data);
+	case FLOOR_TYPE::Outside_A1_ID:
+		for (auto i : Outside_A1_ID())
+		{
+			//switch (A1_ID)
+			//{
+			//case static_cast<int>(i):
+
+
+			//	break;
+
+			//default:
+			//	break;
+			//}
+			if (A1_ID == i)
+			{
+				data.emplace_back(IMAGE_ID("Outside_A1")[static_cast<int>(i)], 30);
+				SetAnim(STATE::NORMAL, data);
+			}
+		}
 
 		break;
-	case FLOOR_TYPE::ドラゴン_左_2:
-		data.emplace_back(IMAGE_ID("Outside_A5")[77], 30);
-		SetAnim(STATE::NORMAL, data);
-
-		break;
-	case FLOOR_TYPE::ドラゴン_左_3:
-		data.emplace_back(IMAGE_ID("Outside_A5")[76+8], 30);
-		SetAnim(STATE::NORMAL, data);
-
-		break;
-	case FLOOR_TYPE::ドラゴン_左_4:
-		data.emplace_back(IMAGE_ID("Outside_A5")[76+9], 30);
-		SetAnim(STATE::NORMAL, data);
-
-		break;
-	//case FLOOR_TYPE::ドラゴン_右_1:
-	//	break;
-	//case FLOOR_TYPE::ドラゴン_右_2:
-	//	break;
-	//case FLOOR_TYPE::ドラゴン_右_3:
-	//	break;
-	//case FLOOR_TYPE::ドラゴン_右_4:
-	//	break;
 	default:
 		break;
 	}

@@ -11,6 +11,7 @@
 using funcAct = std::function<bool(ActQueT&, void*)>;				
 
 
+
 class GameScene :
 	public BaseScene
 {
@@ -33,7 +34,6 @@ private:
 	std::map<ACT_QUE, funcAct> funcQue;								// ファンク活動キュー
 
 	std::shared_ptr<InputState>_input;							// ｲﾝﾌﾟｯﾄのﾕﾆｰｸﾎﾟｲﾝﾀ宣言
-
 
 
 	// マップ初期化
