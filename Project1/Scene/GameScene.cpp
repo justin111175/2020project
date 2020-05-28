@@ -235,26 +235,45 @@ void GameScene::MapInit_1(void)
 
 
 	MoveState tmpMoveState;
-	for (auto i : Outside_A1_ID())
+	//for (auto i : Outside_A1_ID())
+	//{
+
+	//	for (int x = 0; x < 50; x++)
+	//	{
+	//		for (int y = 0; y < 50; y++)
+	//		{
+
+	//			if (IpSceneMng.mapNow[y][x] == static_cast<int>(i))
+	//			{
+	//				Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,i };
+	//				_objList.emplace_back(new Floor(Flrdata));
+	//			}
+	//		}
+	//	}
+	//	
+	//}
+	//for (int x = 0; x < 50; x++)
+	//{
+	//	for (int y = 0; y < 50; y++)
+	//	{
+
+	//			Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,Outside_A1_ID::A10 };
+	//			_objList.emplace_back(new Floor(Flrdata));
+	//		
+	//	}
+	//}
+
+	for (int x = 0; x < 100; x++)
 	{
-
-		for (int x = 0; x < 25; x++)
+		for (int y = 0; y < 100; y++)
 		{
-			for (int y = 0; y < 25; y++)
-			{
 
-				if (IpSceneMng.mapNow[y][x] == static_cast<int>(i))
-				{
-					Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,i };
-					_objList.emplace_back(new Floor(Flrdata));
-				}
-			}
+
+				Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,Outside_A1_ID::A10 };
+				_objList.emplace_back(new Floor(Flrdata));
+			
 		}
-		
 	}
-
-
-
 }
 
 
