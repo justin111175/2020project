@@ -53,10 +53,10 @@ GameScene::GameScene()
 	
 	IpImageMng.GetID("blast", "image/blast.png", { 40,40 }, { 6,4 });
 	
+	IpImageMng.GetID("UP", "image/levelUp.png", { 450,250 }, { 1,8 });
+	IpImageMng.GetID("UP1", "image/levelUp1.png", { 250,150 }, { 1,8 });
+
 	IpImageMng.GetID("•¶Žš", "image/letter.png", { 1280,720 }, { 1,1 });
-
-
-
 
 
 	
@@ -235,45 +235,36 @@ void GameScene::MapInit_1(void)
 
 
 	MoveState tmpMoveState;
-	//for (auto i : Outside_A1_ID())
-	//{
+	for (auto i : Outside_A1_ID())
+	{
 
-	//	for (int x = 0; x < 50; x++)
-	//	{
-	//		for (int y = 0; y < 50; y++)
-	//		{
+		for (int x = 0; x < 50; x++)
+		{
+			for (int y = 0; y < 20; y++)
+			{
 
-	//			if (IpSceneMng.mapNow[y][x] == static_cast<int>(i))
-	//			{
-	//				Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,i };
-	//				_objList.emplace_back(new Floor(Flrdata));
-	//			}
-	//		}
-	//	}
-	//	
-	//}
-	//for (int x = 0; x < 50; x++)
+				if (IpSceneMng.mapNow[y][x] == static_cast<int>(i))
+				{
+					Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,i };
+					_objList.emplace_back(new Floor(Flrdata));
+				}
+			}
+		}
+		
+	}
+
+
+	//for (int x = 0; x < 100; x++)
 	//{
-	//	for (int y = 0; y < 50; y++)
+	//	for (int y = 0; y < 100; y++)
 	//	{
+
 
 	//			Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,Outside_A1_ID::A10 };
 	//			_objList.emplace_back(new Floor(Flrdata));
 	//		
 	//	}
 	//}
-
-	for (int x = 0; x < 100; x++)
-	{
-		for (int y = 0; y < 100; y++)
-		{
-
-
-				Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,Outside_A1_ID::A10 };
-				_objList.emplace_back(new Floor(Flrdata));
-			
-		}
-	}
 }
 
 
@@ -302,6 +293,7 @@ void GameScene::funcInit(void)
 	funcQue[ACT_QUE::SHOT] = FuncBullet();
 
 	funcQue[ACT_QUE::SLASH] = FuncSlash();
+	funcQue[ACT_QUE::LEVELUP] = FuncLevelUp();
 	funcQue[ACT_QUE::CHECK] = FuncCheck();
 
 }

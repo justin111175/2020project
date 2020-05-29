@@ -34,6 +34,8 @@ void Player::Update(sharedObj plObj)
 	}
 
 
+
+
 	//DrawFormatString(0, 0, GetColor(255, 255, 255), "GameCounter = %d", gameCounter);
 	//DrawFormatString(0, 32, GetColor(255, 255, 255), "map : %d,  %d", _pos.x, _pos.y);
 	//_dbgDrawFormatString(0, 32, GetColor(255, 255, 255), "map : %d,  %d", _pos.x, _pos.y);
@@ -56,6 +58,12 @@ void Player::Update(sharedObj plObj)
 			if ((*_input).state(INPUT_ID::BTN_1).first && !(*_input).state(INPUT_ID::BTN_1).second)
 			{
 				LetterFlag = true;
+
+			}
+			if ((*_input).state(INPUT_ID::P).first && !(*_input).state(INPUT_ID::P).second)
+			{
+				_posOld = _pos;
+				IpSceneMng.AddActQue({ ACT_QUE::LEVELUP , *this });
 
 			}
 		}
@@ -265,44 +273,7 @@ void Player::Init(void)
 	}
 
 
-	//FILE* fp = NULL;
-	//if (fopen_s(&fp, "Dat/status.dat", "rb") != 0)
-	//{	
-	//	_level.Init();
 
-	//	////for (int i = 0; i < STATUS::MAX; i++)
-	//	////{
-	//	//	fread(&_level._status[0], sizeof(&_level._status[0])*7, 1, fp);
-
-	//	////}
-	//	//fclose(fp);
-	//}
-	//else
-	//{		
-	//	for (int i = 0; i < STATUS::MAX; i++)
-	//	{
-	//		fread(&_level._status[0], sizeof(&_level._status[0])*i, 1, fp);
-
-	//	}
-	//	fclose(fp);
-	//}
-
-	//FILE* fp1 = NULL;
-
-	//if (fopen_s(&fp1, "Dat/statusUp.dat", "rb") != 0)
-	//{
-	//	_level.Init();
-
-	//}
-	//else
-	//{
-	//	for (int i = 0; i < STATUS_UP::‹­‰»_MAX; i++)
-	//	{
-	//		fread(&_level._statusUp[0], sizeof(&_level._statusUp[0])*i, 1, fp1);
-
-	//	}
-	//	fclose(fp1);
-	//}
 
 
 

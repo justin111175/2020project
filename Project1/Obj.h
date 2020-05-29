@@ -40,7 +40,8 @@ enum class UNIT_ID
 	ENEMY,						// “G
 	PLaS,						// ƒvƒŒƒCƒ„[‹ß‹——£UŒ‚
 	PLaB,
-	FLOOR
+	FLOOR,
+	LevelUp
 };
 
 enum class ACT

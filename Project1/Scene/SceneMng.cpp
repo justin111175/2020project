@@ -10,7 +10,7 @@
 #include <KeyState.h>
 #include <TitleScene.h>
 #include <Floor.h>
-
+#include <GameOverScene.h>
 
 //動的シングルトン
 SceneMng *SceneMng::sInstance = nullptr;
@@ -106,7 +106,7 @@ void SceneMng::Draw(void)
 	SetFontSize(40);
 
 	//// 『ＤＸライブラリ』と描画
-	DrawFormatString(100, 100,  GetColor(255, 255, 255),"%d",IpSceneMng.frames());
+	//DrawFormatString(100, 100,  GetColor(255, 255, 255),"%d",IpSceneMng.frames());
 
 	// フォントのタイプをエッジつきアンチエイリアスフォントに変更
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);

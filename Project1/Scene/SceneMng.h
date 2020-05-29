@@ -61,6 +61,8 @@ using DrawQueT = std::tuple<int, double, double, int,int,double,double, double, 
 //#define _mapSize SceneMng::GetInstance().MapSize
 #define _Input SceneMng::GetInstance()._input
 #define _TitleId SceneMng::GetInstance().titleID
+#define _OverId SceneMng::GetInstance().overID
+
 #define TESTMAX 2500
 
 
@@ -103,7 +105,7 @@ public:
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報
 
 	TITLE_ID titleID;
-
+	TITLE_ID overID;
 	int _blendCnt;												// ブレンド用カント
 
 	const int frames(void)const;								// フレーム数のゲット関数

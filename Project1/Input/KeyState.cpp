@@ -19,6 +19,8 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_X);
 	_keyConDef.emplace_back(KEY_INPUT_C);
 	_keyConDef.emplace_back(KEY_INPUT_V);
+	_keyConDef.emplace_back(KEY_INPUT_P);
+
 	_keyConDef.emplace_back(KEY_INPUT_ESCAPE);
 
 

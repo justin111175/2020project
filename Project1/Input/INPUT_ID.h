@@ -12,6 +12,7 @@ enum class INPUT_ID		//INPUT_ID:int
 	BTN_2,				// ƒ{ƒ^ƒ“‚Q
 	BTN_3,				// ƒ{ƒ^ƒ“‚R
 	BTN_4,				// ƒ{ƒ^ƒ“‚S
+	P,
 	ESC,
 	MAX
 };

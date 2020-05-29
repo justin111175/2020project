@@ -43,3 +43,75 @@ void Level::Updata(void)
 
 }
 
+//Up::Up()
+//{
+//	Init();
+//}
+//
+//Up::Up(Vector2Dbl pos, Vector2Dbl size)
+//{
+//	_pos = pos;
+//	_exrate = { 1.0f,1.0f };
+//	Init();
+//}
+//
+//Up::~Up()
+//{
+//}
+//
+//void Up::Init(void)
+//{
+//	_alive = true;
+//
+//	_unitID = UNIT_ID::PLaS;
+//
+//	AnimVector data;
+//	data.reserve(1);
+//	//data.emplace_back(IMAGE_ID("ŽaŒ‚2")[0], 0);
+//	//for (int i = 0; i < 7; i++)
+//	//{
+//	//	data.emplace_back(IMAGE_ID("ŽaŒ‚3")[i], i*5);
+//	//}
+//	//data.emplace_back(-1, 40);
+//
+//	SetAnim(STATE::NORMAL, data);
+//
+//
+//
+//
+//	data.reserve(1);
+//	data.emplace_back(-1, 40);
+//	SetAnim(STATE::DETH, data);
+//
+//	state(STATE::NORMAL);
+//
+//}
+//
+//void Up::Update(sharedObj plObj)
+//{
+//	DestroyPrpc();
+//
+//
+//
+//}
+//
+//bool Up::SetAlive(bool alive)
+//{
+//	if (!alive)
+//	{
+//		// ‰æ–Ê—h‚ç‚µ‚ÌQUE‚ð“Š‚°‚é
+//		//IpSceneMng.AddActQue({ ACT_QUE::SHAKE, *this });
+//	}
+//
+//	return Obj::SetAlive(alive);
+//}
+//
+//bool Up::DestroyPrpc(void)
+//{
+//	if (Obj::DestroyPrpc())
+//	{
+//		return true;
+//	}
+//
+//	return false;
+//}
