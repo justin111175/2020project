@@ -30,6 +30,7 @@ unique_Base TitleScene::Update(unique_Base own)
 	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
 	auto _level = [](sharedObj& plobj) {return (*plobj)._level; };
+	
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)

@@ -6,7 +6,6 @@
 #include <memory>
 #include <level.h>
 
-
 enum class MOVE_TYPE
 {
 	DOWN,
@@ -55,7 +54,6 @@ enum class ACT
 class Obj;
 class Player;
 class Enemy;
-class iteam;
 class Floor;
 
 using AnimVector = std::vector<std::pair<int, unsigned int>>;
@@ -83,10 +81,11 @@ public:
 	bool isAlive(void) { return _alive; }								// 生きている管理
 	bool isDead(void) { return _dead; }									// 死んでいる管理
 	bool isAnimEnd(void);												// アニメがおわったかどうか
-	Vector2Dbl _pos;													// 座標
-	Vector2Dbl _posOld;
-	Vector2Dbl _size;														// サイズ
-	Vector2Dbl _exrate;
+
+	Vector2Dbl posGet(void);
+	Vector2Dbl posOldGet(void);
+	Vector2Dbl sizeGet(void);
+
 	Level _level;
 
 private:
@@ -103,4 +102,9 @@ protected:
 	bool _dead;															// 死亡－＞死んでいるかグラフ
 	double _rad;														// 角度
 	int _zorder;														// 描画優先度用
+	Vector2Dbl _pos;													// 座標
+	Vector2Dbl _posOld;
+	Vector2Dbl _size;														// サイズ
+	Vector2Dbl _exrate;
+
 };

@@ -58,12 +58,10 @@ void LevelUp::Init(void)
 
 void LevelUp::Update(sharedObj plObj)
 {
-
 	DestroyPrpc();
-
-	if ((*plObj)._pos != (*plObj)._posOld)
+	if ((*plObj).posGet() != (*plObj).posOldGet())
 	{
-		_pos = (*plObj)._pos - (*plObj)._posOld + _posOld;
+		_pos = (*plObj).posGet() - (*plObj).posOldGet() + _posOld;
 
 	}
 

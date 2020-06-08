@@ -21,10 +21,10 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 			if ((obj->_unitID == unitID) && (*obj).isAlive())
 			{
 
-				if (actQue.second._pos.x + actQue.second._size.x > (*obj)._pos.x&&
-					actQue.second._pos.x < (*obj)._pos.x + (*obj)._size.x&&
-					actQue.second._pos.y<(*obj)._pos.y + (*obj)._size.y&&
-					actQue.second._pos.y + actQue.second._size.y>(*obj)._pos.y)
+				if (actQue.second.posGet().x + actQue.second.sizeGet().x > (*obj).posGet().x&&
+					actQue.second.posGet().x < (*obj).posGet().x + (*obj).sizeGet().x&&
+					actQue.second.posGet().y<(*obj).posGet().y + (*obj).sizeGet().y&&
+					actQue.second.posGet().y + actQue.second.sizeGet().y>(*obj).posGet().y)
 				{
 					//actQue.second._level._status[STATUS::HP] -= 20;
 					//actQue.second.SetAlive(false);
@@ -43,10 +43,10 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 			if ((obj->_unitID == unitID) && (*obj).isAlive())
 			{
 
-				if (actQue.second._pos.x + actQue.second._size.x > (*obj)._pos.x&&
-					actQue.second._pos.x < (*obj)._pos.x + (*obj)._size.x&&
-					actQue.second._pos.y<(*obj)._pos.y + (*obj)._size.y&&
-					actQue.second._pos.y + actQue.second._size.y>(*obj)._pos.y)
+				if (actQue.second.posGet().x + actQue.second.sizeGet().x > (*obj).posGet().x &&
+					actQue.second.posGet().x < (*obj).posGet().x + (*obj).sizeGet().x &&
+					actQue.second.posGet().y<(*obj).posGet().y + (*obj).sizeGet().y &&
+					actQue.second.posGet().y + actQue.second.sizeGet().y>(*obj).posGet().y)
 				{
 					//actQue.second._level._status[STATUS::HP] -= 20;
 					//actQue.second.SetAlive(false);
@@ -65,20 +65,17 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 			if ((obj->_unitID == unitID) &&(*obj).isAlive())
 			{
 
-				if (actQue.second._pos.x + actQue.second._size.x > (*obj)._pos.x&&
-					actQue.second._pos.x < (*obj)._pos.x + (*obj)._size.x&&
-					actQue.second._pos.y<(*obj)._pos.y + (*obj)._size.y&&
-					actQue.second._pos.y + actQue.second._size.y>(*obj)._pos.y)
+				if (actQue.second.posGet().x + actQue.second.sizeGet().x > (*obj).posGet().x &&
+					actQue.second.posGet().x < (*obj).posGet().x + (*obj).sizeGet().x &&
+					actQue.second.posGet().y<(*obj).posGet().y + (*obj).sizeGet().y &&
+					actQue.second.posGet().y + actQue.second.sizeGet().y>(*obj).posGet().y)
 				{
 					//actQue.second._level._status[STATUS::HP] -= 20;
 					actQue.second.SetAlive(false);
 					(*obj).SetAlive(false);
 					return true;
 				}
-				//else
-				//{
-				//	return false;
-				//}
+
 			}
 		}
 		return false;

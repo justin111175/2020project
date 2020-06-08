@@ -35,7 +35,6 @@ void Player::Update(sharedObj plObj)
 
 
 
-
 	//DrawFormatString(0, 0, GetColor(255, 255, 255), "GameCounter = %d", gameCounter);
 	//DrawFormatString(0, 32, GetColor(255, 255, 255), "map : %d,  %d", _pos.x, _pos.y);
 	//_dbgDrawFormatString(0, 32, GetColor(255, 255, 255), "map : %d,  %d", _pos.x, _pos.y);

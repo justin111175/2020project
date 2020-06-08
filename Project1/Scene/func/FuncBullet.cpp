@@ -22,7 +22,7 @@ bool FuncBullet::operator()(ActQueT &actQue, void* scene)
 
 	if (std::count_if(((GameScene*)scene)->_objList.begin(), ((GameScene*)scene)->_objList.end(), [&](sharedObj obj) {return (*obj)._unitID == unitID; }) < _MaxCount[unitID])
 	{
-		((GameScene*)scene)->_objList.emplace_back(new Bullet(unitID, actQue.second._pos, actQue.second.movetype, actQue.second._size));
+		((GameScene*)scene)->_objList.emplace_back(new Bullet(unitID, actQue.second.posGet(), actQue.second.movetype, actQue.second.sizeGet()));
 		return true;
 	}
 

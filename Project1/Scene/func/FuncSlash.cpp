@@ -21,7 +21,7 @@ bool FuncSlash::operator()(ActQueT &actQue, void* scene)
 
 	if (std::count_if(((GameScene*)scene)->_objList.begin(), ((GameScene*)scene)->_objList.end(), [&](sharedObj obj) {return (*obj)._unitID == unitID; }) < _MaxCount[unitID])
 	{
-		((GameScene*)scene)->_objList.emplace_back(new Slash(unitID, actQue.second._pos, actQue.second._size, actQue.second.movetype));
+		((GameScene*)scene)->_objList.emplace_back(new Slash(unitID, actQue.second.posGet(), actQue.second.sizeGet(), actQue.second.movetype));
 		return true;
 	}
 

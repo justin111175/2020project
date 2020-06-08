@@ -73,9 +73,9 @@ void Slash::Update(sharedObj plObj)
 
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
-	if ((*plObj)._pos!= (*plObj)._posOld)
+	if ((*plObj).posGet()!= (*plObj).posOldGet())
 	{
-		_pos = (*plObj)._pos - (*plObj)._posOld + _posOld;
+		_pos = (*plObj).posGet() - (*plObj).posOldGet() + _posOld;
 
 	}
 

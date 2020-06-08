@@ -119,6 +119,22 @@ bool Obj::isAnimEnd(void)
 	return false;
 }
 
+Vector2Dbl Obj::posGet(void)
+{
+	return _pos;
+}
+
+Vector2Dbl Obj::posOldGet(void)
+{
+
+	return _posOld;
+}
+
+Vector2Dbl Obj::sizeGet(void)
+{
+	return _size;
+}
+
 // 爆発アニメが終わったかどうか確認、終わったら、消滅する
 bool Obj::DestroyPrpc(void)
 {
