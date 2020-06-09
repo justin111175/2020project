@@ -27,12 +27,18 @@ Player::Player(Vector2Dbl pos, Vector2Dbl size,Vector2Dbl exrate)
 // çXêV
 void Player::Update(sharedObj plObj)
 {		
-
+	TRACE("%d\n", Bmax);
 	if (DestroyPrpc())
 	{
 		return;
 	}
-
+	if (Bmax < 20)
+	{
+		if (IpSceneMng.frames() % 60==0)
+		{
+			Bmax++;
+		}
+	}
 
 
 	//DrawFormatString(0, 0, GetColor(255, 255, 255), "GameCounter = %d", gameCounter);
@@ -163,13 +169,15 @@ void Player::PlayerMove(void)
 
 	}
 
-
-
-
 	if ((*_input).state(INPUT_ID::BTN_2).first && !(*_input).state(INPUT_ID::BTN_2).second)
 	{
-		IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
-		_level._statusUp[STATUS_UP::ã≠âª_âÒïú]++;
+		if (Bmax > 0)
+		{
+			IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+			Bmax--;
+
+		}
+		//_level._statusUp[STATUS_UP::ã≠âª_âÒïú]++;
 	}
 
 	if ((*_input).state(INPUT_ID::BTN_3).first && !(*_input).state(INPUT_ID::BTN_3).second)
@@ -227,7 +235,7 @@ bool Player::SetAlive(bool alive)
 void Player::Init(void)
 {
 
-
+	Bmax = 10;
 	_alive = true;
 	_dead = false;
 	_unitID = UNIT_ID::PLAYER;

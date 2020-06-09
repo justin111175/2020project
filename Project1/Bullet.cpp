@@ -50,6 +50,7 @@ Bullet::Bullet(UNIT_ID unitID, Vector2Dbl pos, MOVE_TYPE movetype, Vector2Dbl si
 		break;
 	}
 	
+	_posOld = _pos;
 
 
 }
@@ -68,8 +69,13 @@ void Bullet::Update(sharedObj plObj)
 	_pos.x += cos(_rad)*BulletSpeed;
 	_pos.y += sin(_rad)*BulletSpeed;
 
-
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+	
+	if ((((_posOld.y-_pos.y)* (_posOld.y - _pos.y))+ ((_posOld.x - _pos.x) * (_posOld.x - _pos.x)))>200*200)
+	{
+		SetAlive(false);
+	}
+
 
 	DestroyPrpc();
 }

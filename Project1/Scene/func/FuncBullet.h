@@ -10,6 +10,6 @@ struct FuncBullet
 
 private:
 	static std::map<UNIT_ID, int> _MaxCount;
-
+	
 };
 

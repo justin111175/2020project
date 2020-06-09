@@ -54,7 +54,6 @@ private:
 	
 	Number number;
 	Letter letter;
-
-
+	int Bmax;
 };
 
