@@ -10,7 +10,7 @@ public:
 	T x;
 	T y;
 
-	// ‘ã“ü‰‰Zq
+	// ‘ã“ü‰‰Zq@
 	Vector2Template<T>& operator = (const Vector2Template&vec);
 
 	// “Y‚¦š‰‰Zq

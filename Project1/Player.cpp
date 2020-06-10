@@ -89,33 +89,15 @@ void Player::Update(sharedObj plObj)
 
 		if (MeanState == MEAN_OUT)
 		{
-			if ((*_input).state(INPUT_ID::LEFT).first && !(*_input).state(INPUT_ID::LEFT).second)
-			{
-				if (meanId > ステータス)
-				{
-					meanId = (MEAN_ID)(meanId - 1);
-				}
-				else
-				{
-					meanId = ゲーム終了;
-				}
-			}
-			if ((*_input).state(INPUT_ID::RIGHT).first && !(*_input).state(INPUT_ID::RIGHT).second)
-			{
-				if (meanId < ゲーム終了)
-				{
-					meanId = (MEAN_ID)(meanId + 1);
-				}
-				else
-				{
-					meanId = ステータス;
-				}
-			}
+			_select.Updata(IpSceneMng._input, INPUT_ID::RIGHT, SceneSel::Mean, 4, 1);
+			_select.Updata(IpSceneMng._input, INPUT_ID::LEFT, SceneSel::Mean, 4, -1);
+
+
 
 			if ((*_input).state(INPUT_ID::BTN_1).first && !(*_input).state(INPUT_ID::BTN_1).second)
 			{
 
-				if (meanId == ゲーム終了)
+				if (_select.s_id.Mean == 4)
 				{
 					DxLib_End();
 				}
@@ -280,22 +262,15 @@ void Player::Init(void)
 	}
 
 
-
-
-
-
-	
-
-
 	number.Init();
 	FILE* fp = NULL;
 	
-	switch (_TitleId)
+	switch (_select.s_id.Title)
 	{
-	case TITLE_ID::新しいゲーム:
+	case 0:
 		_level.Init();
 		break;
-	case TITLE_ID::データ読み込む:
+	case 1:
 		if (fopen_s(&fp, "Dat/player.dat", "rb") != 0)
 		{
 			_level.Init();
@@ -307,9 +282,6 @@ void Player::Init(void)
 			fread(&_level._status, sizeof(&_level._status), 7, fp);
 			fread(&_level.level, sizeof(&_level.level), 3, fp);
 
-
-
-
 			fclose(fp);
 
 		}
@@ -317,8 +289,6 @@ void Player::Init(void)
 	default:
 		break;
 	}
-
-
 
 	state(STATE::UP);
 	_input = std::make_shared<KeyState>();
@@ -342,17 +312,16 @@ void Player::MeanDraw(void)
 		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 350 ,300,0,0,0.7f,0.7f,0,2,LAYER::UI });
 		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], 450 ,315,0,0,0.7f,0.7f,0,1,LAYER::UI });
 
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255*meanId ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,1.0f,1.0f,0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255* IpSceneMng.select.s_id.Mean ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,1.0f,1.0f,0,1,LAYER::UI });
 		
 		number.Draw({ 260, 80 }, { 0.4f, 0.3f }, _level.level);
 		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _level._status[STATUS::お金]);
 		
 		
 		number.Draw({ 1150, 280 }, {1.0f, 1.0f }, _level.experience[_level.level]);
-
 		break;
 	case MEAN_IN:
-		switch (meanId)
+		switch (_select.s_id.Mean)
 		{
 		case ステータス:
 			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::UI });
@@ -440,9 +409,9 @@ void Player::StatusUpdate(void)
 	//FILE* fp = NULL;
 	FILE* fp = NULL;
 
-	switch (meanId)
+	switch (IpSceneMng.select.s_id.Mean)
 	{
-	case ステータス:
+	case 0:
 		if ((*_input).state(INPUT_ID::UP).first && !(*_input).state(INPUT_ID::UP).second)
 		{
 			if (statusupId > 強化_攻撃力)
@@ -498,9 +467,9 @@ void Player::StatusUpdate(void)
 			break;
 		}
 		break;
-	case 装備:
+	case 1:
 		break;
-	case 保存:
+	case 2:
 
 
 		if (fopen_s(&fp, "Dat/player.dat", "wb") == 0)
@@ -516,9 +485,9 @@ void Player::StatusUpdate(void)
 		}
 
 		break;
-	case オプション:
+	case 3:
 		break;
-	case ゲーム終了:
+	case 4:
 		DxLib_End();
 		break;
 	default:

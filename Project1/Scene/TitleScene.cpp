@@ -4,12 +4,11 @@
 #include <ImageMng.h>
 #include <GameScene.h>
 #include <Dxlib.h>
-
+#include <Select.h>
 TitleScene::TitleScene()
 {
 	IpImageMng.GetID("タイトル", "image/title.png", { 1280,720 }, { 1,1 });
 	IpImageMng.GetID("選択", "image/textplate.png", { 486,150 }, { 1,1 });
-	_TitleId = 新しいゲーム;
 }
 
 TitleScene::~TitleScene()
@@ -46,74 +45,36 @@ unique_Base TitleScene::Update(unique_Base own)
 	}
 
 
-
-
-
-
 	IpSceneMng.AddDrawQue({ IMAGE_ID("タイトル")[0],0,0,0,0,1.0f,1.0f,0,0,LAYER::BG });
-	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],400,370+76* _TitleId,0,0,1.0f,1.0f,0,0,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],400,370 + 76 * _select.s_id.Title ,0,0,1.0f,1.0f,0,0,LAYER::UI });
 
 
-	if ((*_Input).state(INPUT_ID::UP).first && !(*_Input).state(INPUT_ID::UP).second)
-	{
-		if (_TitleId > 新しいゲーム)
-		{
-			_TitleId = (TITLE_ID)(_TitleId - 1);
-		}
-		else
-		{
-			_TitleId = 終了;
-		}
-	}
-	if ((*_Input).state(INPUT_ID::DOWN).first && !(*_Input).state(INPUT_ID::DOWN).second)
-	{
-		if (_TitleId < 終了)
-		{
-			_TitleId = (TITLE_ID)(_TitleId + 1);
-		}
-		else
-		{
-			_TitleId = 新しいゲーム;
-		}
-	}
+	_select.Updata(IpSceneMng._input, INPUT_ID::UP, SceneSel::TITLE, 2,-1);
+	_select.Updata(IpSceneMng._input, INPUT_ID::DOWN, SceneSel::TITLE, 2,1);
+
 
 	FILE* fp = NULL;
-	switch (_TitleId)
+	
+	
+	if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
 	{
-	case 新しいゲーム:
-
-		if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
+		switch (_select.s_id.Title)
 		{
+		case 0:
 			return std::make_unique<GameScene>();
-
-		}
-		break;
-	case データ読み込む:
-
-
-		
-		if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
-		{
+			break;
+		case 1:
 			if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
 			{
 				return std::make_unique<GameScene>();
-
-
-			}
-
-
-		}
-		break;
-	case 終了:
-		if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
-		{
+			}			
+			break;
+		case 2:
 			DxLib_End();
-
+			break;
+		default:
+			break;
 		}
-
-		break;
-	default:
-		break;
 	}
 
 	//DrawString(640, 360, "Hello C World!", GetColor(255, 255, 255));

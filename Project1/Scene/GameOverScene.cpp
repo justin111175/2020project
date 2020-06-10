@@ -16,25 +16,10 @@ GameOverScene::GameOverScene()
 	//SoundInit();
 	//Number number;
 	//number.Init();
-	//
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	if (IpSceneMng._hightScore[i] < IpSceneMng._scoreCnt)
-	//	{
-	//		if (i < 5 - 1)
-	//		{
-	//			for (int j = 5 - 2; j >= i; j--)
-	//			{
-	//				IpSceneMng._hightScore[i + 1] = IpSceneMng._hightScore[i];
-	//			}
-	//		}
-	//		IpSceneMng._hightScore[i] = IpSceneMng._scoreCnt;
-	//		break;
-	//	}
-	//}
+
 
 	cnt = -100;
-	_OverId = データ読み込む;
+	//_OverId = データ読み込む;
 }
 
 GameOverScene::~GameOverScene()
@@ -51,81 +36,39 @@ unique_Base GameOverScene::Update(unique_Base own)
 			cnt++;
 		}
 	}
-	// 描画を増加
-	// クラスが4より小さいなら
-	//if (IpSceneMng._classCnt <3)
-	//{
-	//	// ゲームオーバー
-	//	IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバー1")[0],IpSceneMng.ScreenSize.x / 2,IpSceneMng.ScreenSize.y / 2,0,0,0,LAYER::BG});
-	//}
-	//else
-	//{
-	//	// ゲームクリア
-	//	IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバー")[0],IpSceneMng.ScreenSize.x / 2,IpSceneMng.ScreenSize.y / 2,0,0,0,LAYER::BG });
-	//}
+
 	IpSceneMng.AddDrawQue({ IMAGE_ID("BG")[0], 0,0,0,0,1.0f,1.0f,0,1,LAYER::BG });
 
 	IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバー")[0], 0,cnt,0,0,1.0f,1.0f,0,1,LAYER::UI });
 	if (cnt >= 0)
 	{
 		IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバーSel")[0], 0,0,0,0,1.0f,1.0f,0,1,LAYER::UI });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 480,415+ (_OverId-1)*110,0,0,1.0f,1.0f,0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 480,415+ (_select.s_id.GameOver)*110,0,0,1.0f,1.0f,0,1,LAYER::UI });
 
 	}
 	
-	if ((*_Input).state(INPUT_ID::UP).first && !(*_Input).state(INPUT_ID::UP).second)
+	_select.Updata(IpSceneMng._input, INPUT_ID::UP, SceneSel::GameOver, 1, -1);
+	_select.Updata(IpSceneMng._input, INPUT_ID::DOWN, SceneSel::GameOver, 1, 1);
+
+
+	FILE* fp = NULL;	
+
+	if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
 	{
-		if (_OverId == データ読み込む)
+		switch (_select.s_id.GameOver)
 		{
-			_OverId = 終了;
-		}
-		else
-		{
-			_OverId = データ読み込む;
-		}
-	}
-	if ((*_Input).state(INPUT_ID::DOWN).first && !(*_Input).state(INPUT_ID::DOWN).second)
-	{
-		if (_OverId == 終了)
-		{
-			_OverId = データ読み込む;
-		}
-		else
-		{
-			_OverId = 終了;
-		}
-
-	}
-
-	FILE* fp = NULL;
-	switch (_OverId)
-	{
-	case データ読み込む:
-
-
-
-		if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
-		{
+		case 0:
 			if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
 			{
 				return std::make_unique<GameScene>();
-
-
 			}
-
-
-		}
-		break;
-	case 終了:
-		if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
-		{
+			break;
+		case 1:
 			DxLib_End();
-
+			break;
+		default:
+			break;
 		}
-
-		break;
-	default:
-		break;
 	}
 	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
@@ -141,10 +84,6 @@ unique_Base GameOverScene::Update(unique_Base own)
 	{
 		(*data).Draw();
 	}
-
-
-
-
 
 	// 描画を消す
 	_objList.erase(std::remove_if(

@@ -8,6 +8,8 @@
 #include <map>
 #include <InputState.h>
 #include <level.h>
+#include <Select.h>
+
 
 enum class DRAW_QUE
 {
@@ -23,32 +25,6 @@ enum class DRAW_QUE
 	LAYER,										// レイヤーID（数値の低い方が奥）
 };
 
-//enum TRG
-//{
-//	TRG_NOW,									// 現在
-//	TRG_OLD,									// １フレーム前
-//	TRG_MAX
-//};
-
-//struct Key										// キー情報セット
-//{
-//	bool up[TRG_MAX];
-//	bool right[TRG_MAX];
-//	bool down[TRG_MAX];
-//	bool left[TRG_MAX];
-//	bool Y[TRG_MAX];
-//	bool B[TRG_MAX];
-//	bool A[TRG_MAX];
-//	bool X[TRG_MAX];
-//};
-
-
-enum TITLE_ID
-{
-	新しいゲーム,
-	データ読み込む,
-	終了
-};
 
 class Obj;
 
@@ -60,10 +36,8 @@ using DrawQueT = std::tuple<int, double, double, int,int,double,double, double, 
 //#define _mapPos SceneMng::GetInstance().MapPos
 //#define _mapSize SceneMng::GetInstance().MapSize
 #define _Input SceneMng::GetInstance()._input
-#define _TitleId SceneMng::GetInstance().titleID
-#define _OverId SceneMng::GetInstance().overID
 
-#define TESTMAX 2500
+#define _select SceneMng::GetInstance().select
 
 
 
@@ -104,11 +78,13 @@ public:
 	
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報
 
-	TITLE_ID titleID;
-	TITLE_ID overID;
+	Select select;
+
 	int _blendCnt;												// ブレンド用カント
+	
 
 	const int frames(void)const;								// フレーム数のゲット関数
+	
 
 private:
 	static SceneMng* sInstance;									// インスタンス

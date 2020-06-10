@@ -24,7 +24,6 @@ enum ME_ST
 };
 
 
-
 class Player :
 	public Obj
 {	
@@ -33,6 +32,7 @@ public:
 	Player(Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate);
 	void Update(sharedObj plObj) override;									// XV
 	~Player();
+
 
 private:
 	bool SetAlive(bool alive);
@@ -43,7 +43,7 @@ private:
 	void Init(void);											// ‰Šú‰»
 	std::shared_ptr<InputState>_input;							// ²İÌß¯Ä‚ÌÕÆ°¸Îß²İÀéŒ¾
 
-	MEAN_ID meanId;
+
 	ME_ST MeanState;
 
 	STATUS_UP statusupId;
