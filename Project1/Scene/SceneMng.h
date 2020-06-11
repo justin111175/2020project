@@ -85,7 +85,7 @@ public:
 
 	const int frames(void)const;								// フレーム数のゲット関数
 	
-
+	Vector2Dbl mapPos;
 private:
 	static SceneMng* sInstance;									// インスタンス
 	// スマートポインタ
@@ -98,7 +98,6 @@ private:
 	std::map<LAYER, int> _screenID;								// 
 	std::vector<DrawQueT> _drawList;							// 描画リスト
 	std::vector<ActQueT> _actList;								// 活動リスト
-
 
 	~SceneMng();
 	SceneMng();

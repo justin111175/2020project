@@ -71,7 +71,7 @@ void Bullet::Update(sharedObj plObj)
 
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 	
-	if ((((_posOld.y-_pos.y)* (_posOld.y - _pos.y))+ ((_posOld.x - _pos.x) * (_posOld.x - _pos.x)))>200*200)
+	if ((((_posOld.y-_pos.y)* (_posOld.y - _pos.y))+ ((_posOld.x - _pos.x) * (_posOld.x - _pos.x)))>200.0*200.0)
 	{
 		SetAlive(false);
 	}

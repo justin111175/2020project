@@ -29,6 +29,7 @@ Vector2Template<T> & Vector2Template<T>::operator =(const Vector2Template<T> & v
 	y = vec.y;
 
 	return *this;
+
 }
 
 // “Y‚¦Žš‰‰ŽZŽq
@@ -82,11 +83,12 @@ bool Vector2Template<T>::operator<=(const Vector2Template<T> & vec) const
 template<class T>
 Vector2Template<T> & Vector2Template<T>::operator+=(const Vector2Template<T> & vec)
 {
-	x += vec.x;
-	y += vec.y;
+	//x += vec.x;
+	//y += vec.y;
 
-	return *this;
+	//return *this;
 
+	return Vector2Template<T>(x+=vec.x, y += vec.y);
 
 }
 template<class T>
@@ -101,10 +103,11 @@ Vector2Template<T> & Vector2Template<T>::operator-=(const Vector2Template<T> & v
 template<class T>
 Vector2Template<T> & Vector2Template<T>::operator*=(T k)
 {
-	x *= k;
-	y *= k;
+	//x *= k;
+	//y *= k;
 
-	return *this;
+	//return *this;
+	return Vector2Template<T>(x *= k, y *= k);
 }
 
 template<class T>

@@ -15,7 +15,7 @@
 //動的シングルトン
 SceneMng *SceneMng::sInstance = nullptr;
 
-SceneMng::SceneMng() :ScreenSize{ 1280,720 }, GameScreenSize{ ScreenSize / 2 }					// 初期化
+SceneMng::SceneMng() :ScreenSize{ 1280,720 }, GameScreenSize{ ScreenSize / 2 }	,_frames(0)				// 初期化
 {
 }
 
@@ -57,18 +57,16 @@ void SceneMng::Draw(void)
 
 		switch (layer_id)
 		{
-		//case LAYER::CHIP:
-		//	DrawRectGraph(
-		//		size.x *8,
-		//		size.y *16,
-		//		size.x *(pzData[y][x] % divTable[divID]),
-		//		size.y *(pzData[y][x] / divTable[divID]),
-		//		size.x,
-		//		size.y,
-		//		id,
-		//		false,
-		//		false);
-		//	break;
+		case LAYER::MEAN:
+			DrawRotaGraph3(static_cast<int>(x) , static_cast<int>(y) ,
+				0, 0,
+				ExRate.x, ExRate.y, rad, id, true);
+			break;
+		case LAYER::NUMBER:
+			DrawRotaGraph3(static_cast<int>(x), static_cast<int>(y),
+				0, 0,
+				ExRate.x, ExRate.y, rad, id, true);
+			break;
 		case LAYER::PUTTOM:
 			// ボタン描画表示するブレント
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs(250 * sin(_frames / 25.0)));
@@ -83,7 +81,7 @@ void SceneMng::Draw(void)
 			break;
 		default:
 //			DrawRotaGraph(static_cast<int>(x)+size.x/2 , static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
-			DrawRotaGraph3(static_cast<int>(x) , static_cast<int>(y),
+			DrawRotaGraph3(static_cast<int>(x)+mapPos.x, static_cast<int>(y)+mapPos.y,
 				0,0,
 				ExRate.x, ExRate.y, rad, id, true);
 			break;
@@ -100,7 +98,6 @@ void SceneMng::Draw(void)
 		DrawRotaGraph(GameScreenSize.x, GameScreenSize.y, 1.0, 0, _screenID[layer_id], true);
 	}
 	_dbgDrawFPS();
-
 
 	// サイズを４０に変更
 	SetFontSize(40);

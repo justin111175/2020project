@@ -9,6 +9,13 @@ TitleScene::TitleScene()
 {
 	IpImageMng.GetID("タイトル", "image/title.png", { 1280,720 }, { 1,1 });
 	IpImageMng.GetID("選択", "image/textplate.png", { 486,150 }, { 1,1 });
+	
+	FILE* fp = NULL;
+
+	if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
+	{
+		_select.s_id.Title = 1;
+	}
 }
 
 TitleScene::~TitleScene()

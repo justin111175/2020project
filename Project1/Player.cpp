@@ -21,6 +21,7 @@ Player::Player(Vector2Dbl pos, Vector2Dbl size,Vector2Dbl exrate)
 	_exrate = exrate;
 	_pos = pos;
 	_size = size;
+	_zorder = 0;
 	Init();
 }
 
@@ -173,6 +174,7 @@ void Player::PlayerMove(void)
 		state(STATE::UP);
 		movetype = MOVE_TYPE::UP;
 		_pos.y -= 5;
+		IpSceneMng.mapPos.y++;
 	}
 
 	if (CheckHitKey(KEY_INPUT_DOWN))
@@ -181,6 +183,7 @@ void Player::PlayerMove(void)
 		movetype = MOVE_TYPE::DOWN;
 
 		_pos.y += 5;
+		IpSceneMng.mapPos.y--;
 	}
 
 
@@ -190,6 +193,7 @@ void Player::PlayerMove(void)
 		movetype = MOVE_TYPE::LEFT;
 
 		_pos.x -= 5;
+		IpSceneMng.mapPos.x++;
 	}
 
 	if (CheckHitKey(KEY_INPUT_RIGHT))
@@ -198,6 +202,8 @@ void Player::PlayerMove(void)
 		movetype = MOVE_TYPE::RIGHT;
 
 		_pos.x += 5;
+		IpSceneMng.mapPos.x--;
+
 	}
 
 
@@ -303,16 +309,16 @@ void Player::MeanDraw(void)
 	switch (MeanState)
 	{
 	case MEAN_OUT:
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::MEAN });
 		
 		
-		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 300 ,250,0,0,0.7f,0.7f,0,2,LAYER::UI });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], 400 ,265,0,0,0.7f,0.7f,0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 300 ,250,0,0,0.7f,0.7f,0,2,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], 400 ,265,0,0,0.7f,0.7f,0,1,LAYER::MEAN });
 		
-		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 350 ,300,0,0,0.7f,0.7f,0,2,LAYER::UI });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], 450 ,315,0,0,0.7f,0.7f,0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 350 ,300,0,0,0.7f,0.7f,0,2,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], 450 ,315,0,0,0.7f,0.7f,0,1,LAYER::MEAN });
 
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255* IpSceneMng.select.s_id.Mean ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,1.0f,1.0f,0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255* IpSceneMng.select.s_id.Mean ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,1.0f,1.0f,0,1,LAYER::MEAN });
 		
 		number.Draw({ 260, 80 }, { 0.4f, 0.3f }, _level.level);
 		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _level._status[STATUS::お金]);
@@ -324,18 +330,18 @@ void Player::MeanDraw(void)
 		switch (_select.s_id.Mean)
 		{
 		case ステータス:
-			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::UI });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], 1010 ,205+ statusupId *53,0,0,1.0f,1.0f,0,1,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], 1010 ,205+ statusupId *53,0,0,1.0f,1.0f,0,1,LAYER::MEAN });
 
-			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 200 ,150,0,0,0.7f,0.7f,0,2,LAYER::UI });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], 300 ,165,0,0,0.7f,0.7f,0,1,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 200 ,150,0,0,0.7f,0.7f,0,2,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], 300 ,165,0,0,0.7f,0.7f,0,1,LAYER::MEAN });
 
-			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 250 ,200,0,0,0.7f,0.7f,0,2,LAYER::UI });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], 350 ,215,0,0,0.7f,0.7f,0,1,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], 250 ,200,0,0,0.7f,0.7f,0,2,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], 350 ,215,0,0,0.7f,0.7f,0,1,LAYER::MEAN });
 
 
 
-			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 750+sin(IpSceneMng.frames() / 5)*10.0 ,205 + statusupId * 53,0,0,1.0f,1.0f,0,1,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 750+sin(IpSceneMng.frames() / 5)*10.0 ,205 + statusupId * 53,0,0,1.0f,1.0f,0,1,LAYER::MEAN });
 
 
 			number.Draw({ 240,300 }, {0.4f,0.4f},_level._status[STATUS::攻撃力]);
@@ -360,10 +366,11 @@ void Player::MeanDraw(void)
 
 			break;
 		case 装備:
-			IpSceneMng.AddDrawQue({ IMAGE_ID("装備")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::UI });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("装備")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::MEAN });
 
 			break;
 		case 保存:
+
 			break;
 		case オプション:
 			break;
@@ -483,7 +490,8 @@ void Player::StatusUpdate(void)
 			
 			fclose(fp);
 		}
-
+		MeanState = ME_ST::MEAN_OUT;
+		meanFlag = false;
 		break;
 	case 3:
 		break;

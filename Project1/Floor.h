@@ -30,7 +30,6 @@ public:
 
 	void Update(sharedObj plObj) override;							// XV
 	~Floor();
-
 private:
 	void Init(void);												// ‰Šú‰»
 	FLOOR_TYPE _type;												// í—Ş

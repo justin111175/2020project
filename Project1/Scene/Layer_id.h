@@ -6,6 +6,7 @@ enum class LAYER
 	CHIP,
 	CHAR,										// キャラクター
 	UI,											// UI
+	MEAN,
 	NUMBER,
 	LETTER,
 	PUTTOM,										// パタン

@@ -1,6 +1,7 @@
 #include "Floor.h"
 #include "ImageMng.h"
 #include "_DeBugConOut.h"
+#include <Dxlib.h>
 
 Floor::Floor()
 {
@@ -24,9 +25,6 @@ Floor::Floor(FloorState & state)
 
 void Floor::Update(sharedObj plObj)
 {
-
-
-
 }
 
 Floor::~Floor()

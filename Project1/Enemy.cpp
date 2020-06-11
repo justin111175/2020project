@@ -19,6 +19,7 @@ Enemy::Enemy(EnemyState& state)
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
 	_exrate = std::move(std::get<static_cast<int>(ENEMY_STATE::EXRATE)>(state));
 	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(state), true);
+	_zorder = 1;
 	Init();
 }
 
@@ -92,7 +93,6 @@ void Enemy::Init(void)
 	_unitID = UNIT_ID::ENEMY;
 
 	AnimVector data;
-
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12 * static_cast<int>(_type) + 0], 10);
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 1], 20);
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 2], 30);
@@ -111,7 +111,6 @@ void Enemy::Init(void)
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 7], 40);
 	SetAnim(STATE::RIGHT, data);
 
-
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 9], 10);
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 10], 20);
 	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 11], 30);
@@ -126,32 +125,6 @@ void Enemy::Init(void)
 	SetAnim(STATE::DETH, data);
 
 
-	//switch (_type)
-	//{
-	//case ENEMY_TYPE::コウモリ:
-	//	data.emplace_back(IMAGE_ID("モンスター歩く")[0], 10);
-	//	data.emplace_back(IMAGE_ID("モンスター歩く")[1], 20);
-	//	data.emplace_back(IMAGE_ID("モンスター歩く")[2], 30);
-	//	data.emplace_back(IMAGE_ID("モンスター歩く")[1], 40);
-	//	data.emplace_back(IMAGE_ID("モンスター歩く")[0], 50);
-	//	SetAnim(STATE::DOWN, data);
-
-	//	break;
-	//case ENEMY_TYPE::飛ぶスライム:
-
-	//	data.emplace_back(IMAGE_ID("飛ぶスライム")[2], 30);
-	//	data.emplace_back(IMAGE_ID("飛ぶスライム")[1], 60);
-	//	SetAnim(STATE::MOVE, data);
-
-	//	data.emplace_back(IMAGE_ID("飛ぶスライム")[0], 5);
-	//	data.emplace_back(-1, 10);
-	//	SetAnim(STATE::DETH, data);
-	//	break;
-	//default:
-	//	// こないはず
-	//	AST();
-	//	break;
-	//}
 
 
 	//state(STATE::MOVE);
