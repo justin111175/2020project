@@ -88,7 +88,7 @@ void Player::Update(sharedObj plObj)
 	{
 		MeanDraw();
 
-		if (MeanState == MEAN_OUT)
+		if (MeanState == ME_ST::MEAN_OUT)
 		{
 			_select.Updata(IpSceneMng._input, INPUT_ID::RIGHT, SceneSel::Mean, 4, 1);
 			_select.Updata(IpSceneMng._input, INPUT_ID::LEFT, SceneSel::Mean, 4, -1);
@@ -104,7 +104,7 @@ void Player::Update(sharedObj plObj)
 				}
 				else
 				{
-					MeanState = MEAN_IN;
+					MeanState = ME_ST::MEAN_IN;
 				}
 
 			}
@@ -121,7 +121,7 @@ void Player::Update(sharedObj plObj)
 			StatusUpdate();
 			if ((*_input).state(INPUT_ID::ESC).first && !(*_input).state(INPUT_ID::ESC).second)
 			{
-				MeanState = MEAN_OUT;
+				MeanState = ME_ST::MEAN_OUT;
 
 			}
 		}
@@ -168,13 +168,28 @@ void Player::PlayerMove(void)
 		_posOld = _pos;
 		IpSceneMng.AddActQue({ ACT_QUE::SLASH , *this });
 	}
+	
 
+
+	if (abs(_pos.x - _mapPos.x) > IpSceneMng.ScreenSize.x/2)
+	{
+		_mapPos.x-=speed.x;
+	}
+	if (abs(_pos.y - _mapPos.y) > IpSceneMng.ScreenSize.y/2)
+	{
+		_mapPos.y -= speed.y;
+
+	}
+
+
+	speed = { 0,0 };
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
 		state(STATE::UP);
 		movetype = MOVE_TYPE::UP;
-		_pos.y -= 5;
-		IpSceneMng.mapPos.y++;
+		speed.y = -4;
+		_pos.y += speed.y;
+		
 	}
 
 	if (CheckHitKey(KEY_INPUT_DOWN))
@@ -182,8 +197,8 @@ void Player::PlayerMove(void)
 		state(STATE::DOWN);
 		movetype = MOVE_TYPE::DOWN;
 
-		_pos.y += 5;
-		IpSceneMng.mapPos.y--;
+		speed.y = 4;
+		_pos.y += speed.y;
 	}
 
 
@@ -192,8 +207,8 @@ void Player::PlayerMove(void)
 		state(STATE::LEFT);
 		movetype = MOVE_TYPE::LEFT;
 
-		_pos.x -= 5;
-		IpSceneMng.mapPos.x++;
+		speed.x = -4;
+		_pos.x += speed.x;
 	}
 
 	if (CheckHitKey(KEY_INPUT_RIGHT))
@@ -201,10 +216,13 @@ void Player::PlayerMove(void)
 		state(STATE::RIGHT);
 		movetype = MOVE_TYPE::RIGHT;
 
-		_pos.x += 5;
-		IpSceneMng.mapPos.x--;
+		speed.x = 4;
+		_pos.x += speed.x;
+
 
 	}
+	
+
 
 
 }
@@ -267,7 +285,7 @@ void Player::Init(void)
 		_level.experience[x] = 100 * x;
 	}
 
-
+	
 	number.Init();
 	FILE* fp = NULL;
 	
@@ -308,7 +326,7 @@ void Player::MeanDraw(void)
 
 	switch (MeanState)
 	{
-	case MEAN_OUT:
+	case ME_ST::MEAN_OUT:
 		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], 0 ,0,0,0,1.0f,1.0f,0,0,LAYER::MEAN });
 		
 		
@@ -326,7 +344,7 @@ void Player::MeanDraw(void)
 		
 		number.Draw({ 1150, 280 }, {1.0f, 1.0f }, _level.experience[_level.level]);
 		break;
-	case MEAN_IN:
+	case ME_ST::MEAN_IN:
 		switch (_select.s_id.Mean)
 		{
 		case ステータス:

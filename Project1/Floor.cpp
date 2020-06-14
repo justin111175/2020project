@@ -42,16 +42,6 @@ void Floor::Init(void)
 	case FLOOR_TYPE::Outside_A1_ID:
 		for (auto i : Outside_A1_ID())
 		{
-			//switch (A1_ID)
-			//{
-			//case static_cast<int>(i):
-
-
-			//	break;
-
-			//default:
-			//	break;
-			//}
 			if (A1_ID == i)
 			{
 				data.emplace_back(IMAGE_ID("Outside_A1")[static_cast<int>(i)], 30);
@@ -63,9 +53,6 @@ void Floor::Init(void)
 	default:
 		break;
 	}
-
-
-
 
 	state(STATE::NORMAL);
 

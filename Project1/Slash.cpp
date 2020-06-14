@@ -84,15 +84,6 @@ void Slash::Update(sharedObj plObj)
 	{
 		cnt += 3;
 		_rad -= cnt * DEG;
-		//if (_rad > 90 * DEG)
-		//{
-		//	_rad -= cnt * DEG;
-		//}
-		//else
-		//{
-		//	_rad += cnt * DEG;
-		//}
-
 	}
 
 
@@ -132,17 +123,12 @@ void Slash::Init(void)
 
 	SetAnim(STATE::NORMAL, data);
 
-
-
-
 	data.reserve(1);
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
 
 	state(STATE::NORMAL);
 }
-
-
 
 bool Slash::DestroyPrpc(void)
 {

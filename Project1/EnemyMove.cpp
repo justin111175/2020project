@@ -133,13 +133,10 @@ void EnemyMove::MoveNormal(void)
 	//}
 
 
-
-
-
-
-
 }
 
+
+// 四方向移動-100ピクセル移動したら、抜けます
 void EnemyMove::MoveUp(void)
 {
 	if (abs(_pos.y - _posOld.y) < 100)

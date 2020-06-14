@@ -2,7 +2,7 @@
 #include "Obj.h"
 #include <Outside_A1_ID.h>
 
-enum class FLOOR_TYPE
+enum class FLOOR_TYPE		//°‚Ì•`‰æ‚Ìƒ^ƒCƒv
 {
 	Outside_A1_ID,
 };
@@ -33,6 +33,6 @@ public:
 private:
 	void Init(void);												// ‰Šú‰»
 	FLOOR_TYPE _type;												// í—Ş
-	Outside_A1_ID A1_ID;
+	Outside_A1_ID A1_ID;											//•`‰æA1‚ÌID
 };
 

@@ -22,6 +22,7 @@ Bullet::Bullet(UNIT_ID unitID, Vector2Dbl pos, MOVE_TYPE movetype, Vector2Dbl si
 
 	Init();
 
+	//’e”­ŽË‚ÌŠp“x‚Æ‰ŠúÀ•W
 	switch (movetype)
 	{
 	case MOVE_TYPE::UP:
@@ -66,11 +67,14 @@ Bullet::~Bullet()
 void Bullet::Update(sharedObj plObj)
 {
 	
+	//’eˆÚ“®
 	_pos.x += cos(_rad)*BulletSpeed;
 	_pos.y += sin(_rad)*BulletSpeed;
 
+	//’e‚Ì“–‚½‚è”»’è
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 	
+	//ƒvƒŒƒCƒ„[‚©‚ç‚Ì‹——£200ˆÈŒãÁŽ¸
 	if ((((_posOld.y-_pos.y)* (_posOld.y - _pos.y))+ ((_posOld.x - _pos.x) * (_posOld.x - _pos.x)))>200.0*200.0)
 	{
 		SetAlive(false);

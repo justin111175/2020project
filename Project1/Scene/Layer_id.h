@@ -3,12 +3,12 @@
 enum class LAYER
 {		
 	BG,											// 背景
-	CHIP,
+	CHIP,										//チップ（床）
 	CHAR,										// キャラクター
 	UI,											// UI
-	MEAN,
-	NUMBER,
-	LETTER,
+	MEAN,										//メニュー
+	NUMBER,										//数字
+	LETTER,										//文字
 	PUTTOM,										// パタン
 	EX,											// 一番前用
 	MAX

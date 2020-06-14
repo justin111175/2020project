@@ -8,11 +8,10 @@
 
 enum class MOVE_TYPE
 {
-	DOWN,
+	DOWN,						//下
 	LEFT,						// 左
 	RIGHT,						// 右
-	UP
-	
+	UP							//上
 };
 
 // 状態管理
@@ -21,16 +20,12 @@ enum class STATE
 	DOWN,
 	LEFT,						// 左
 	RIGHT,						// 右
-	UP,
-	
+	UP,							//上
 	STAY,						// 止まる
-	NORMAL,
+	NORMAL,						//普通
 	DETH,						// 爆発(死亡)
 	MAX
 };
-
-
-
 
 enum class UNIT_ID
 {
@@ -38,17 +33,9 @@ enum class UNIT_ID
 	PLAYER,						// プレイヤー
 	ENEMY,						// 敵
 	PLaS,						// プレイヤー近距離攻撃
-	PLaB,
-	FLOOR,
-	LevelUp
-};
-
-enum class ACT
-{
-	STAY,						// 止まる
-	RIGHT,						// 右
-	LEFT,						// 左
-	MAX
+	PLaB,						//プレイヤーの弾
+	FLOOR,						//床
+	LevelUp						//レベルアップ
 };
 
 class Obj;
@@ -61,8 +48,6 @@ using AnimVector = std::vector<std::pair<int, unsigned int>>;
 //shared_ptr：		指定されたリソースへの所有権(ownership)を共有(share)するスマートポインタである。
 using sharedObj = std::shared_ptr<Obj>;									// shared_ptr 側だけコビーできます
 
-
-
 class Obj
 {
 public:
@@ -74,7 +59,7 @@ public:
 
 	bool state(const STATE state);										// ゲット関数-どのアニメションを再生するか指定する
 	UNIT_ID _unitID;													// ユニットID
-	MOVE_TYPE movetype;
+	MOVE_TYPE movetype;													// 向き
 	virtual bool SetAlive(bool alive);									// 生きているかどうか設定
 
 	bool SetAnim(const STATE state,AnimVector& data);					// アニメの設定
@@ -82,11 +67,12 @@ public:
 	bool isDead(void) { return _dead; }									// 死んでいる管理
 	bool isAnimEnd(void);												// アニメがおわったかどうか
 
-	Vector2Dbl posGet(void);
-	Vector2Dbl posOldGet(void);
-	Vector2Dbl sizeGet(void);
+	//ゲット関数
+	Vector2Dbl posGet(void);											//今の座標
+	Vector2Dbl posOldGet(void);											//昔の座標
+	Vector2Dbl sizeGet(void);											//大きさ
 
-	Level _level;
+	Level _level;														//レベル
 
 private:
 
@@ -102,9 +88,9 @@ protected:
 	bool _dead;															// 死亡－＞死んでいるかグラフ
 	double _rad;														// 角度
 	int _zorder;														// 描画優先度用
-	Vector2Dbl _pos;													// 座標
-	Vector2Dbl _posOld;
-	Vector2Dbl _size;														// サイズ
-	Vector2Dbl _exrate;
+	Vector2Dbl _pos;													// 今の座標
+	Vector2Dbl _posOld;													// 昔の座標
+	Vector2Dbl _size;													// サイズ
+	Vector2Dbl _exrate;													// XとYの拡大縮小率
 
 };

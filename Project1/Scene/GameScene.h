@@ -23,8 +23,6 @@ public:
 
 private:
 	// ファンク-フレンド
-
-
 	friend FuncBullet;
 	friend FuncSlash;
 	friend FuncCheck;
@@ -35,13 +33,11 @@ private:
 	std::vector<sharedObj> _objList;								// シェアポインタ-Obj
 	std::map<ACT_QUE, funcAct> funcQue;								// ファンク活動キュー
 
-	std::shared_ptr<InputState>_input;							// ｲﾝﾌﾟｯﾄのﾕﾆｰｸﾎﾟｲﾝﾀ宣言
-
+	std::shared_ptr<InputState>_input;								// ｲﾝﾌﾟｯﾄのﾕﾆｰｸﾎﾟｲﾝﾀ宣言
 
 	// マップ初期化
 	void MapInit_1(void);											// クラス1
 
-	
 	// 音初期化
 	int _shakeCount;
 };

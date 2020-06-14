@@ -15,10 +15,11 @@
 #define _dbgDrawCircle(fmt, ...) _DebugDispOut::GetInstance().DrawCircle(fmt, __VA_ARGS__) 
 #define _dbgDrawPixel(fmt, ...) _DebugDispOut::GetInstance().DrawPixel(fmt, __VA_ARGS__) 
 #define _dbgDrawString(fmt, ...) _DebugDispOut::GetInstance().DrawString(fmt, __VA_ARGS__)
+
+
 //#define _dbgDrawFormatString(fmt, ...) 	_DebugDispOut::GetInstance().DrawFormatString(fmt, __VA_ARGS__)
-#define _dbgDrawFormatString(fmt, ...) 	_DebugDispOut::GetInstance().SetScreen(); \
-										DxLib::DrawFormatString(fmt, __VA_ARGS__);\
-										_DebugDispOut::GetInstance().RevScreen()
+
+
 #define _dbgStartFPS()	_DebugDispOut::GetInstance().StartFPS()
 #define _dbgDrawFPS()	_DebugDispOut::GetInstance().DrawFPS()
 
@@ -35,7 +36,9 @@ public:
 	int DrawGraph(int x, int y, int GrHandle, int TransFlag);
 	int DrawBox(int x1, int y1, int x2, int y2, unsigned int Color, int FillFlag);
 	int DrawString(int x, int y, char* String, unsigned int Color);
-	//int DrawFormatString(int x, int y, unsigned int Color, std::string FormatString, ...);
+	
+	
+	//int DrawFormatString(int x, int y, unsigned int Color,const char* FormatString, ...);
 
 	int DrawLine(int x1, int y1, int x2, int y2, unsigned int Color);
 	int DrawCircle(int x, int y, int r, unsigned int Color, int FillFlag);

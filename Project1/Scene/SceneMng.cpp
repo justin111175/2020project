@@ -15,7 +15,7 @@
 //動的シングルトン
 SceneMng *SceneMng::sInstance = nullptr;
 
-SceneMng::SceneMng() :ScreenSize{ 1280,720 }, GameScreenSize{ ScreenSize / 2 }	,_frames(0)				// 初期化
+SceneMng::SceneMng() :ScreenSize{ 1280,720 }, GameScreenSize{ ScreenSize / 2 }				// 初期化
 {
 }
 
@@ -68,10 +68,10 @@ void SceneMng::Draw(void)
 				ExRate.x, ExRate.y, rad, id, true);
 			break;
 		case LAYER::PUTTOM:
-			// ボタン描画表示するブレント
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs(250 * sin(_frames / 25.0)));
-			DrawRotaGraph(static_cast<int>(x)/*+size.x/2*/ , static_cast<int>(y) /*+ size.y / 2*/, 1.0, rad, id, true);
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			//// ボタン描画表示するブレント
+			//SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs(250 * sin(_frames / 25.0)));
+			//DrawRotaGraph(static_cast<int>(x)/*+size.x/2*/ , static_cast<int>(y) /*+ size.y / 2*/, 1.0, rad, id, true);
+			//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			break;
 		case LAYER::EX:
 			// シン変更するときブレント用
@@ -80,7 +80,6 @@ void SceneMng::Draw(void)
 			SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 			break;
 		default:
-//			DrawRotaGraph(static_cast<int>(x)+size.x/2 , static_cast<int>(y) + size.y / 2, 1.0, rad, id, true);
 			DrawRotaGraph3(static_cast<int>(x)+mapPos.x, static_cast<int>(y)+mapPos.y,
 				0,0,
 				ExRate.x, ExRate.y, rad, id, true);
@@ -103,7 +102,7 @@ void SceneMng::Draw(void)
 	SetFontSize(40);
 
 	//// 『ＤＸライブラリ』と描画
-	//DrawFormatString(100, 100,  GetColor(255, 255, 255),"%d",IpSceneMng.frames());
+	//_dbgDrawFormatString(0, 32, GetColor(255, 255, 255), "map: %f", _frames);
 
 	// フォントのタイプをエッジつきアンチエイリアスフォントに変更
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
@@ -211,7 +210,6 @@ bool SceneMng::SysInit(void)
 	_screenID.try_emplace(LAYER::PUTTOM, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 	_screenID.try_emplace(LAYER::EX, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 
-	_frames = 0;
 
 
 	for (int y = 0; y < 50; y++)
@@ -222,8 +220,7 @@ bool SceneMng::SysInit(void)
 		}
 	}
 
-			
-	//testmode=false;
+	_frames = 0;
 
 
 	return false;

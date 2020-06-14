@@ -23,16 +23,7 @@ TitleScene::~TitleScene()
 }
 
 unique_Base TitleScene::Update(unique_Base own)
-{
-	
-
-
-
-
-
-
-	//return std::make_unique<LoadingScene>();
-	
+{	
 	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
 	auto _level = [](sharedObj& plobj) {return (*plobj)._level; };
@@ -51,11 +42,11 @@ unique_Base TitleScene::Update(unique_Base own)
 		(*data).Draw();
 	}
 
-
+	//タイトル描画
 	IpSceneMng.AddDrawQue({ IMAGE_ID("タイトル")[0],0,0,0,0,1.0f,1.0f,0,0,LAYER::BG });
 	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],400,370 + 76 * _select.s_id.Title ,0,0,1.0f,1.0f,0,0,LAYER::UI });
 
-
+	//選択
 	_select.Updata(IpSceneMng._input, INPUT_ID::UP, SceneSel::TITLE, 2,-1);
 	_select.Updata(IpSceneMng._input, INPUT_ID::DOWN, SceneSel::TITLE, 2,1);
 
@@ -67,25 +58,24 @@ unique_Base TitleScene::Update(unique_Base own)
 	{
 		switch (_select.s_id.Title)
 		{
-		case 0:
+		case 0:		//新しいゲーム	
+
 			return std::make_unique<GameScene>();
 			break;
-		case 1:
+			
+		case 1:		//データ読み込む
 			if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
 			{
 				return std::make_unique<GameScene>();
 			}			
 			break;
-		case 2:
+		case 2:		//ゲーム終了
 			DxLib_End();
 			break;
 		default:
 			break;
 		}
 	}
-
-	//DrawString(640, 360, "Hello C World!", GetColor(255, 255, 255));
-
 
 	_objList.erase(std::remove_if(
 		_objList.begin(),									// チェック範囲の開始
@@ -97,10 +87,4 @@ unique_Base TitleScene::Update(unique_Base own)
 
 }
 
-void TitleScene::funcInit(void)
-{
-}
 
-void TitleScene::RunActQue(std::vector<ActQueT> actList)
-{
-}

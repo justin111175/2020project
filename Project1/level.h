@@ -2,7 +2,7 @@
 
 
 
-enum STATUS
+enum STATUS														//強化ステータス
 {
 	HP,
 	MP,
@@ -14,7 +14,7 @@ enum STATUS
 	MAX
 };
 
-enum STATUS_UP
+enum STATUS_UP													//強化ステータス
 {
 	強化_攻撃力,
 	強化_防御力,
@@ -27,6 +27,7 @@ enum STATUS_UP
 
 };
 
+
 #define LevelMax 99
 #define BaseHP 100
 #define BaseMP 100
@@ -37,16 +38,12 @@ struct Level
 public:
 	void Init(void);											// 初期化
 
-	void Updata(void);
+	void Updata(void);											//ステータスの更新
+	int level;													//レベル
+	int experience[LevelMax];									//必要な経験値
 
-
-
-	//int vitality;			//活力
-	int level;
-	double experience[LevelMax];   //経験値
-
-	double _status[STATUS::MAX];
-	double _statusUp[STATUS_UP::強化_MAX];
+	int _status[STATUS::MAX];									//ステータス
+	int _statusUp[STATUS_UP::強化_MAX];							//強化ステータス
 
 };
 

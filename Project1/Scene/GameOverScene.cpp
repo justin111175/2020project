@@ -12,10 +12,6 @@ GameOverScene::GameOverScene()
 	IpImageMng.GetID("ゲームオーバーSel", "image/gameoverSel.png", { 1280,720 }, { 1,1 });
 	IpImageMng.GetID("messagecursorD3", "image/messagecursorD3.png", { 56,40 }, { 1,1 });
 	IpImageMng.GetID("BG", "image/bg.png", { 1280,720 }, { 1,1 });
-	//IpImageMng.GetID("スコア", "image/score.png", { 300,380 }, { 1,1 });
-	//SoundInit();
-	//Number number;
-	//number.Init();
 
 
 	cnt = -100;
@@ -28,7 +24,7 @@ GameOverScene::~GameOverScene()
 
 unique_Base GameOverScene::Update(unique_Base own)
 {
-
+	//アニメ
 	if (cnt < 0)
 	{
 		if (IpSceneMng.frames() % 60)
@@ -47,6 +43,7 @@ unique_Base GameOverScene::Update(unique_Base own)
 
 	}
 	
+	//選択
 	_select.Updata(IpSceneMng._input, INPUT_ID::UP, SceneSel::GameOver, 1, -1);
 	_select.Updata(IpSceneMng._input, INPUT_ID::DOWN, SceneSel::GameOver, 1, 1);
 
@@ -57,13 +54,13 @@ unique_Base GameOverScene::Update(unique_Base own)
 	{
 		switch (_select.s_id.GameOver)
 		{
-		case 0:
+		case 0:			//データ読み込む
 			if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
 			{
 				return std::make_unique<GameScene>();
 			}
 			break;
-		case 1:
+		case 1:			//ゲーム終了
 			DxLib_End();
 			break;
 		default:

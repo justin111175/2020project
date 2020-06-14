@@ -2,11 +2,13 @@
 
 void Select::Updata(std::weak_ptr<InputState> keyData, const INPUT_ID id, SceneSel sceneSel, int max,int move)
 {
-
+	// expired:監視対象の寿命切れやリンク切れを判定する
 	if (!keyData.expired())
 	{
+		// lock:監視しているshared_ptrオブジェクトを取得する
 		if ((*keyData.lock()).state(id).first && !(*keyData.lock()).state(id).second)
 		{
+			//シンの分類
 			switch (sceneSel)
 			{
 			case SceneSel::TITLE:
@@ -35,7 +37,6 @@ void Select::Updata(std::weak_ptr<InputState> keyData, const INPUT_ID id, SceneS
 				}
 				break;
 			case SceneSel::Mean:
-
 				if (id == INPUT_ID::LEFT)
 				{
 					if (s_id.Mean > 0)
@@ -59,11 +60,8 @@ void Select::Updata(std::weak_ptr<InputState> keyData, const INPUT_ID id, SceneS
 						s_id.Mean = 0;
 					}
 				}
-
-
 				break;
-			case SceneSel::GameOver:
-				
+			case SceneSel::GameOver:			
 				if (id == INPUT_ID::UP)
 				{
 					if (s_id.GameOver > 0)
@@ -75,7 +73,6 @@ void Select::Updata(std::weak_ptr<InputState> keyData, const INPUT_ID id, SceneS
 						s_id.GameOver = max;
 					}
 				}
-
 				if (id == INPUT_ID::DOWN)
 				{
 					if (s_id.GameOver < max)
@@ -87,8 +84,6 @@ void Select::Updata(std::weak_ptr<InputState> keyData, const INPUT_ID id, SceneS
 						s_id.GameOver = 0;
 					}
 				}
-
-
 				break;
 			default:
 				break;
@@ -96,9 +91,4 @@ void Select::Updata(std::weak_ptr<InputState> keyData, const INPUT_ID id, SceneS
 
 		}
 	}
-
-	
-
-
-
 }

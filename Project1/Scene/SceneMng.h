@@ -18,8 +18,8 @@ enum class DRAW_QUE
 	Y,											// 座標Y
 	SIZE_X,										// サイズX
 	SIZE_Y,										// サイズY
-	EXRATE_X,
-	EXRATE_Y,
+	EXRATE_X,									//拡大縮小率X
+	EXRATE_Y,									//拡大縮小率Y
 	RAD,										// 角度
 	ZODER,										// Zオーダー（レイヤーの前後順番-数値の低い方が奥）
 	LAYER,										// レイヤーID（数値の低い方が奥）
@@ -33,8 +33,7 @@ using DrawQueT = std::tuple<int, double, double, int,int,double,double, double, 
 // デファイン
 #define IpSceneMng SceneMng::GetInstance()
 
-//#define _mapPos SceneMng::GetInstance().MapPos
-//#define _mapSize SceneMng::GetInstance().MapSize
+#define _mapPos SceneMng::GetInstance().mapPos
 #define _Input SceneMng::GetInstance()._input
 
 #define _select SceneMng::GetInstance().select
@@ -75,17 +74,17 @@ public:
 
 	const Vector2 ScreenSize;									// 全画面サイズ
 	const Vector2 GameScreenSize;								// 全画面サイズの4分の１
-	
+	Vector2Dbl mapPos;
+
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報
 
-	Select select;
+	Select select;												//選択用
 
 	int _blendCnt;												// ブレンド用カント
 	
 
 	const int frames(void)const;								// フレーム数のゲット関数
 	
-	Vector2Dbl mapPos;
 private:
 	static SceneMng* sInstance;									// インスタンス
 	// スマートポインタ

@@ -14,12 +14,12 @@ LevelUp::LevelUp(UNIT_ID unitID, Vector2Dbl pos,Vector2Dbl size)
 	_size = { 250,150 };
 	_unitID = unitID;
 
-
+	//プレイヤーのの頭の上
 	_pos.x = pos.x-_size.x/2+size.x/2;
 	_pos.y = pos.y-_size.y+20;
 
+	// レベルアップしたプレイヤーの位置をとる
 	_posOld = _pos;
-
 
 	Init();
 
@@ -29,11 +29,11 @@ LevelUp::LevelUp(UNIT_ID unitID, Vector2Dbl pos,Vector2Dbl size)
 LevelUp::~LevelUp()
 {
 }
-
+//レベルアップ画像の初期化
 void LevelUp::Init(void)
 {
-	_alive = true;
 
+	_alive = true;
 
 	AnimVector data;
 	data.reserve(1);
@@ -46,9 +46,6 @@ void LevelUp::Init(void)
 
 	SetAnim(STATE::NORMAL, data);
 
-
-
-
 	data.reserve(1);
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
@@ -58,7 +55,9 @@ void LevelUp::Init(void)
 
 void LevelUp::Update(sharedObj plObj)
 {
+	//消失確認
 	DestroyPrpc();
+	//レベルアップして、アニメが終わってない、そしてプレイヤーの位置が変更した場合の補正
 	if ((*plObj).posGet() != (*plObj).posOldGet())
 	{
 		_pos = (*plObj).posGet() - (*plObj).posOldGet() + _posOld;

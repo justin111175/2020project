@@ -83,12 +83,12 @@ bool Vector2Template<T>::operator<=(const Vector2Template<T> & vec) const
 template<class T>
 Vector2Template<T> & Vector2Template<T>::operator+=(const Vector2Template<T> & vec)
 {
-	//x += vec.x;
-	//y += vec.y;
+	x += vec.x;
+	y += vec.y;
 
-	//return *this;
+	return *this;
 
-	return Vector2Template<T>(x+=vec.x, y += vec.y);
+//	return Vector2Template<T>(x+=vec.x, y += vec.y);
 
 }
 template<class T>

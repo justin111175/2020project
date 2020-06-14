@@ -27,9 +27,6 @@ void Number::Draw(Vector2 pos,Vector2Dbl exrate, int score)
 		IpSceneMng.AddDrawQue({ IMAGE_ID("数字1")[score % 10], pos.x - 90.0* exrate.x * i,pos.y ,0,0,exrate.x,exrate.y,0,0,LAYER::NUMBER });
 		score /= 10;
 	}
-	
-
-
 
 	// scoreの値で事前チェック
 	if (score <= 0)

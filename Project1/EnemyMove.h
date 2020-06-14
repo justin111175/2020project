@@ -3,17 +3,6 @@
 #include <Vector2.h>
 #include <vector>
 
-//enum class MOVE_TYPE
-//{
-//	WAIT,			// 移動停止
-//	SIGMOID,		// シグモイド移動
-//	SPIRAL,			// スパイラル移動
-//	PITIN,			// 指定したところへ行く移動
-//	LR,				// 左右移動
-//	EXPAND,			// 拡大縮小
-//	ATTACK			// 攻撃
-//};
-
 
 //移動種類、ゴール地点
 using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2Dbl>>;
@@ -31,6 +20,7 @@ private:
 	void SetMovePrg(void);								// セットムーブプログラム
 	void (EnemyMove::*_move)(void);						// ムーブ用関数ポインタ
 
+	// 移動用関数
 	void MoveNormal(void);								
 	void MoveUp(void);
 	void MoveRight(void);
@@ -47,8 +37,8 @@ private:
 	Vector2Dbl _endPos;									// 各移動関数のエンド地点
 
 	Vector2Dbl& _pos;									// ゴール地点
-	Vector2Dbl& _size;										// サイズ
-	MOVE_TYPE& movetype;
+	Vector2Dbl& _size;									// サイズ
+	MOVE_TYPE& movetype;								//移動のタイプ
 
 
 	double & _rad;										// 角度

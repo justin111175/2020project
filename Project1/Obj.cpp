@@ -55,7 +55,7 @@ void Obj::Draw(void)
 
 void Obj::Draw(int id)
 {
-	// 描画キューの設定｛Key、座標X、座標Y、角度、Zオーダー（レイヤーの前後順番）、レイヤーID｝
+	// 描画キューの設定｛Key、座標X、座標Y、サイズX、サイズY、拡大縮小率X、拡大縮小率Y、角度、Zオーダー（レイヤーの前後順番）、レイヤーID｝
 	IpSceneMng.AddDrawQue({ id, _pos.x, _pos.y ,_size.x,_size.y,_exrate.x,_exrate.y,_rad,_zorder,LAYER::CHAR});
 }
 
@@ -118,6 +118,7 @@ bool Obj::isAnimEnd(void)
 	}
 	return false;
 }
+
 
 Vector2Dbl Obj::posGet(void)
 {
