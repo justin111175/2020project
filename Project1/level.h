@@ -44,6 +44,6 @@ public:
 
 	int _status[STATUS::MAX];									//ステータス
 	int _statusUp[STATUS_UP::強化_MAX];							//強化ステータス
-
+	unsigned int i[9];
 };
 

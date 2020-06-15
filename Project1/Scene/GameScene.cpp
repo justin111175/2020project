@@ -73,6 +73,8 @@ GameScene::GameScene()
 
 
 	_shakeCount = 0;
+
+
 }
 
 

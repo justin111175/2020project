@@ -6,10 +6,8 @@
 #include <_DebugDispOut.h>
 #include <SceneMng.h>
 #include <Obj.h>
-#include <algorithm>
 #include <KeyState.h>
 #include <level.h>
-
 
 Player::Player()
 {
@@ -28,11 +26,11 @@ Player::Player(Vector2Dbl pos, Vector2Dbl size,Vector2Dbl exrate)
 // 更新
 void Player::Update(sharedObj plObj)
 {		
-	TRACE("%d\n", Bmax);
 	if (DestroyPrpc())
 	{
 		return;
 	}
+
 	if (Bmax < 20)
 	{
 		if (IpSceneMng.frames() % 60==0)
@@ -40,15 +38,8 @@ void Player::Update(sharedObj plObj)
 			Bmax++;
 		}
 	}
+	TRACE("i[8]:%d\n", _level.i[8]);
 
-
-	//DrawFormatString(0, 0, GetColor(255, 255, 255), "GameCounter = %d", gameCounter);
-	//DrawFormatString(0, 32, GetColor(255, 255, 255), "map : %d,  %d", _pos.x, _pos.y);
-	//_dbgDrawFormatString(0, 32, GetColor(255, 255, 255), "map : %d,  %d", _pos.x, _pos.y);
-	//_dbgDrawString(0, 0, "map:", GetColor(0, 0, 0));
-
-	//_dbgDrawString(0, 0);
-	//	int x, int y, char* String, unsigned int Color
 	(*_input).Update();
 
 	if (!meanFlag)
@@ -280,14 +271,13 @@ void Player::Init(void)
 	
 	SetAnim(STATE::DETH, data);
 
-	for (int x = 1; x <= LevelMax; x++)
+	for (int x = 1; x < LevelMax; x++)
 	{
 		_level.experience[x] = 100 * x;
 	}
 
 	
 	number.Init();
-	FILE* fp = NULL;
 	
 	switch (_select.s_id.Title)
 	{
@@ -295,26 +285,15 @@ void Player::Init(void)
 		_level.Init();
 		break;
 	case 1:
-		if (fopen_s(&fp, "Dat/player.dat", "rb") != 0)
-		{
-			_level.Init();
-		}
-		else
-		{
+		//_level.Init();
+		Read();
 
-			fread(&_level._statusUp, sizeof(&_level._statusUp), 3, fp);
-			fread(&_level._status, sizeof(&_level._status), 7, fp);
-			fread(&_level.level, sizeof(&_level.level), 3, fp);
-
-			fclose(fp);
-
-		}
 		break;
 	default:
 		break;
 	}
 
-	state(STATE::UP);
+	//state(STATE::UP);
 	_input = std::make_shared<KeyState>();
 	meanFlag = false;
 	LetterFlag = false;
@@ -339,7 +318,7 @@ void Player::MeanDraw(void)
 		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], 115+255* IpSceneMng.select.s_id.Mean ,385+sin(IpSceneMng.frames()/5)*10.0,0,0,1.0f,1.0f,0,1,LAYER::MEAN });
 		
 		number.Draw({ 260, 80 }, { 0.4f, 0.3f }, _level.level);
-		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _level._status[STATUS::お金]);
+		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _level._status[static_cast<int>(STATUS::お金)]);
 		
 		
 		number.Draw({ 1150, 280 }, {1.0f, 1.0f }, _level.experience[_level.level]);
@@ -412,7 +391,7 @@ void Player::StatusUpdate(void)
 	_level.Updata();
 
 	auto UpDown = [](std::weak_ptr<InputState> keyData, const INPUT_ID id,Level& _level, const STATUS_UP status_up, const int num) {
-	
+		
 		if (!keyData.expired())
 		{
 			if ((*keyData.lock()).state(id).first && !(*keyData.lock()).state(id).second)
@@ -430,9 +409,7 @@ void Player::StatusUpdate(void)
 			}
 		}
 	};
-
-	//FILE* fp = NULL;
-	FILE* fp = NULL;
+	
 
 	switch (IpSceneMng.select.s_id.Mean)
 	{
@@ -496,18 +473,10 @@ void Player::StatusUpdate(void)
 		break;
 	case 2:
 
+		Save();
 
-		if (fopen_s(&fp, "Dat/player.dat", "wb") == 0)
-		{
 
-			fwrite(&_level._statusUp, sizeof(&_level._statusUp), 3, fp);
-			fwrite(&_level._status, sizeof(&_level._status), 7, fp);
-			fwrite(&_level.level, sizeof(&_level.level), 3, fp);
 
-			
-			
-			fclose(fp);
-		}
 		MeanState = ME_ST::MEAN_OUT;
 		meanFlag = false;
 		break;
@@ -519,6 +488,43 @@ void Player::StatusUpdate(void)
 	default:
 		break;
 	}
+
+}
+
+void Player::Save(void)
+{
+
+
+	FILE* fp = NULL;
+	if (fopen_s(&fp, "player.dat", "wb") == 0)
+	{
+		fwrite(&_level._statusUp[0], sizeof(&_level._statusUp[0]) * 7, 1, fp);
+		fwrite(&_level._status[0], sizeof(&_level._status[0])*7, 1, fp);
+		fwrite(&_level.level, sizeof(&_level.level), 1, fp);
+		fclose(fp);
+
+
+	}
+}
+
+void Player::Read(void)
+{
+	FILE* fp = NULL;
+	if (fopen_s(&fp, "player.dat", "rb") != 0)
+	{
+		_level.Init();
+	}
+	else
+	{
+
+		fread(&_level._statusUp[0], sizeof(&_level._statusUp[0]) * 7, 1, fp);
+		fread(&_level._status[0], sizeof(&_level._status[0]), 7, fp);
+		fread(&_level.level, sizeof(&_level.level), 1, fp);
+
+		fclose(fp);
+
+	}
+
 
 }
 

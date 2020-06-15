@@ -22,7 +22,7 @@ void Level::Init(void)
 	_statusUp[STATUS_UP::強化_敏捷] = 0;
 	_statusUp[STATUS_UP::強化_防御力] = 0;
 	_statusUp[STATUS_UP::残るボーナスポイント] = 5;
-
+	i[8] = 111;
 
 }
 

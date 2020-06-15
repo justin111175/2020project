@@ -72,7 +72,7 @@ public:
 	Vector2Dbl posOldGet(void);											//Ì‚ÌÀ•W
 	Vector2Dbl sizeGet(void);											//‘å‚«‚³
 
-	Level _level;														//ƒŒƒxƒ‹
+	//Level _level;														//ƒŒƒxƒ‹
 
 private:
 

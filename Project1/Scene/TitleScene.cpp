@@ -12,9 +12,11 @@ TitleScene::TitleScene()
 	
 	FILE* fp = NULL;
 
-	if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
+	if (fopen_s(&fp, "player.dat", "rb") == 0)
 	{
 		_select.s_id.Title = 1;
+		fclose(fp);
+
 	}
 }
 
@@ -26,7 +28,6 @@ unique_Base TitleScene::Update(unique_Base own)
 {	
 	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
-	auto _level = [](sharedObj& plobj) {return (*plobj)._level; };
 	
 	if (!FadeUpdate())
 	{
@@ -51,7 +52,6 @@ unique_Base TitleScene::Update(unique_Base own)
 	_select.Updata(IpSceneMng._input, INPUT_ID::DOWN, SceneSel::TITLE, 2,1);
 
 
-	FILE* fp = NULL;
 	
 	
 	if (((*_Input).state(INPUT_ID::BTN_1).first && !(*_Input).state(INPUT_ID::BTN_1).second))
@@ -64,10 +64,8 @@ unique_Base TitleScene::Update(unique_Base own)
 			break;
 			
 		case 1:		//データ読み込む
-			if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
-			{
-				return std::make_unique<GameScene>();
-			}			
+
+			return std::make_unique<GameScene>();
 			break;
 		case 2:		//ゲーム終了
 			DxLib_End();

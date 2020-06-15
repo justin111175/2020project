@@ -23,7 +23,7 @@ struct Select
 {
 public:
 	void Updata(std::weak_ptr<InputState> keyData, const INPUT_ID id, SceneSel sceneSel, int max,int move);
-	
 	S_ID s_id;						//ŠeƒVƒ“‚Ì’†‚ÌID
+
 };
 

@@ -35,6 +35,7 @@ public:
 	Player(Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate);
 	void Update(sharedObj plObj) override;									// 更新
 	~Player();													//デストラクタ
+	Level _level;														//レベル
 
 
 private:
@@ -58,5 +59,7 @@ private:
 	int Bmax;													//弾の最大値
 	
 	Vector2Dbl speed;											//移動速度
+	void Save(void);
+	void Read(void);
 };
 
