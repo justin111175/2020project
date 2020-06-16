@@ -4,7 +4,6 @@
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "DxLib.h"
-#include "Player.h"
 #include "Obj.h"
 
 Enemy::Enemy()
@@ -25,15 +24,37 @@ Enemy::Enemy(EnemyState& state)
 
 // 更新
 void Enemy::Update(sharedObj plObj)
-{
-	if (DestroyPrpc())
+{	
+	if (isAlive())
 	{
+		if (_status[STATUS::HP] <= 0)
+		{
+			SetAlive(false);
+			(*plObj)._experience[(*plObj)._level] -= 30;
+
+		}
+	}
+
+
+
+	if (DestroyPrpc())
+	{	
+
+
 		return;
 	}
 
+
+	//TRACE("%d", Player::_level.experience[Player::_level.level]);
+	
+	//if (SetAlive(false)==true)
+	//{
+	//	(*plObj)._level.experience[(*plObj)._level.level] -= 30;
+
+	//}
 	//IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
-
+	
 	_moveCtl.Update(plObj);
 	
 	//TRACE(" %d\n", movetype);
@@ -124,7 +145,30 @@ void Enemy::Init(void)
 	data.emplace_back(-1, 35);
 	SetAnim(STATE::DETH, data);
 
-
+	switch (_type)
+	{
+	case ENEMY_TYPE::コウモリ:
+		_status.try_emplace(STATUS::HP, 100);
+		break;
+	case ENEMY_TYPE::スライム:
+		break;
+	case ENEMY_TYPE::オーク:
+		break;
+	case ENEMY_TYPE::ミノタウロス:
+		break;
+	case ENEMY_TYPE::小悪魔:
+		break;
+	case ENEMY_TYPE::スカルマン:
+		break;
+	case ENEMY_TYPE::ゴースト:
+		break;
+	case ENEMY_TYPE::魔族:
+		break;
+	case ENEMY_TYPE::MAX:
+		break;
+	default:
+		break;
+	}
 
 
 	//state(STATE::MOVE);

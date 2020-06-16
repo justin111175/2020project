@@ -1,7 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include <EnemyMove.h>
-
+#include "Player.h"
 
 enum class ENEMY_TYPE		//敵タイプ
 {
@@ -41,8 +41,8 @@ public:
 	void Update(sharedObj plObj) override;							// 更新
 	~Enemy();
 private:
+	friend Player;
 	EnemyMove _moveCtl{ _pos,_rad,_size,movetype };					// ムーブコントロール｛座標、角度、サイズ、移動種類｝
-
 	bool SetAlive(bool alive);										// 生きているかどうか
 	void Init(void);												// 初期化
 	ENEMY_TYPE _type;												// 敵種類

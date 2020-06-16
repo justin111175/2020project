@@ -188,7 +188,7 @@ bool _DebugDispOut::AddDrawDebug(void)
 	}
 	if (dispFlag)
 	{
-		IpSceneMng.AddDrawQue({ _DbgScreen,IpSceneMng.ScreenSize.x/2,IpSceneMng.ScreenSize.y / 2,0,0,1.0f,1.0f,0,INT_MAX,LAYER::UI});
+		IpSceneMng.AddDrawQue({ _DbgScreen,{IpSceneMng.ScreenSize.x / 2.0,IpSceneMng.ScreenSize.y / 2.0},{0,0},{1.0f,1.0f},0,INT_MAX,LAYER::UI });
 	}
 	WaitMode();
 	return true;

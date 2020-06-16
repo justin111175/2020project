@@ -1,5 +1,7 @@
 #include "LevelUp.h"
 #include <ImageMng.h>
+#include <_DeBugConOut.h>
+#include <_DebugDispOut.h>
 
 LevelUp::LevelUp()
 {
@@ -22,7 +24,6 @@ LevelUp::LevelUp(UNIT_ID unitID, Vector2Dbl pos,Vector2Dbl size)
 	_posOld = _pos;
 
 	Init();
-
 
 }
 
@@ -55,6 +56,9 @@ void LevelUp::Init(void)
 
 void LevelUp::Update(sharedObj plObj)
 {
+
+	//TRACE("E:%d\n", Player::_level._statusUp[STATUS_UP::残るボーナスポイント]);
+
 	//消失確認
 	DestroyPrpc();
 	//レベルアップして、アニメが終わってない、そしてプレイヤーの位置が変更した場合の補正

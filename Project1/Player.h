@@ -25,8 +25,6 @@ enum class ME_ST												//メニューの状態
 };
 
 
-
-
 class Player :
 	public Obj
 {	
@@ -35,7 +33,7 @@ public:
 	Player(Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate);
 	void Update(sharedObj plObj) override;									// 更新
 	~Player();													//デストラクタ
-	Level _level;														//レベル
+	//Level _level;														//レベル
 
 
 private:
@@ -43,8 +41,11 @@ private:
 
 	void PlayerMove(void);										// プレイヤーの移動
 	void Init(void);											// 初期化
-	std::shared_ptr<InputState>_input;							// ｲﾝﾌﾟｯﾄのﾕﾆｰｸﾎﾟｲﾝﾀ宣言
+	void Save(void);
+	void Read(void);
 
+	void StatusInit(void);
+	void StatusUpdata(void);
 
 	ME_ST MeanState;											//メニューの状態
 
@@ -59,7 +60,5 @@ private:
 	int Bmax;													//弾の最大値
 	
 	Vector2Dbl speed;											//移動速度
-	void Save(void);
-	void Read(void);
 };
 

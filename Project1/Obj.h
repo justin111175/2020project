@@ -38,11 +38,37 @@ enum class UNIT_ID
 	LevelUp						//レベルアップ
 };
 
+enum STATUS_UP													//強化ステータス
+{
+	強化_攻撃力,
+	強化_防御力,
+	強化_敏捷,
+	強化_回復,
+	強化_最大HP,
+	強化_最大MP,
+	残るボーナスポイント,
+	強化_MAX
+
+};
+
+enum STATUS														//強化ステータス
+{
+	HP,
+	最大HP,
+	MP,
+	最大MP,
+	攻撃力,
+	防御力,
+	敏捷,
+	回復,
+	お金,
+	MAX
+};
+
 class Obj;
 class Player;
 class Enemy;
 class Floor;
-
 using AnimVector = std::vector<std::pair<int, unsigned int>>;
 
 //shared_ptr：		指定されたリソースへの所有権(ownership)を共有(share)するスマートポインタである。
@@ -71,8 +97,11 @@ public:
 	Vector2Dbl posGet(void);											//今の座標
 	Vector2Dbl posOldGet(void);											//昔の座標
 	Vector2Dbl sizeGet(void);											//大きさ
-
-	//Level _level;														//レベル
+	
+	std::map<int, int> _status;
+	std::map<int, int> _statusUp;
+	int _level;
+	int _experience[99];
 
 private:
 

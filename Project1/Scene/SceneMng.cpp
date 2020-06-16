@@ -40,15 +40,16 @@ void SceneMng::Draw(void)
 	// stdのベクターを調べて回る:範囲FOR
 	for (auto dQue : _drawList)
 	{
-		double x, y, rad;
+		double rad;
 		int id;
+		Vector2Dbl pos;
 		Vector2Dbl size;
 		Vector2Dbl ExRate;
 		LAYER layer_id;
 		
 		// いらないことを飛ばす
 		// tie:同期する出力ストリームオブジェクトを取得・設定する
-		std::tie(id, x, y, size.x,size.y,ExRate.x,ExRate.y, rad, std::ignore, layer_id) = dQue;
+		std::tie(id, pos, size,ExRate, rad, std::ignore, layer_id) = dQue;
 
 		if (_screenID[layer_id] != GetDrawScreen())
 		{
@@ -58,12 +59,12 @@ void SceneMng::Draw(void)
 		switch (layer_id)
 		{
 		case LAYER::MEAN:
-			DrawRotaGraph3(static_cast<int>(x) , static_cast<int>(y) ,
+			DrawRotaGraph3(static_cast<int>(pos.x) , static_cast<int>(pos.y) ,
 				0, 0,
 				ExRate.x, ExRate.y, rad, id, true);
 			break;
 		case LAYER::NUMBER:
-			DrawRotaGraph3(static_cast<int>(x), static_cast<int>(y),
+			DrawRotaGraph3(static_cast<int>(pos.x), static_cast<int>(pos.y),
 				0, 0,
 				ExRate.x, ExRate.y, rad, id, true);
 			break;
@@ -76,11 +77,11 @@ void SceneMng::Draw(void)
 		case LAYER::EX:
 			// シン変更するときブレント用
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, IpSceneMng._blendCnt);
-			DrawRotaGraph(static_cast<int>(x)/*+size.x/2*/, static_cast<int>(y) /*+ size.y / 2*/, 1.0, rad, id, true);
+			DrawRotaGraph(static_cast<int>(pos.x)/*+size.x/2*/, static_cast<int>(pos.y) /*+ size.y / 2*/, 1.0, rad, id, true);
 			SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 			break;
 		default:
-			DrawRotaGraph3(static_cast<int>(x)+mapPos.x, static_cast<int>(y)+mapPos.y,
+			DrawRotaGraph3(static_cast<int>(pos.x)+mapPos.x, static_cast<int>(pos.y)+mapPos.y,
 				0,0,
 				ExRate.x, ExRate.y, rad, id, true);
 			break;

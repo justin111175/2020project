@@ -33,13 +33,13 @@ unique_Base GameOverScene::Update(unique_Base own)
 		}
 	}
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("BG")[0], 0,0,0,0,1.0f,1.0f,0,1,LAYER::BG });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("BG")[0], {0,0},{0,0},{1.0f,1.0f},0,1,LAYER::BG });
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバー")[0], 0,cnt,0,0,1.0f,1.0f,0,1,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバー")[0], {0,cnt*1.0},{0,0},{1.0f,1.0f},0,1,LAYER::UI });
 	if (cnt >= 0)
 	{
-		IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバーSel")[0], 0,0,0,0,1.0f,1.0f,0,1,LAYER::UI });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], 480,415+ (_select.s_id.GameOver)*110,0,0,1.0f,1.0f,0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバーSel")[0], {0,0},{0,0},{1.0f,1.0f},0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], {480.0,415 + (_select.s_id.GameOver) * 110.0},{0,0},{1.0f,1.0f},0,1,LAYER::UI });
 
 	}
 	
@@ -55,7 +55,7 @@ unique_Base GameOverScene::Update(unique_Base own)
 		switch (_select.s_id.GameOver)
 		{
 		case 0:			//データ読み込む
-			if (fopen_s(&fp, "Dat/player.dat", "rb") == 0)
+			if (fopen_s(&fp, "player.dat", "rb") == 0)
 			{
 				return std::make_unique<GameScene>();
 			}

@@ -44,8 +44,8 @@ unique_Base TitleScene::Update(unique_Base own)
 	}
 
 	//タイトル描画
-	IpSceneMng.AddDrawQue({ IMAGE_ID("タイトル")[0],0,0,0,0,1.0f,1.0f,0,0,LAYER::BG });
-	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],400,370 + 76 * _select.s_id.Title ,0,0,1.0f,1.0f,0,0,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("タイトル")[0],{0,0},{0,0},{1.0f,1.0f},0,0,LAYER::BG });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],{400.0,370 + 76.0 * _select.s_id.Title} ,{0,0},{1.0f,1.0f},0,0,LAYER::UI });
 
 	//選択
 	_select.Updata(IpSceneMng._input, INPUT_ID::UP, SceneSel::TITLE, 2,-1);
