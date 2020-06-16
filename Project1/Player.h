@@ -50,6 +50,7 @@ private:
 	ME_ST MeanState;											//メニューの状態
 
 	STATUS_UP statusupId;										//ステータスのID
+	void Draw(void);											//ゲーム画面描画
 	void MeanDraw(void);										//メニュー描画
 	void StatusUpdate(void);									//ステータス更新
 	bool meanFlag;												//メニュー開いたかどうかフラグ
@@ -60,5 +61,9 @@ private:
 	int Bmax;													//弾の最大値
 	
 	Vector2Dbl speed;											//移動速度
+
+
+	double HpRatio;
+	double MpRatio;
 };
 

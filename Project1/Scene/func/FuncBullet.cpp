@@ -1,5 +1,4 @@
 #include "FuncBullet.h"
-
 #include "Bullet.h"
 #include <algorithm>
 #include <GameScene.h>

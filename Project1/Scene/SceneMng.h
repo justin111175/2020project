@@ -7,16 +7,15 @@
 #include "Layer_id.h"
 #include <map>
 #include <InputState.h>
-#include <level.h>
 #include <Select.h>
 
 
 enum class DRAW_QUE
 {
 	IMAGE,										// イメージ
-	POS,
-	SIZE,
-	EXRATE,									//拡大縮小率
+	POS,										// 座標
+	SIZE,										// サイズ
+	EXRATE,										// 拡大縮小率
 	RAD,										// 角度
 	ZODER,										// Zオーダー（レイヤーの前後順番-数値の低い方が奥）
 	LAYER,										// レイヤーID（数値の低い方が奥）
@@ -71,6 +70,7 @@ public:
 
 	const Vector2 ScreenSize;									// 全画面サイズ
 	const Vector2 GameScreenSize;								// 全画面サイズの4分の１
+
 	Vector2Dbl mapPos;
 
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報

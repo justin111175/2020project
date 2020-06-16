@@ -77,11 +77,11 @@ void SceneMng::Draw(void)
 		case LAYER::EX:
 			// シン変更するときブレント用
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, IpSceneMng._blendCnt);
-			DrawRotaGraph(static_cast<int>(pos.x)/*+size.x/2*/, static_cast<int>(pos.y) /*+ size.y / 2*/, 1.0, rad, id, true);
+			DrawRotaGraph(pos.x, pos.y , 1.0, rad, id, true);
 			SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 			break;
 		default:
-			DrawRotaGraph3(static_cast<int>(pos.x)+mapPos.x, static_cast<int>(pos.y)+mapPos.y,
+			DrawRotaGraph3(pos.x+mapPos.x, pos.y+mapPos.y,
 				0,0,
 				ExRate.x, ExRate.y, rad, id, true);
 			break;

@@ -3,11 +3,9 @@
 #include <Dxlib.h>
 #include <GameScene.h>
 #include <_DeBugConOut.h>
-#include <_DebugDispOut.h>
-#include <SceneMng.h>
-#include <Obj.h>
-#include <KeyState.h>
-#include <level.h>
+#include "_DebugDispOut.h"
+#include "SceneMng.h"
+#include "KeyState.h"
 
 Player::Player()
 {
@@ -31,7 +29,6 @@ void Player::Update(sharedObj plObj)
 		return;
 	}
 
-	TRACE("%d\n", _statusUp[STATUS_UP::残るボーナスポイント]);
 	
 
 	//TRACE("E:%d\n", _level._statusUp[STATUS_UP::残るボーナスポイント]);
@@ -52,10 +49,14 @@ void Player::Update(sharedObj plObj)
 			Bmax++;
 		}
 	}
+	
+	HpRatio = static_cast<double>(_status[STATUS::HP]) / static_cast<double>(_status[STATUS::最大HP]);
+	MpRatio = _status[STATUS::MP] / _status[STATUS::最大MP];
 
 
 	if (!meanFlag)
 	{
+		Draw();
 		if (!LetterFlag)
 		{
 			PlayerMove();
@@ -134,11 +135,16 @@ void Player::Update(sharedObj plObj)
 // プレイヤー移動
 void Player::PlayerMove(void)
 {
-
+	TRACE("%f\n", HpRatio);
 	
 	if ((*_Input).state(INPUT_ID::P).first && !(*_Input).state(INPUT_ID::P).second)
 	{
-		_experience[_level] -= 30;
+		//_experience[_level] -= 30;
+		if (_status[STATUS::HP] < _status[STATUS::最大HP])
+		{
+			_status[STATUS::HP]+=10;
+
+		}
 	}
 
 	if ((*_Input).state(INPUT_ID::BTN_2).first && !(*_Input).state(INPUT_ID::BTN_2).second)
@@ -286,10 +292,20 @@ void Player::Init(void)
 	default:
 		break;
 	}
-
 	//state(STATE::UP);
 	meanFlag = false;
 	LetterFlag = false;
+}
+
+void Player::Draw(void)
+{
+
+	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {150 ,250},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {250 ,265},{0,0},{0.7f * HpRatio,0.6f},0,1,LAYER::MEAN });
+
+	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {200 ,300},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {300 ,315},{0,0},{0.7f* MpRatio,0.6f},0,1,LAYER::MEAN });
+
 }
 
 void Player::MeanDraw(void)
@@ -303,12 +319,12 @@ void Player::MeanDraw(void)
 		
 		
 		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {300 ,250},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {400 ,265},{0,0},{0.7f,0.7f},0,1,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {400 ,265},{0,0},{0.7f* HpRatio,0.6f},0,1,LAYER::MEAN });
 		
 		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {350 ,300},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {450 ,315},{0,0},{0.7f,0.7f},0,1,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {450 ,315},{0,0},{0.7f* MpRatio,0.6f},0,1,LAYER::MEAN });
 
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], {115.0 + 255 * IpSceneMng.select.s_id.Mean ,385 + sin(IpSceneMng.frames() / 5) * 10.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], {115 + 255.0 * IpSceneMng.select.s_id.Mean ,385 + sin(IpSceneMng.frames() / 5) * 10.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
 		
 		number.Draw({ 260, 80 }, { 0.4f, 0.3f }, _level);
 		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _status[STATUS::お金]);
@@ -560,9 +576,10 @@ void Player::StatusInit(void)
 
 void Player::StatusUpdata(void)
 {
+	
 
-	_status[STATUS::最大HP] = 100 + _statusUp[STATUS_UP::強化_最大HP] * 1.3;
-	_status[STATUS::最大MP] = 100 + _statusUp[STATUS_UP::強化_最大MP] * 1.3;
+	_status[STATUS::最大HP] = static_cast<int>(100 + _statusUp[STATUS_UP::強化_最大HP] * 1.3);
+	_status[STATUS::最大MP] = static_cast<int>(100 + _statusUp[STATUS_UP::強化_最大MP] * 1.3);
 
 }
 

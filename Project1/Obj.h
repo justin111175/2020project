@@ -4,14 +4,13 @@
 #include <Vector2.h>
 #include <map>
 #include <memory>
-#include <level.h>
 
 enum class MOVE_TYPE
 {
-	DOWN,						//下
+	DOWN,						// 下
 	LEFT,						// 左
 	RIGHT,						// 右
-	UP							//上
+	UP							// 上
 };
 
 // 状態管理
@@ -20,9 +19,9 @@ enum class STATE
 	DOWN,
 	LEFT,						// 左
 	RIGHT,						// 右
-	UP,							//上
+	UP,							// 上
 	STAY,						// 止まる
-	NORMAL,						//普通
+	NORMAL,						// 普通
 	DETH,						// 爆発(死亡)
 	MAX
 };
@@ -33,9 +32,9 @@ enum class UNIT_ID
 	PLAYER,						// プレイヤー
 	ENEMY,						// 敵
 	PLaS,						// プレイヤー近距離攻撃
-	PLaB,						//プレイヤーの弾
-	FLOOR,						//床
-	LevelUp						//レベルアップ
+	PLaB,						// プレイヤーの弾
+	FLOOR,						// 床
+	LevelUp						// レベルアップ
 };
 
 enum STATUS_UP													//強化ステータス
@@ -98,10 +97,10 @@ public:
 	Vector2Dbl posOldGet(void);											//昔の座標
 	Vector2Dbl sizeGet(void);											//大きさ
 	
-	std::map<int, int> _status;
-	std::map<int, int> _statusUp;
-	int _level;
-	int _experience[99];
+	std::map<int, int> _status;											//ステータス用
+	std::map<int, int> _statusUp;										//ステータス強化用
+	int _level;															//レベル
+	int _experience[99];												//経験値【レベル】
 
 private:
 

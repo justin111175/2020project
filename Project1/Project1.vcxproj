@@ -141,7 +141,6 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Scene\func\FuncLevelUp.cpp" />
     <ClCompile Include="Letter.cpp" />
-    <ClCompile Include="level.cpp" />
     <ClCompile Include="common\Number.cpp" />
     <ClCompile Include="LevelUp.cpp" />
     <ClCompile Include="Outside_A1_ID.cpp" />
@@ -175,7 +174,6 @@
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Scene\func\FuncLevelUp.h" />
     <ClInclude Include="Letter.h" />
-    <ClInclude Include="level.h" />
     <ClInclude Include="common\Number.h" />
     <ClInclude Include="LevelUp.h" />
     <ClInclude Include="Outside_A1_ID.h" />
