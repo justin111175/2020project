@@ -29,6 +29,7 @@ void SceneMng::Draw(void)
 			<
 			std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueB), std::get<static_cast<int>(DRAW_QUE::ZODER)>(dQueB));
 	});
+	
 
 	for (auto layer : LAYER())
 	{
@@ -40,6 +41,7 @@ void SceneMng::Draw(void)
 	// stdのベクターを調べて回る:範囲FOR
 	for (auto dQue : _drawList)
 	{
+
 		double rad;
 		int id;
 		Vector2Dbl pos;
@@ -60,6 +62,11 @@ void SceneMng::Draw(void)
 		{
 		case LAYER::MEAN:
 			DrawRotaGraph3(static_cast<int>(pos.x) , static_cast<int>(pos.y) ,
+				0, 0,
+				ExRate.x, ExRate.y, rad, id, true);
+			break;
+		case LAYER::UI:
+			DrawRotaGraph3(static_cast<int>(pos.x), static_cast<int>(pos.y),
 				0, 0,
 				ExRate.x, ExRate.y, rad, id, true);
 			break;
@@ -88,6 +95,46 @@ void SceneMng::Draw(void)
 		}
 	}
 
+	std::sort(_textList.begin(), _textList.end(), [](TextQueT tQueA, TextQueT tQueB) {
+
+		return	std::tie(std::get<static_cast<int>(TEXT_QUE::LAYER)>(tQueA), std::get<static_cast<int>(TEXT_QUE::ZODER)>(tQueA))
+			<
+			std::tie(std::get<static_cast<int>(TEXT_QUE::LAYER)>(tQueB), std::get<static_cast<int>(TEXT_QUE::ZODER)>(tQueB));
+	});
+
+	for (auto tQue : _textList)
+	{
+		const char* key;
+		Vector2Dbl pos;
+		Vector2Dbl ExRate;
+
+		LAYER layer_id;
+
+		// いらないことを飛ばす
+		// tie:同期する出力ストリームオブジェクトを取得・設定する
+		std::tie(key, pos, ExRate, std::ignore, layer_id) = tQue;
+
+		if (_screenID[layer_id] != GetDrawScreen())
+		{
+			SetDrawScreen(_screenID[layer_id]);
+		}
+
+		//DrawString(pos.x, pos.y, key, 0xFFFFFF);
+
+		switch (layer_id)
+		{
+	
+		case LAYER::UI:
+			
+		DrawExtendString(pos.x, pos.y, ExRate.x, ExRate.y, key, 0xFFFFFF);
+		break;
+		default:
+			break;
+		}
+	
+	
+	}
+
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
@@ -99,20 +146,11 @@ void SceneMng::Draw(void)
 	}
 	_dbgDrawFPS();
 
-	// サイズを４０に変更
-	SetFontSize(40);
-
-	//// 『ＤＸライブラリ』と描画
-	//_dbgDrawFormatString(0, 32, GetColor(255, 255, 255), "map: %f", _frames);
 
 	// フォントのタイプをエッジつきアンチエイリアスフォントに変更
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
 
-	//// 『ＤＸライブラリ』と描画
-	//DrawString(100, 160, "ＤＸライブラリ", GetColor(255, 255, 255), GetColor(0, 0, 0));
 
-
-	//DrawString(int x, int y, char *String, unsigned int Color);
 
 
 
@@ -137,6 +175,7 @@ void SceneMng::Run(void)
 	{
 		// clear：全ての要素を削除する
 		_drawList.clear();
+		_textList.clear();
 		_dbgStartDraw();
 		// _activeScene->
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
@@ -172,12 +211,33 @@ bool SceneMng::AddDrawQue(DrawQueT dQue)
 	return true;
 }
 
+bool SceneMng::AddDrawQue(TextQueT tQue)
+{
+	if (std::get<static_cast<int>(TEXT_QUE::STRING)>(tQue) <= 0)
+	{
+		//画像IDが不正なので、追加しない
+		return false;
+	}
+
+
+
+	_textList.emplace_back(tQue);
+	return true;
+}
+
+
+
 // 活動を増加する
 bool SceneMng::AddActQue(ActQueT aQue)
 {
 	_actList.emplace_back(aQue);
 	return true;
 }
+
+//void SceneMng::_DrawFormatString(int x, int y, unsigned int Color,const char* FormatString, ...)
+//{
+//	DrawFormatString(x, y, Color, FormatString);
+//}
 
 // フレーム数のゲット関数
 const int SceneMng::frames(void) const

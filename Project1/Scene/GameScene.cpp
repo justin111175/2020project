@@ -57,6 +57,8 @@ GameScene::GameScene()
 	IpImageMng.GetID("UP1", "image/levelUp1.png", { 250,150 }, { 1,8 });
 
 	IpImageMng.GetID("•¶Žš", "image/letter.png", { 1280,720 }, { 1,1 });
+	
+	IpImageMng.GetID("UI”wŒi", "image/UI_back.png", { 480,480 }, { 1,1 });
 
 
 	

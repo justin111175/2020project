@@ -107,12 +107,12 @@ int _DebugDispOut::DrawString(int x, int y, char* String, unsigned int Color)
 
 //int _DebugDispOut::DrawFormatString(int x, int y, unsigned int Color,const char* FormatString, ...)
 //{
-//	//SetScreen();
+//	SetScreen();
 //
-//	//int rtnFlag = DxLib::DrawFormatString(x, y, Color, FormatString);
-//	////RevScreen();
+//	int rtnFlag = DxLib::DrawFormatString(x, y, Color, FormatString);
+//	RevScreen();
 //
-//	//return rtnFlag;
+//	return rtnFlag;
 //
 //}
 

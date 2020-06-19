@@ -45,14 +45,14 @@ private:
 	void Read(void);
 
 	void StatusInit(void);
-	void StatusUpdata(void);
+	void StatusUpdate(void);									//ステータス更新
 
 	ME_ST MeanState;											//メニューの状態
 
 	STATUS_UP statusupId;										//ステータスのID
-	void Draw(void);											//ゲーム画面描画
+	void UIDraw(void);											//ゲーム画面描画
 	void MeanDraw(void);										//メニュー描画
-	void StatusUpdate(void);									//ステータス更新
+
 	bool meanFlag;												//メニュー開いたかどうかフラグ
 	bool LetterFlag;
 	

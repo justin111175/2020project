@@ -12,6 +12,7 @@ using VecInt = std::vector<int>;
 #define IMAGE_ID(KEY)(ImageMng::GetInstance().GetID(KEY))
 #define IMAGE_SOUND(KEY)(ImageMng::GetInstance().GetSound(KEY))
 
+
 class ImageMng
 {
 public:
@@ -28,6 +29,7 @@ public:
 
 	const VecInt& GetSound(const std::string&key);
 	const VecInt& GetSound(const std::string&key, const std::string & fileName);
+
 
 private:
 	struct ImageMngDeleter

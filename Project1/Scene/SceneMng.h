@@ -21,10 +21,23 @@ enum class DRAW_QUE
 	LAYER,										// レイヤーID（数値の低い方が奥）
 };
 
+enum class TEXT_QUE
+{
+	STRING,										// イメージ
+	POS,										// 座標
+	EXRATE,										// 拡大縮小率
 
+	ZODER,										// Zオーダー（レイヤーの前後順番-数値の低い方が奥）
+	LAYER										// レイヤーID（数値の低い方が奥）
+
+};
 class Obj;
 
 using DrawQueT = std::tuple<int, Vector2Dbl, Vector2Dbl,Vector2Dbl, double, int, LAYER>;
+
+using TextQueT = std::tuple<const char*, Vector2Dbl, Vector2Dbl,int, LAYER>;
+
+
 
 // デファイン
 #define IpSceneMng SceneMng::GetInstance()
@@ -66,12 +79,17 @@ public:
 
 
 	bool AddDrawQue(DrawQueT dQue);								// 描画を増加する
+	bool AddDrawQue(TextQueT tQue);								// 描画を増加する
+	
 	bool AddActQue(ActQueT aQue);								// 活動を増加する
 
 	const Vector2 ScreenSize;									// 全画面サイズ
 	const Vector2 GameScreenSize;								// 全画面サイズの4分の１
 
 	Vector2Dbl mapPos;
+
+	//void _DrawFormatString(int x, int y, unsigned int Color,const char* FormatString, ...);
+
 
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報
 
@@ -91,8 +109,12 @@ private:
 	int _frames;												// フレーム数
 	int _layerGID;												// レイヤーID
 
-	std::map<LAYER, int> _screenID;								// 
+	std::map<LAYER, int> _screenID;								
+	
 	std::vector<DrawQueT> _drawList;							// 描画リスト
+	
+	std::vector<TextQueT> _textList;							// 文字リスト
+	
 	std::vector<ActQueT> _actList;								// 活動リスト
 
 	~SceneMng();
