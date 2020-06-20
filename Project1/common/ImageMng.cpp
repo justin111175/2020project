@@ -28,7 +28,8 @@ const VecInt & ImageMng::GetID(const std::string & key, const std::string & file
 	//å©Ç¬ÇØÇ»Ç©Ç¡ÇΩÇÁÅAì¸ÇÈ
 	if (imgMap.find(key)==imgMap.end())
 	{
-		imgMap[key].resize(divCnt.x*divCnt.y);
+		int divCntSize = divCnt.x * divCnt.y;
+		imgMap[key].resize(divCntSize);
 		LoadDivGraph(fileName.c_str(), divCnt.x*divCnt.y, divCnt.x, divCnt.y, divSize.x, divSize.y, &imgMap[key][0]);
 	}	
 	return imgMap[key];	

@@ -11,6 +11,7 @@
 #include <KeyState.h>
 #include <Number.h>
 #include <Floor.h>
+#include "_DebugDispOut.h"
 
 
 GameScene::GameScene()
@@ -48,12 +49,13 @@ GameScene::GameScene()
 
 	IpImageMng.GetID("HP", "image/gaugeB.png", { 325,22 }, { 1,1 });
 	IpImageMng.GetID("MP", "image/gaugeB (1).png", { 325,22 }, { 1,1 });
-	
+	IpImageMng.GetID("“GHP", "image/EnemyHp.png", { 60,18 }, { 1,1 });
+	IpImageMng.GetID("“GHP_BAR", "image/EnemyHpBar.png", { 60,18 }, { 1,1 });
+
 	
 	
 	IpImageMng.GetID("blast", "image/blast.png", { 40,40 }, { 6,4 });
 	
-	IpImageMng.GetID("UP", "image/levelUp.png", { 450,250 }, { 1,8 });
 	IpImageMng.GetID("UP1", "image/levelUp1.png", { 250,150 }, { 1,8 });
 
 	IpImageMng.GetID("•¶Žš", "image/letter.png", { 1280,720 }, { 1,1 });
@@ -103,7 +105,6 @@ unique_Base GameScene::Update(unique_Base own)
 
 		(*data).Draw();
 	}
-	
 
 
 
@@ -204,7 +205,7 @@ void GameScene::MapInit_1(void)
 	{
 		for (int y = 0; y < 5; y++)
 		{
-			EnemyAdd(ENEMY_TYPE::ƒRƒEƒ‚ƒŠ, _objList, { 400.0 + x * 30.0,300.0 + y * 30 }, { 48.0,48.0 }, { 1.0f,1.0f });
+			EnemyAdd(ENEMY_TYPE::ƒRƒEƒ‚ƒŠ, _objList, { 400+ x * 30.0,300+ y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
 
 		}
 	}

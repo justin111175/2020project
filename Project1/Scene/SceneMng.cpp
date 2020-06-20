@@ -135,6 +135,8 @@ void SceneMng::Draw(void)
 	
 	}
 
+
+
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
@@ -147,10 +149,9 @@ void SceneMng::Draw(void)
 	_dbgDrawFPS();
 
 
-	// フォントのタイプをエッジつきアンチエイリアスフォントに変更
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
-
-
+	SetFontSize(40);
+	SetFontThickness(3);
 
 
 

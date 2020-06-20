@@ -46,7 +46,7 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 				{
 					//actQue.second._level._status[STATUS::HP] -= 20;
 					//actQue.second.SetAlive(false);
-					(*obj).SetAlive(false);
+					(*obj)._status[STATUS::HP] -= 100;
 					return true;
 				}
 			}

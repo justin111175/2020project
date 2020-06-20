@@ -6,8 +6,7 @@
 #include <Number.h>
 #include <Letter.h>
 
-#define PLSPEED 4												// プレイヤーの最大値スピード（左右）
-
+#define BulletCost 30
 enum MEAN_ID													//メニューのID
 {
 	ステータス,
@@ -33,7 +32,6 @@ public:
 	Player(Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate);
 	void Update(sharedObj plObj) override;									// 更新
 	~Player();													//デストラクタ
-	//Level _level;														//レベル
 
 
 private:
@@ -44,8 +42,9 @@ private:
 	void Save(void);
 	void Read(void);
 
+	void StatusData(void);
 	void StatusInit(void);
-	void StatusUpdate(void);									//ステータス更新
+	void StatusUpData(void);									//ステータス更新
 
 	ME_ST MeanState;											//メニューの状態
 
@@ -58,12 +57,11 @@ private:
 	
 	Number number;												//数字用
 	Letter letter;												//文字用
-	int Bmax;													//弾の最大値
 	
 	Vector2Dbl speed;											//移動速度
 
 
-	double HpRatio;
-	double MpRatio;
+	float HpRatio;
+	float MpRatio;
 };
 

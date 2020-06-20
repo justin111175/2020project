@@ -99,8 +99,13 @@ public:
 	
 	std::map<int, int> _status;											//ステータス用
 	std::map<int, int> _statusUp;										//ステータス強化用
+	
+	std::map<int, int> _experience;
+	
+	
 	int _level;															//レベル
-	int _experience[99];												//経験値【レベル】
+	//int _experience[99];												//経験値【レベル】
+
 
 private:
 
