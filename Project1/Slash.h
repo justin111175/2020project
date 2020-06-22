@@ -12,7 +12,7 @@ class Slash :
 {
 public:
 	Slash();
-	Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, MOVE_TYPE movetype);
+	Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, DIR_ID movetype);
 	~Slash();
 
 private:

@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(IncludePath)</IncludePath>
-    <LibraryPath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(SolutionDir)\id;$(IncludePath)</IncludePath>
+    <LibraryPath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(SolutionDir)\id;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(IncludePath)</IncludePath>
@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
+    <ClCompile Include="id\DIR_ID.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
     <ClCompile Include="Floor.cpp" />
@@ -143,7 +144,7 @@
     <ClCompile Include="Letter.cpp" />
     <ClCompile Include="common\Number.cpp" />
     <ClCompile Include="LevelUp.cpp" />
-    <ClCompile Include="Outside_A1_ID.cpp" />
+    <ClCompile Include="id\Outside_A1_ID.cpp" />
     <ClCompile Include="Scene\func\FuncCheck.cpp" />
     <ClCompile Include="Input\InputState.cpp" />
     <ClCompile Include="Input\INPUT_ID.cpp" />
@@ -156,7 +157,7 @@
     <ClCompile Include="Scene\BaseScene.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
-    <ClCompile Include="Scene\Layer_id.cpp" />
+    <ClCompile Include="id\Layer_id.cpp" />
     <ClCompile Include="Scene\SceneMng.cpp" />
     <ClCompile Include="Select.cpp" />
     <ClCompile Include="Slash.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="common\detail\Vector2.h" />
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="common\Vector2.h" />
+    <ClInclude Include="id\DIR_ID.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMove.h" />
     <ClInclude Include="Floor.h" />
@@ -176,7 +178,7 @@
     <ClInclude Include="Letter.h" />
     <ClInclude Include="common\Number.h" />
     <ClInclude Include="LevelUp.h" />
-    <ClInclude Include="Outside_A1_ID.h" />
+    <ClInclude Include="id\Outside_A1_ID.h" />
     <ClInclude Include="Scene\func\FuncCheck.h" />
     <ClInclude Include="Input\InputState.h" />
     <ClInclude Include="Input\INPUT_ID.h" />
@@ -188,7 +190,7 @@
     <ClInclude Include="Scene\BaseScene.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="Scene\GameScene.h" />
-    <ClInclude Include="Scene\Layer_id.h" />
+    <ClInclude Include="id\Layer_id.h" />
     <ClInclude Include="Scene\SceneMng.h" />
     <ClInclude Include="Select.h" />
     <ClInclude Include="Slash.h" />

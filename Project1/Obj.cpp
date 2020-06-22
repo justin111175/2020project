@@ -18,24 +18,24 @@ Obj::Obj()
 void Obj::Draw(void)
 {
 	// _animkeyを探して、存在しているかどうか確保する
-	if (_animMap.find(_state) == _animMap.end())
+	if (_animMap[static_cast<int>(_dir)].find(_state) == _animMap[static_cast<int>(_dir)].end())
 	{
 		return;
 	}
 	// _animFrameを探して、存在しない確保する：０より小さい、要素のコマ数より大きい
-	if (_animFrame<0 || _animFrame>=_animMap[_state].size())
+	if (_animFrame<0 || _animFrame>=_animMap[static_cast<int>(_dir)][_state].size())
 	{
 		return;
 	}
 
-	if (_animMap[_state][_animFrame].first >= 0)
+	if (_animMap[static_cast<int>(_dir)][_state][_animFrame].first >= 0)
 	{
-		if (_animCount >= _animMap[_state][_animFrame].second)
+		if (_animCount >= _animMap[static_cast<int>(_dir)][_state][_animFrame].second)
 		{
 			// フレームの加算
 			_animFrame++;
 		}
-		if (_animFrame >= _animMap[_state].size())
+		if (_animFrame >= _animMap[static_cast<int>(_dir)][_state].size())
 		{
 			// フレームとカント0にする
 			_animFrame = 0;
@@ -47,9 +47,9 @@ void Obj::Draw(void)
 			_animCount++;
 		}
 	}
-
+	
 	// 描画キューの設定
-	IpSceneMng.AddDrawQue({ _animMap[_state][_animFrame].first,{ _pos.x, _pos.y },{_size.x,_size.y},{_exrate.x,_exrate.y},_rad,_zorder,LAYER::CHAR });
+	IpSceneMng.AddDrawQue({ _animMap[static_cast<int>(_dir)][_state][_animFrame].first,{ _pos.x, _pos.y },{_size.x,_size.y},{_exrate.x,_exrate.y},_rad,_zorder,LAYER::CHAR });
 
 }
 
@@ -64,9 +64,9 @@ Obj::~Obj()
 }
 
 // どのアニメションを再生するか指定する
-bool Obj::state(const STATE state)
+bool Obj::stateDir(const STATE state, const DIR_ID dir)
 {
-	if (_animMap.find(state) == _animMap.end())
+	if (_animMap[static_cast<int>(_dir)].find(state) == _animMap[static_cast<int>(_dir)].end())
 	{
 		return false;
 	}
@@ -76,8 +76,11 @@ bool Obj::state(const STATE state)
 		_animFrame = 0;
 	}
 	_state = state;
+	_dir = dir;
 	return true;
 }
+
+
 
 
 bool Obj::SetAlive(bool alive)
@@ -85,30 +88,35 @@ bool Obj::SetAlive(bool alive)
 	_alive = alive;
 	if (!_alive)
 	{
-		state(STATE::DETH);
+		stateDir(STATE::DETH,DIR_ID::DOWN);
 	}
 
 	return true;
 }
 
+bool Obj::SetAnim(const STATE state,const DIR_ID _dir, AnimVector& data)
+{
+	return (_animMap[static_cast<int>(_dir)].try_emplace(state, std::move(data))).second;
+}
+
 bool Obj::SetAnim(const STATE state, AnimVector& data)
 {
-	return (_animMap.try_emplace(state, std::move(data))).second;
+	return (_animMap[static_cast<int>(_dir)].try_emplace(state, std::move(data))).second;
 }
 
 
 // アニメがおわったかどうか
 bool Obj::isAnimEnd(void)
 {
-	if (_animMap.find(_state) == _animMap.end())
+	if (_animMap[static_cast<int>(_dir)].find(_state) == _animMap[static_cast<int>(_dir)].end())
 	{
 		return true;
 	}
-	if (_animFrame < 0 || _animFrame >= _animMap[_state].size())
+	if (_animFrame < 0 || _animFrame >= _animMap[static_cast<int>(_dir)][_state].size())
 	{
 		return true;
 	}
-	if (_animMap[_state][_animFrame].first == -1)
+	if (_animMap[static_cast<int>(_dir)][_state][_animFrame].first == -1)
 	{
 		return true;
 	}
@@ -134,6 +142,11 @@ Vector2Dbl Obj::posOldGet(void)
 Vector2Dbl Obj::sizeGet(void)
 {
 	return _size;
+}
+
+const DIR_ID Obj::dirGet(void) const
+{
+	return _dir;
 }
 
 // 爆発アニメが終わったかどうか確認、終わったら、消滅する

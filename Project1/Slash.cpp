@@ -12,7 +12,7 @@ Slash::Slash()
 	Init();
 }
 
-Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, MOVE_TYPE movetype)
+Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, DIR_ID movetype)
 {
 	_unitID = unitID;
 	_exrate = { 1.0f,1.0f };
@@ -22,19 +22,19 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, MOVE_TYPE movetype
 	//_pos.y = pos.y - _size.y / 2;
 	switch (movetype)
 	{
-	case MOVE_TYPE::UP:
+	case DIR_ID::UP:
 		_pos.x = pos.x + size.x / 2;
 		_pos.y = pos.y+size.y/2;
 		_rad = 0 * DEG;
 
 		break;
-	case MOVE_TYPE::DOWN:
+	case DIR_ID::DOWN:
 		_pos.x = pos.x + size.x / 2;
 		_pos.y = pos.y+size.y*2/3;
 
 		_rad = 180 * DEG;
 		break;
-	case MOVE_TYPE::LEFT:
+	case DIR_ID::LEFT:
 
 		_pos.x = pos.x+size.x/2;
 		_pos.y = pos.y+size.y/2;
@@ -42,7 +42,7 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, MOVE_TYPE movetype
 		_rad = 270 * DEG;
 		//_rad = 180 * DEG;
 		break;
-	case MOVE_TYPE::RIGHT:
+	case DIR_ID::RIGHT:
 
 
 		_pos.x = pos.x + size.x / 2;
@@ -123,7 +123,7 @@ void Slash::Init(void)
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
 
-	state(STATE::NORMAL);
+	stateDir(STATE::NORMAL,DIR_ID::DOWN);
 }
 
 bool Slash::DestroyPrpc(void)

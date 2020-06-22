@@ -192,23 +192,23 @@ void GameScene::MapInit_1(void)
 	//敵増加－ラムダ式
 	auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate) {
 		MoveState tmpMoveState;
-		tmpMoveState.emplace_back(MOVE_TYPE::RIGHT, Vector2Dbl{ 0,0 });
-		tmpMoveState.emplace_back(MOVE_TYPE::DOWN, Vector2Dbl{ 0,0 });
-		tmpMoveState.emplace_back(MOVE_TYPE::LEFT, Vector2Dbl{ 0,0 });
-		tmpMoveState.emplace_back(MOVE_TYPE::UP, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(DIR_ID::RIGHT, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(DIR_ID::DOWN, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(DIR_ID::LEFT, Vector2Dbl{ 0,0 });
+		tmpMoveState.emplace_back(DIR_ID::UP, Vector2Dbl{ 0,0 });
 
 		EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
 		_objList.emplace_back(new Enemy(data));
 	};
 
-	//for (int x = 0; x < 5; x++)
-	//{
-	//	for (int y = 0; y < 5; y++)
-	//	{
-	//		EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400+ x * 30.0,300+ y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
+	for (int x = 0; x < 5; x++)
+	{
+		for (int y = 0; y < 5; y++)
+		{
+			EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400+ x * 30.0,300+ y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
 
-	//	}
-	//}
+		}
+	}
 
 }
 

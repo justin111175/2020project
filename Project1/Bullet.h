@@ -12,7 +12,7 @@ class Bullet :
 {
 public:
 	Bullet();
-	Bullet(UNIT_ID unitID, Vector2Dbl pos, MOVE_TYPE movetype, Vector2Dbl size);
+	Bullet(UNIT_ID unitID, Vector2Dbl pos, DIR_ID movetype, Vector2Dbl size);
 	~Bullet();
 
 private:

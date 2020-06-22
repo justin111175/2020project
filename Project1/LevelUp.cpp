@@ -33,7 +33,7 @@ LevelUp::~LevelUp()
 //レベルアップ画像の初期化
 void LevelUp::Init(void)
 {
-
+	_unitID = UNIT_ID::LevelUp;
 	_alive = true;
 
 	AnimVector data;
@@ -47,11 +47,10 @@ void LevelUp::Init(void)
 
 	SetAnim(STATE::NORMAL, data);
 
-	data.reserve(1);
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
 
-	state(STATE::NORMAL);
+	stateDir(STATE::NORMAL,DIR_ID::DOWN);
 }
 
 void LevelUp::Update(sharedObj plObj)

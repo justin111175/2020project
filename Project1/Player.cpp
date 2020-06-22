@@ -168,46 +168,81 @@ void Player::PlayerMove(void)
 
 	}
 
-
 	speed = { 0,0 };
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
-		state(STATE::UP);
-		movetype = MOVE_TYPE::UP;
 		speed.y = -4;
 		_pos.y += speed.y;
+		stateDir(STATE::NORMAL, DIR_ID::UP);
+
 		
 	}
 
+
 	if (CheckHitKey(KEY_INPUT_DOWN))
 	{
-		state(STATE::DOWN);
-		movetype = MOVE_TYPE::DOWN;
+		//state(STATE::DOWN);
 
 		speed.y = 4;
 		_pos.y += speed.y;
+		stateDir(STATE::NORMAL, DIR_ID::DOWN);
+
 	}
 
 
 	if (CheckHitKey(KEY_INPUT_LEFT))
 	{
-		state(STATE::LEFT);
-		movetype = MOVE_TYPE::LEFT;
+		//state(STATE::LEFT);
 
 		speed.x = -4;
 		_pos.x += speed.x;
+		stateDir(STATE::NORMAL, DIR_ID::LEFT);
+
 	}
+
 
 	if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
-		state(STATE::RIGHT);
-		movetype = MOVE_TYPE::RIGHT;
+		//state(STATE::RIGHT);
 
 		speed.x = 4;
 		_pos.x += speed.x;
+		stateDir(STATE::NORMAL, DIR_ID::RIGHT);
+
 
 
 	}
+	
+	if (speed.x==0)
+	{
+		if (speed.y == 0)
+		{
+			switch (_dir)
+			{
+			case DIR_ID::DOWN:
+				stateDir(STATE::STAY, DIR_ID::DOWN);
+
+				break;
+			case DIR_ID::LEFT:
+				stateDir(STATE::STAY, DIR_ID::LEFT);
+
+				break;
+			case DIR_ID::RIGHT:
+				stateDir(STATE::STAY, DIR_ID::RIGHT);
+
+				break;
+			case DIR_ID::UP:
+				stateDir(STATE::STAY, DIR_ID::UP);
+
+				break;
+
+			default:
+				break;
+			}
+		}
+
+	}
+
 	
 
 
@@ -234,37 +269,27 @@ void Player::Init(void)
 
 	AnimVector data;
 
+	for (auto dir : DIR_ID())
+	{
+		int dirCnt = static_cast<int>(dir) * 3;
+		data.emplace_back(IMAGE_ID("プレイヤー歩く")[(__int64)dirCnt+0], 10);
+		data.emplace_back(IMAGE_ID("プレイヤー歩く")[(__int64)dirCnt+1], 20);
+		data.emplace_back(IMAGE_ID("プレイヤー歩く")[(__int64)dirCnt+2], 30);
+		data.emplace_back(IMAGE_ID("プレイヤー歩く")[(__int64)dirCnt+1], 40);
+		SetAnim(STATE::NORMAL,dir, data);
 
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[0], 10);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[1], 20);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[2], 30);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[1], 40);
-	SetAnim(STATE::DOWN, data);	
+		data.emplace_back(IMAGE_ID("プレイヤー歩く")[(__int64)dirCnt + 0], 10);
+		SetAnim(STATE::STAY, dir, data);
 
 
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[3], 10);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[4], 20);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[5], 30);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[4], 40);
-	SetAnim(STATE::LEFT, data);
+	}
 
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[6], 10);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[7], 20);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[8], 30);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[7], 40);
-	SetAnim(STATE::RIGHT, data);
 
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[9], 10);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[10], 20);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[11], 30);
-	data.emplace_back(IMAGE_ID("プレイヤー歩く")[10], 40);
-	SetAnim(STATE::UP, data);
-
-	data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[0], 10);
-	data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[1], 20);
-	data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[2], 30);
-	
-	SetAnim(STATE::DETH, data);
+	//data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[0], 10);
+	//data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[1], 20);
+	//data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[2], 30);
+	////SetAnim(STATE::DETH, data);
+	//SetAnim(STATE::NORMAL, data);
 
 	number.Init();
 	

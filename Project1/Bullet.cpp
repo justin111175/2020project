@@ -12,7 +12,7 @@ Bullet::Bullet()
 	Init();
 }
 
-Bullet::Bullet(UNIT_ID unitID, Vector2Dbl pos, MOVE_TYPE movetype, Vector2Dbl size)
+Bullet::Bullet(UNIT_ID unitID, Vector2Dbl pos, DIR_ID movetype, Vector2Dbl size)
 {
 	_unitID = unitID;
 	_size = { 43,11 };
@@ -25,24 +25,24 @@ Bullet::Bullet(UNIT_ID unitID, Vector2Dbl pos, MOVE_TYPE movetype, Vector2Dbl si
 	//íeî≠éÀÇÃäpìxÇ∆èâä˙ç¿ïW
 	switch (movetype)
 	{
-	case MOVE_TYPE::UP:
+	case DIR_ID::UP:
 		_rad = 270 * DEG;
 		_pos.x = pos.x + size.x / 2 - _size.y / 2;
 		_pos.y = pos.y;
 		break;
-	case MOVE_TYPE::DOWN:
+	case DIR_ID::DOWN:
 
 		_rad = 90 * DEG;
 		_pos.x = pos.x + size.x / 2+ _size.y / 2;
 		_pos.y = pos.y;
 		break;
-	case MOVE_TYPE::LEFT:
+	case DIR_ID::LEFT:
 
 		_rad = 180 * DEG;
 		_pos.x = pos.x + size.x / 2 ;
 		_pos.y = pos.y + size.y / 2 + _size.y / 2;
 		break;
-	case MOVE_TYPE::RIGHT:
+	case DIR_ID::RIGHT:
 		_rad = 0 * DEG;
 		_pos.x = pos.x + size.x / 2 - _size.y / 2;
 		_pos.y = pos.y + size.y / 2 ;
@@ -94,13 +94,13 @@ void Bullet::Init(void)
 	AnimVector data;
 	data.reserve(1);
 	data.emplace_back(IMAGE_ID("íe")[0], 30);
-	SetAnim(STATE::NORMAL, data);
+	SetAnim(STATE::NORMAL,data);
 
 	data.reserve(1);
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
 
-	state(STATE::NORMAL);
+	stateDir(STATE::NORMAL,DIR_ID::DOWN);
 }
 
 

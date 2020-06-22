@@ -53,28 +53,27 @@ void Enemy::Update(sharedObj plObj)
 	
 	_moveCtl.Update(plObj);
 	
-	//TRACE(" %d\n", movetype);
 
-	switch (movetype)
+	switch (dirGet())
 	{
-	case MOVE_TYPE::DOWN:
-		state(STATE::DOWN);
+	case DIR_ID::DOWN:
+		stateDir(STATE::NORMAL,DIR_ID::DOWN);
 
 		_pos.y++;
 		break;
-	case MOVE_TYPE::LEFT:
-		state(STATE::LEFT);
+	case DIR_ID::LEFT:
+		stateDir(STATE::NORMAL,DIR_ID::LEFT);
 
 		_pos.x--;
 		break;
-	case MOVE_TYPE::RIGHT:
-		state(STATE::RIGHT);
+	case DIR_ID::RIGHT:
+		stateDir(STATE::NORMAL,DIR_ID::RIGHT);
 
 		_pos.x++;
 
 		break;
-	case MOVE_TYPE::UP:
-		state(STATE::UP);
+	case DIR_ID::UP:
+		stateDir(STATE::NORMAL,DIR_ID::UP);
 
 		_pos.y--;
 		break;
@@ -111,36 +110,28 @@ void Enemy::Init(void)
 	
 	int TYPE = 12 * static_cast<int>(_type);
 	AnimVector data;
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 0], 10);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 1], 20);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 2], 30);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 1], 40);
-	SetAnim(STATE::DOWN, data);
+	for (auto dir : DIR_ID())
+	{
+		int dirCnt = static_cast<int>(dir) * 3;
+		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+0], 10);
+		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+1], 20);
+		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+2], 30);
+		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+1], 40);
+		SetAnim(STATE::NORMAL, dir, data);
 
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 3], 10);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 4], 20);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 5], 30);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 4], 40);
-	SetAnim(STATE::LEFT, data);
+	}
 
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 6], 10);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 7], 20);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 8], 30);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 7], 40);
-	SetAnim(STATE::RIGHT, data);
-
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 9], 10);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 10], 20);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 11], 30);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 10], 40);
-	SetAnim(STATE::UP, data);
 
 	for (int i = 0; i < 24; i++)
 	{
 		data.emplace_back(IMAGE_ID("blast")[i], i);
 	}
 	data.emplace_back(-1, 35);
-	SetAnim(STATE::DETH, data);
+	
+	for (auto dir : DIR_ID())
+	{
+		SetAnim(STATE::DETH, dir, data);
+	}
 
 	switch (_type)
 	{

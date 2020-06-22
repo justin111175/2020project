@@ -4,22 +4,13 @@
 #include <Vector2.h>
 #include <map>
 #include <memory>
+#include "DIR_ID.h"
 
-enum class MOVE_TYPE
-{
-	DOWN,						// 下
-	LEFT,						// 左
-	RIGHT,						// 右
-	UP							// 上
-};
+
 
 // 状態管理
 enum class STATE
 {	
-	DOWN,
-	LEFT,						// 左
-	RIGHT,						// 右
-	UP,							// 上
 	STAY,						// 止まる
 	NORMAL,						// 普通
 	DETH,						// 爆発(死亡)
@@ -69,7 +60,6 @@ class Player;
 class Enemy;
 class Floor;
 using AnimVector = std::vector<std::pair<int, unsigned int>>;
-
 //shared_ptr：		指定されたリソースへの所有権(ownership)を共有(share)するスマートポインタである。
 using sharedObj = std::shared_ptr<Obj>;									// shared_ptr 側だけコビーできます
 
@@ -82,12 +72,15 @@ public:
 	void Draw(int id);
 	virtual ~Obj();
 
-	bool state(const STATE state);										// ゲット関数-どのアニメションを再生するか指定する
+	bool stateDir(const STATE state,const DIR_ID dir);										// ゲット関数-どのアニメションを再生するか指定する
+
 	UNIT_ID _unitID;													// ユニットID
-	MOVE_TYPE movetype;													// 向き
 	virtual bool SetAlive(bool alive);									// 生きているかどうか設定
 
-	bool SetAnim(const STATE state,AnimVector& data);					// アニメの設定
+	
+	bool SetAnim(const STATE state, const DIR_ID _dir, AnimVector& data);					// アニメの設定
+	bool SetAnim(const STATE state, AnimVector& data);					// アニメの設定
+
 	bool isAlive(void) { return _alive; }								// 生きている管理
 	bool isDead(void) { return _dead; }									// 死んでいる管理
 	bool isAnimEnd(void);												// アニメがおわったかどうか
@@ -96,7 +89,8 @@ public:
 	Vector2Dbl posGet(void);											//今の座標
 	Vector2Dbl posOldGet(void);											//昔の座標
 	Vector2Dbl sizeGet(void);											//大きさ
-	
+	const 	DIR_ID dirGet(void)const;
+
 	std::map<int, int> _status;											//ステータス用
 	std::map<int, int> _statusUp;										//ステータス強化用
 	
@@ -109,8 +103,10 @@ public:
 
 private:
 
-	std::map <STATE, AnimVector> _animMap;								// キー、アニメフレーム
+	std::map <STATE, AnimVector> _animMap[static_cast<int>(DIR_ID::MAX)];								// キー、アニメフレーム
+
 	STATE _state;														// 状態
+
 	unsigned int _animFrame;											// フレーム
 	unsigned int _animCount;											// アニメカント
 
@@ -125,5 +121,6 @@ protected:
 	Vector2Dbl _posOld;													// 昔の座標
 	Vector2Dbl _size;													// サイズ
 	Vector2Dbl _exrate;													// XとYの拡大縮小率
+	DIR_ID _dir;													// 向き
 
 };

@@ -45,7 +45,7 @@ void Floor::Init(void)
 			if (A1_ID == i)
 			{
 				data.emplace_back(IMAGE_ID("Outside_A1")[static_cast<int>(i)], 30);
-				SetAnim(STATE::NORMAL, data);
+				SetAnim(STATE::NORMAL,DIR_ID::DOWN, data);
 			}
 		}
 
@@ -54,6 +54,6 @@ void Floor::Init(void)
 		break;
 	}
 
-	state(STATE::NORMAL);
+	stateDir(STATE::NORMAL,DIR_ID::DOWN);
 
 }

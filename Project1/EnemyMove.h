@@ -5,13 +5,13 @@
 
 
 //移動種類、ゴール地点
-using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2Dbl>>;
+using MoveState = std::vector<std::pair<DIR_ID, Vector2Dbl>>;
 
 class EnemyMove :
 	public Obj
 {
 public:
-	EnemyMove(Vector2Dbl& pos, double& rad, Vector2Dbl& size, MOVE_TYPE& _movetype);
+	EnemyMove(Vector2Dbl& pos, double& rad, Vector2Dbl& size, DIR_ID& _movetype);
 	~EnemyMove();
 
 	bool SetMoveState(MoveState& state, bool newFlag);	// 移動種類設定：新しい移動があれば古い移動を消す
@@ -38,7 +38,7 @@ private:
 
 	Vector2Dbl& _pos;									// ゴール地点
 	Vector2Dbl& _size;									// サイズ
-	MOVE_TYPE& movetype;								//移動のタイプ
+	DIR_ID& movetype;								//移動のタイプ
 
 
 	double & _rad;										// 角度

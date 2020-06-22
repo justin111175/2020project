@@ -15,19 +15,14 @@ bool FuncBullet::operator()(ActQueT &actQue, void* scene)
 	{
 		unitID = UNIT_ID::PLaB;
 	}
-	//else
-	//{
-	//	unitID = UNIT_ID::EM_BULLET;
-	//}
+
 
 
 	if (std::count_if(((GameScene*)scene)->_objList.begin(), ((GameScene*)scene)->_objList.end(), [&](sharedObj obj) {return (*obj)._unitID == unitID; }) < _MaxCount[unitID])
 	{
-		//TRACE("%d\n", _MaxCount[unitID]);
 
 
-
-		((GameScene*)scene)->_objList.emplace_back(new Bullet(unitID, actQue.second.posGet(), actQue.second.movetype, actQue.second.sizeGet()));
+		((GameScene*)scene)->_objList.emplace_back(new Bullet(unitID, actQue.second.posGet(), actQue.second.dirGet(), actQue.second.sizeGet()));
 		return true;
 	}
 

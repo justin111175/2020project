@@ -6,7 +6,7 @@
 #include <Dxlib.h>
 
 
-EnemyMove::EnemyMove(Vector2Dbl& pos, double& rad, Vector2Dbl& size, MOVE_TYPE& movetype) :_pos(pos), _rad(rad), _size(size), movetype(movetype)
+EnemyMove::EnemyMove(Vector2Dbl& pos, double& rad, Vector2Dbl& size, DIR_ID& movetype) :_pos(pos), _rad(rad), _size(size), movetype(movetype)
 {
 	_move = nullptr;
 	_aimCnt = -1;
@@ -52,7 +52,7 @@ void EnemyMove::SetMovePrg(void)
 	auto aimRev = [&]() {
 		for (_aimCnt = 0; _aimCnt < _aim.size(); _aimCnt++)
 		{
-			if (_aim[_aimCnt].first == MOVE_TYPE::RIGHT)
+			if (_aim[_aimCnt].first == DIR_ID::RIGHT)
 			{
 				return true;
 			}
@@ -78,25 +78,25 @@ void EnemyMove::SetMovePrg(void)
 	// _move‚ÌˆÚ“®Ží—Þ‚ÌÝ’è
 	switch (_aim[_aimCnt].first)
 	{
-	case MOVE_TYPE::UP:
+	case DIR_ID::UP:
 		_posOld = _pos;
 		_move = &EnemyMove::MoveUp;
 
 		break;
 
-	case MOVE_TYPE::RIGHT:
+	case DIR_ID::RIGHT:
 		_posOld = _pos;
 		_move = &EnemyMove::MoveRight;
 
 		break;
 
-	case MOVE_TYPE::DOWN:
+	case DIR_ID::DOWN:
 		_posOld = _pos;
 		_move = &EnemyMove::MoveDown;
 
 		break;
 
-	case MOVE_TYPE::LEFT:
+	case DIR_ID::LEFT:
 		_posOld = _pos;
 		_move = &EnemyMove::MoveLeft;
 
@@ -141,7 +141,7 @@ void EnemyMove::MoveUp(void)
 {
 	if (abs(_pos.y - _posOld.y) < 100)
 	{
-		movetype = MOVE_TYPE::UP;
+		movetype = DIR_ID::UP;
 	}
 	else
 	{
@@ -153,7 +153,7 @@ void EnemyMove::MoveRight(void)
 {	
 	if (abs(_pos.x - _posOld.x) < 100)
 	{
-		movetype = MOVE_TYPE::RIGHT;
+		movetype = DIR_ID::RIGHT;
 	}
 	else
 	{
@@ -165,7 +165,7 @@ void EnemyMove::MoveLeft(void)
 {
 	if (abs(_pos.x - _posOld.x) < 100)
 	{
-		movetype = MOVE_TYPE::LEFT;
+		movetype = DIR_ID::LEFT;
 	}
 	else
 	{
@@ -178,7 +178,7 @@ void EnemyMove::MoveDown(void)
 
 	if (abs(_pos.y - _posOld.y) < 100)
 	{
-		movetype = MOVE_TYPE::DOWN;
+		movetype = DIR_ID::DOWN;
 	}
 	else
 	{

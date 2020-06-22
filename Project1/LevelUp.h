@@ -3,7 +3,7 @@
 
 
 class LevelUp :
-	public Player
+	public Obj
 {
 public:
 	LevelUp();
