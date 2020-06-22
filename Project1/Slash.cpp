@@ -115,11 +115,7 @@ void Slash::Init(void)
 	AnimVector data;
 	data.reserve(1);
 	data.emplace_back(IMAGE_ID("ŽaŒ‚2")[0], 0);
-	//for (int i = 0; i < 7; i++)
-	//{
-	//	data.emplace_back(IMAGE_ID("ŽaŒ‚3")[i], i*5);
-	//}
-	//data.emplace_back(-1, 40);
+
 
 	SetAnim(STATE::NORMAL, data);
 

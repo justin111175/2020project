@@ -201,14 +201,14 @@ void GameScene::MapInit_1(void)
 		_objList.emplace_back(new Enemy(data));
 	};
 
-	for (int x = 0; x < 5; x++)
-	{
-		for (int y = 0; y < 5; y++)
-		{
-			EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400+ x * 30.0,300+ y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
+	//for (int x = 0; x < 5; x++)
+	//{
+	//	for (int y = 0; y < 5; y++)
+	//	{
+	//		EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400+ x * 30.0,300+ y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
 
-		}
-	}
+	//	}
+	//}
 
 }
 

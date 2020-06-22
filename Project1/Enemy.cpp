@@ -41,14 +41,13 @@ void Enemy::Update(sharedObj plObj)
 
 		return;
 	}
-	auto HpRatio = static_cast<float>(_status[STATUS::HP]) / static_cast<float>(_status[STATUS::最大HP]);
+	auto HpRatio = 1.0f * static_cast<float>(_status[STATUS::HP]) / static_cast<float>(_status[STATUS::最大HP]);
 	Vector2Dbl HpPos = { _pos.x + _size.x / 2 - 30 ,_pos.y - 10 };
 
 	if (_status[STATUS::HP] != _status[STATUS::最大HP])
-	{
-	
+	{ 
 		IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP_BAR")[0], {HpPos.x,HpPos.y},{0,0},{1.0f,0.5f},0,1,LAYER::CHAR });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP")[0], {HpPos.x,HpPos.y},{0,0},{1.0f* HpRatio,0.5f},0,2,LAYER::CHAR });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP")[0], {HpPos.x,HpPos.y},{0,0},{HpRatio,0.5f},0,2,LAYER::CHAR });
 	}
 
 	
@@ -109,30 +108,31 @@ void Enemy::Init(void)
 	_alive = true;
 	_dead = false;
 	_unitID = UNIT_ID::ENEMY;
-
+	
+	int TYPE = 12 * static_cast<int>(_type);
 	AnimVector data;
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12 * static_cast<int>(_type) + 0], 10);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 1], 20);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 2], 30);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 1], 40);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 0], 10);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 1], 20);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 2], 30);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 1], 40);
 	SetAnim(STATE::DOWN, data);
 
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 3], 10);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 4], 20);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 5], 30);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 4], 40);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 3], 10);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 4], 20);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 5], 30);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 4], 40);
 	SetAnim(STATE::LEFT, data);
 
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 6], 10);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 7], 20);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 8], 30);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 7], 40);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 6], 10);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 7], 20);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 8], 30);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 7], 40);
 	SetAnim(STATE::RIGHT, data);
 
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 9], 10);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 10], 20);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 11], 30);
-	data.emplace_back(IMAGE_ID("モンスター歩く")[12* static_cast<int>(_type) + 10], 40);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 9], 10);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 10], 20);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 11], 30);
+	data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + 10], 40);
 	SetAnim(STATE::UP, data);
 
 	for (int i = 0; i < 24; i++)
