@@ -48,7 +48,7 @@ private:
 
 	ME_ST MeanState;											//メニューの状態
 
-	STATUS_UP statusupId;										//ステータスのID
+	Status_Up_ID statusupId;										//ステータスのID
 	void UIDraw(void);											//ゲーム画面描画
 	void MeanDraw(void);										//メニュー描画
 

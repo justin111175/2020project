@@ -27,7 +27,7 @@ void Enemy::Update(sharedObj plObj)
 {	
 	if (isAlive())
 	{
-		if (_status[STATUS::HP] <= 0)
+		if (_status[Status_ID::HP] <= 0)
 		{
 			SetAlive(false);
 			(*plObj)._experience[(*plObj)._level] -= _experience[0];
@@ -41,10 +41,10 @@ void Enemy::Update(sharedObj plObj)
 
 		return;
 	}
-	auto HpRatio = 1.0f * static_cast<float>(_status[STATUS::HP]) / static_cast<float>(_status[STATUS::最大HP]);
+	auto HpRatio = 1.0f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
 	Vector2Dbl HpPos = { _pos.x + _size.x / 2 - 30 ,_pos.y - 10 };
 
-	if (_status[STATUS::HP] != _status[STATUS::最大HP])
+	if (_status[Status_ID::HP] != _status[Status_ID::最大HP])
 	{ 
 		IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP_BAR")[0], {HpPos.x,HpPos.y},{0,0},{1.0f,0.5f},0,1,LAYER::CHAR });
 		IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP")[0], {HpPos.x,HpPos.y},{0,0},{HpRatio,0.5f},0,2,LAYER::CHAR });
@@ -136,8 +136,8 @@ void Enemy::Init(void)
 	switch (_type)
 	{
 	case ENEMY_TYPE::コウモリ:
-		_status.try_emplace(STATUS::HP, 100);
-		_status.try_emplace(STATUS::最大HP, 100);
+		_status.try_emplace(Status_ID::HP, 100);
+		_status.try_emplace(Status_ID::最大HP, 100);
 		_experience.try_emplace(0, 30);
 		break;
 	case ENEMY_TYPE::スライム:

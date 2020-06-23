@@ -36,14 +36,14 @@ void Player::Update(sharedObj plObj)
 		_level++;
 		//_level._status[STATUS::HP] = 100 + (_level._status[STATUS::レベル] * 100)*3/10;
 		_posOld = _pos;
-		_statusUp[STATUS_UP::残るボーナスポイント] += 5;
+		_statusUp[Status_Up_ID::残るボーナスポイント] += 5;
 		IpSceneMng.AddActQue({ ACT_QUE::LEVELUP , *this });
 	}
 
 
 
-	HpRatio = static_cast<float>(_status[STATUS::HP]) / static_cast<float>(_status[STATUS::最大HP]);
-	MpRatio = static_cast<float>(_status[STATUS::MP]) / static_cast<float>(_status[STATUS::最大MP]);
+	HpRatio = static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
+	MpRatio = static_cast<float>(_status[Status_ID::MP]) / static_cast<float>(_status[Status_ID::最大MP]);
 
 	StatusData();
 
@@ -132,18 +132,18 @@ void Player::PlayerMove(void)
 	
 	if ((*_Input).state(INPUT_ID::P).first && !(*_Input).state(INPUT_ID::P).second)
 	{
-		if (_status[STATUS::HP] < _status[STATUS::最大HP])
+		if (_status[Status_ID::HP] < _status[Status_ID::最大HP])
 		{
-			_status[STATUS::HP]+=10;
+			_status[Status_ID::HP]+=10;
 
 		}
 	}
 
 	if ((*_Input).state(INPUT_ID::BTN_2).first && !(*_Input).state(INPUT_ID::BTN_2).second)
 	{
-		if (_status[STATUS::MP] >= BulletCost)
+		if (_status[Status_ID::MP] >= BulletCost)
 		{			
-			_status[STATUS::MP] -= BulletCost;
+			_status[Status_ID::MP] -= BulletCost;
 
 			IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 		}
@@ -181,8 +181,6 @@ void Player::PlayerMove(void)
 
 	if (CheckHitKey(KEY_INPUT_DOWN))
 	{
-		//state(STATE::DOWN);
-
 		speed.y = 4;
 		_pos.y += speed.y;
 		stateDir(STATE::NORMAL, DIR_ID::DOWN);
@@ -192,7 +190,6 @@ void Player::PlayerMove(void)
 
 	if (CheckHitKey(KEY_INPUT_LEFT))
 	{
-		//state(STATE::LEFT);
 
 		speed.x = -4;
 		_pos.x += speed.x;
@@ -203,14 +200,10 @@ void Player::PlayerMove(void)
 
 	if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
-		//state(STATE::RIGHT);
 
 		speed.x = 4;
 		_pos.x += speed.x;
 		stateDir(STATE::NORMAL, DIR_ID::RIGHT);
-
-
-
 	}
 	
 	if (speed.x==0)
@@ -316,25 +309,25 @@ void Player::UIDraw(void)
 	IpSceneMng.AddDrawQue({ IMAGE_ID("プレイヤー歩く")[0], {220 ,0},{0,0},{2.5f,2.4f},0,1,LAYER::UI });
 
 
-	HpRatio =0.4f* static_cast<float>(_status[STATUS::HP]) / static_cast<float>(_status[STATUS::最大HP]);
-	MpRatio = 0.4f * static_cast<float>(_status[STATUS::MP]) / static_cast<float>(_status[STATUS::最大MP]);
+	HpRatio =0.4f* static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
+	MpRatio = 0.4f * static_cast<float>(_status[Status_ID::MP]) / static_cast<float>(_status[Status_ID::最大MP]);
 
 	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {20 ,30},{0,0},{0.4f,0.4f},0,2,LAYER::UI });
 	IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {78 ,38},{0,0},{ HpRatio,0.3f},0,1,LAYER::UI});
 	IpSceneMng.AddDrawQue({ "HP     /",{51,23}, {0.6f,0.6f},0,LAYER::UI });
-	number.Draw({ 120, 28 }, {0.15f,0.15f }, _status[STATUS::HP]);
-	number.Draw({ 190, 28 }, { 0.15f,0.15f }, _status[STATUS::最大HP]);
+	number.Draw({ 120, 28 }, {0.15f,0.15f }, _status[Status_ID::HP]);
+	number.Draw({ 190, 28 }, { 0.15f,0.15f }, _status[Status_ID::最大HP]);
 
 
 	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {30 ,65},{0,0},{0.4f,0.4f},0,2,LAYER::UI });
 	IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {88 ,73},{0,0},{ MpRatio,0.3f},0,1,LAYER::UI });
 	IpSceneMng.AddDrawQue({ "MP     /",{61,60}, {0.6f,0.6f},0,LAYER::UI});
-	number.Draw({ 130, 63 }, { 0.15f,0.15f }, _status[STATUS::MP]);
-	number.Draw({ 200, 63 }, { 0.15f,0.15f }, _status[STATUS::最大MP]);
+	number.Draw({ 130, 63 }, { 0.15f,0.15f }, _status[Status_ID::MP]);
+	number.Draw({ 200, 63 }, { 0.15f,0.15f }, _status[Status_ID::最大MP]);
 
 	IpSceneMng.AddDrawQue({ "G : ",{71,90}, {0.6f,0.6f},0,LAYER::UI });
 
-	number.Draw({ 210, 95 }, { 0.15f,0.15f }, _status[STATUS::お金]);
+	number.Draw({ 210, 95 }, { 0.15f,0.15f }, _status[Status_ID::お金]);
 
 }	
 
@@ -348,28 +341,28 @@ void Player::MeanDraw(void)
 	case ME_ST::MEAN_OUT:
 		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], {0 ,0},{0,0},{1.0f,1.0f},0,0,LAYER::MEAN });
 		
-		HpRatio = 0.7f * static_cast<float>(_status[STATUS::HP]) / static_cast<float>(_status[STATUS::最大HP]);
-		MpRatio = 0.7f * static_cast<float>(_status[STATUS::MP]) / static_cast<float>(_status[STATUS::最大MP]);
+		HpRatio = 0.7f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
+		MpRatio = 0.7f * static_cast<float>(_status[Status_ID::MP]) / static_cast<float>(_status[Status_ID::最大MP]);
 
 
 		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {300 ,250},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
 		IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {400 ,265},{0,0},{HpRatio,0.6f},0,1,LAYER::MEAN });
 		IpSceneMng.AddDrawQue({ "HP     /",{350,240}, {1.0f,1.0f},0,LAYER::UI });
-		number.Draw({ 480, 240 }, { 0.3f,0.3f }, _status[STATUS::HP]);
-		number.Draw({ 590, 240 }, { 0.3f,0.3f }, _status[STATUS::最大HP]);
+		number.Draw({ 480, 240 }, { 0.3f,0.3f }, _status[Status_ID::HP]);
+		number.Draw({ 590, 240 }, { 0.3f,0.3f }, _status[Status_ID::最大HP]);
 
 
 		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {350 ,310},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
 		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {450 ,325},{0,0},{MpRatio,0.6f},0,1,LAYER::MEAN });
 
 		IpSceneMng.AddDrawQue({ "MP     /",{400,300}, {1.0f,1.0f},0,LAYER::UI });
-		number.Draw({ 530, 300 }, { 0.3f,0.3f }, _status[STATUS::MP]);
-		number.Draw({ 640, 300 }, { 0.3f,0.3f }, _status[STATUS::最大MP]);
+		number.Draw({ 530, 300 }, { 0.3f,0.3f }, _status[Status_ID::MP]);
+		number.Draw({ 640, 300 }, { 0.3f,0.3f }, _status[Status_ID::最大MP]);
 
 		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], {115 + 255.0 * IpSceneMng.select.s_id.Mean ,385 + sin(IpSceneMng.frames() / 5) * 10.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
 		
 		number.Draw({ 260, 80 }, { 0.4f, 0.3f }, _level);
-		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _status[STATUS::お金]);
+		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _status[Status_ID::お金]);
 		
 		
 		number.Draw({ 1150, 280 }, {1.0f, 1.0f }, _experience[_level]);
@@ -379,17 +372,17 @@ void Player::MeanDraw(void)
 		{
 		case ステータス:
 			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0],{ 0 ,0},{0,0},{1.0f,1.0f},0,0,LAYER::MEAN });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], {1010.0 ,205 + statusupId * 53.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], {1010.0 ,205 + static_cast<int>(statusupId) * 53.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
 
-			HpRatio = 0.7f * static_cast<float>(_status[STATUS::HP]) / static_cast<float>(_status[STATUS::最大HP]);
-			MpRatio = 0.7f * static_cast<float>(_status[STATUS::MP]) / static_cast<float>(_status[STATUS::最大MP]);
+			HpRatio = 0.7f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
+			MpRatio = 0.7f * static_cast<float>(_status[Status_ID::MP]) / static_cast<float>(_status[Status_ID::最大MP]);
 
 			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {200 ,150},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
 			IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {300 ,165},{0,0},{HpRatio,0.7f},0,1,LAYER::MEAN });
 			
 			IpSceneMng.AddDrawQue({ "HP     /",{250,145}, {1.0f,1.0f},0,LAYER::UI });
-			number.Draw({ 380, 145 }, { 0.3f,0.3f }, _status[STATUS::HP]);
-			number.Draw({ 490, 145 }, { 0.3f,0.3f }, _status[STATUS::最大HP]);
+			number.Draw({ 380, 145 }, { 0.3f,0.3f }, _status[Status_ID::HP]);
+			number.Draw({ 490, 145 }, { 0.3f,0.3f }, _status[Status_ID::最大HP]);
 
 
 
@@ -397,30 +390,30 @@ void Player::MeanDraw(void)
 			IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {350 ,215},{0,0},{MpRatio,0.7f},0,1,LAYER::MEAN });
 			
 			IpSceneMng.AddDrawQue({ "MP     /",{300,195}, {1.0f,1.0f},0,LAYER::UI });
-			number.Draw({ 430, 195 }, { 0.3f,0.3f }, _status[STATUS::MP]);
-			number.Draw({ 540, 195 }, { 0.3f,0.3f }, _status[STATUS::最大MP]);
+			number.Draw({ 430, 195 }, { 0.3f,0.3f }, _status[Status_ID::MP]);
+			number.Draw({ 540, 195 }, { 0.3f,0.3f }, _status[Status_ID::最大MP]);
 
 
-			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], {750 + sin(IpSceneMng.frames() / 5) * 10.0 ,205 + statusupId * 53.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], {750 + sin(IpSceneMng.frames() / 5) * 10.0 ,205 + static_cast<int>(statusupId) * 53.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
 
-			number.Draw({ 240,300 }, {0.4f,0.4f},_status[STATUS::攻撃力]);
-			number.Draw({ 240, 370 }, { 0.4f,0.4f }, _status[STATUS::防御力]);
-			number.Draw({ 570, 300 }, { 0.4f,0.4f }, _status[STATUS::敏捷]);
-			number.Draw({ 570, 370 }, { 0.4f,0.4f }, _status[STATUS::回復]);
+			number.Draw({ 240,300 }, {0.4f,0.4f},_status[Status_ID::攻撃力]);
+			number.Draw({ 240, 370 }, { 0.4f,0.4f }, _status[Status_ID::防御力]);
+			number.Draw({ 570, 300 }, { 0.4f,0.4f }, _status[Status_ID::敏捷]);
+			number.Draw({ 570, 370 }, { 0.4f,0.4f }, _status[Status_ID::回復]);
 			
-			number.Draw({ 1100, 210 }, { 0.4f,0.4f },_statusUp[STATUS_UP::強化_攻撃力]);
-			number.Draw({ 1100, 265 }, { 0.4f,0.4f },_statusUp[STATUS_UP::強化_防御力]);
-			number.Draw({ 1100, 320 }, { 0.4f,0.4f },_statusUp[STATUS_UP::強化_敏捷]);
-			number.Draw({ 1100, 370 }, { 0.4f,0.4f },_statusUp[STATUS_UP::強化_回復]);
-			number.Draw({ 1100, 425 }, { 0.4f,0.4f }, _statusUp[STATUS_UP::強化_最大HP]);
-			number.Draw({ 1100, 480 }, { 0.4f,0.4f }, _statusUp[STATUS_UP::強化_最大MP]);
-			if (_statusUp[STATUS_UP::残るボーナスポイント] >= 10)
+			number.Draw({ 1100, 210 }, { 0.4f,0.4f },_statusUp[Status_Up_ID::攻撃力]);
+			number.Draw({ 1100, 265 }, { 0.4f,0.4f },_statusUp[Status_Up_ID::防御力]);
+			number.Draw({ 1100, 320 }, { 0.4f,0.4f },_statusUp[Status_Up_ID::敏捷]);
+			number.Draw({ 1100, 370 }, { 0.4f,0.4f },_statusUp[Status_Up_ID::回復]);
+			number.Draw({ 1100, 425 }, { 0.4f,0.4f }, _statusUp[Status_Up_ID::最大HP]);
+			number.Draw({ 1100, 480 }, { 0.4f,0.4f }, _statusUp[Status_Up_ID::最大MP]);
+			if (_statusUp[Status_Up_ID::残るボーナスポイント] >= 10)
 			{
-				number.Draw({ 1190, 555 }, { 0.5f, 0.5f },_statusUp[STATUS_UP::残るボーナスポイント]);
+				number.Draw({ 1190, 555 }, { 0.5f, 0.5f },_statusUp[Status_Up_ID::残るボーナスポイント]);
 			}
 			else
 			{
-				number.Draw({ 1175, 555 }, { 0.5f, 0.5f }, _statusUp[STATUS_UP::残るボーナスポイント]);
+				number.Draw({ 1175, 555 }, { 0.5f, 0.5f }, _statusUp[Status_Up_ID::残るボーナスポイント]);
 			}
 
 			break;
@@ -451,18 +444,18 @@ void Player::StatusUpData(void)
 {
 
 
-	auto UpDown = [](std::weak_ptr<InputState> keyData, const INPUT_ID id,Player& player, const STATUS_UP status_up, const int num) {
+	auto UpDown = [&](std::weak_ptr<InputState> keyData, const INPUT_ID id, const Status_Up_ID status_up, const int num) {
 		
 		if (!keyData.expired())
 		{
 			if ((*keyData.lock()).state(id).first && !(*keyData.lock()).state(id).second)
 			{
-				if (player._statusUp[残るボーナスポイント] > 0||num<0)
+				if (_statusUp[Status_Up_ID::残るボーナスポイント] > 0||num<0)
 				{
-					if (player._statusUp[status_up] > 0 || num>0)
+					if (_statusUp[status_up] > 0 || num>0)
 					{
-						player._statusUp[status_up] += num;
-						player._statusUp[残るボーナスポイント]-=num;
+						_statusUp[status_up] += num;
+						_statusUp[Status_Up_ID::残るボーナスポイント]-=num;
 
 					}
 				}
@@ -477,54 +470,54 @@ void Player::StatusUpData(void)
 	case 0:
 		if ((*_Input).state(INPUT_ID::UP).first && !(*_Input).state(INPUT_ID::UP).second)
 		{
-			if (statusupId > 強化_攻撃力)
+			if (statusupId > Status_Up_ID::攻撃力)
 			{
-				statusupId = (STATUS_UP)(statusupId - 1);
+				statusupId = (Status_Up_ID)(static_cast<int>(statusupId) - 1);
 			}
 			else
 			{
-				statusupId = 強化_最大MP;
+				statusupId = Status_Up_ID::最大MP;
 			}
 		}
 		if ((*_Input).state(INPUT_ID::DOWN).first && !(*_Input).state(INPUT_ID::DOWN).second)
 		{
-			if (statusupId < 強化_最大MP)
+			if (statusupId < Status_Up_ID::最大MP)
 			{
-				statusupId = (STATUS_UP)(statusupId + 1);
+				statusupId = (Status_Up_ID)(static_cast<int>(statusupId) + 1);
 			}
 			else
 			{
-				statusupId = 強化_攻撃力;
+				statusupId = Status_Up_ID::攻撃力;
 			}
 		}
 		switch (statusupId)
 		{
-		case 強化_攻撃力:
-			UpDown(_Input, INPUT_ID::LEFT, *this,強化_攻撃力, -1);
-			UpDown(_Input, INPUT_ID::RIGHT, *this, 強化_攻撃力,  1);
+		case Status_Up_ID::攻撃力:
+			UpDown(_Input, INPUT_ID::LEFT, Status_Up_ID::攻撃力, -1);
+			UpDown(_Input, INPUT_ID::RIGHT, Status_Up_ID::攻撃力,  1);
 
 			break;
-		case 強化_防御力:
-			UpDown(_Input, INPUT_ID::LEFT, *this, 強化_防御力, -1);
-			UpDown(_Input, INPUT_ID::RIGHT, *this, 強化_防御力, 1);
+		case Status_Up_ID::防御力:
+			UpDown(_Input, INPUT_ID::LEFT, Status_Up_ID::防御力, -1);
+			UpDown(_Input, INPUT_ID::RIGHT, Status_Up_ID::防御力, 1);
 			break;
-		case 強化_敏捷:
-			UpDown(_Input, INPUT_ID::LEFT, *this, 強化_敏捷, -1);
-			UpDown(_Input, INPUT_ID::RIGHT, *this, 強化_敏捷, 1);
+		case Status_Up_ID:: 敏捷:
+			UpDown(_Input, INPUT_ID::LEFT, Status_Up_ID::敏捷, -1);
+			UpDown(_Input, INPUT_ID::RIGHT, Status_Up_ID::敏捷, 1);
 			break;
-		case 強化_回復:
-			UpDown(_Input, INPUT_ID::LEFT, *this, 強化_回復, -1);
-			UpDown(_Input, INPUT_ID::RIGHT, *this, 強化_回復, 1);
+		case Status_Up_ID::回復:
+			UpDown(_Input, INPUT_ID::LEFT, Status_Up_ID::回復, -1);
+			UpDown(_Input, INPUT_ID::RIGHT, Status_Up_ID::回復, 1);
 			break;
-		case 強化_最大HP:
-			UpDown(_Input, INPUT_ID::LEFT, *this, 強化_最大HP, -1);
-			UpDown(_Input, INPUT_ID::RIGHT, *this, 強化_最大HP, 1);
+		case Status_Up_ID::最大HP:
+			UpDown(_Input, INPUT_ID::LEFT, Status_Up_ID::最大HP, -1);
+			UpDown(_Input, INPUT_ID::RIGHT, Status_Up_ID::最大HP, 1);
 			break;
-		case 強化_最大MP:
-			UpDown(_Input, INPUT_ID::LEFT, *this, 強化_最大MP, -1);
-			UpDown(_Input, INPUT_ID::RIGHT, *this, 強化_最大MP, 1);
+		case Status_Up_ID::最大MP:
+			UpDown(_Input, INPUT_ID::LEFT, Status_Up_ID::最大MP, -1);
+			UpDown(_Input, INPUT_ID::RIGHT, Status_Up_ID::最大MP, 1);
 			break;
-		case 残るボーナスポイント:
+		case Status_Up_ID::残るボーナスポイント:
 			break;
 		default:
 			break;
@@ -609,20 +602,20 @@ void Player::Read(void)
 
 void Player::StatusData(void)
 {
-	_status[STATUS::最大HP] = static_cast<int>(100 + _statusUp[STATUS_UP::強化_最大HP] * 1.3);
-	_status[STATUS::最大MP] = static_cast<int>(100 + _statusUp[STATUS_UP::強化_最大MP] * 1.3);
-	_status[STATUS::回復] = static_cast<int>(5 + _statusUp[STATUS_UP::強化_回復] * 1.3);
+	_status[Status_ID::最大HP] = static_cast<int>(100 + _statusUp[Status_Up_ID::最大HP] * 1.3);
+	_status[Status_ID::最大MP] = static_cast<int>(100 + _statusUp[Status_Up_ID::最大MP] * 1.3);
+	_status[Status_ID::回復] = static_cast<int>(5 + _statusUp[Status_Up_ID::回復] * 1.3);
 
 	if (IpSceneMng.frames() % 60==1)
 	{
-		if (_status[STATUS::MP]+ _status[STATUS::回復] < _status[STATUS::最大MP])
+		if (_status[Status_ID::MP]+ _status[Status_ID::回復] < _status[Status_ID::最大MP])
 		{
-			_status[STATUS::MP] += _status[STATUS::回復];
+			_status[Status_ID::MP] += _status[Status_ID::回復];
 
 		}
 		else
 		{
-			_status[STATUS::MP] = _status[STATUS::最大MP];
+			_status[Status_ID::MP] = _status[Status_ID::最大MP];
 		}
 
 	}
@@ -631,24 +624,24 @@ void Player::StatusData(void)
 
 void Player::StatusInit(void)
 {
-	_status.try_emplace(STATUS::HP, 0);
-	_status.try_emplace(STATUS::最大HP, 0);
-	_status.try_emplace(STATUS::MP, 0);
-	_status.try_emplace(STATUS::最大MP, 0);
-	_status.try_emplace(STATUS::お金, 99999);
-	_status.try_emplace(STATUS::攻撃力, 0);
-	_status.try_emplace(STATUS::防御力, 0);
-	_status.try_emplace(STATUS::敏捷, 0);
-	_status.try_emplace(STATUS::回復, 0);
+	_status.try_emplace(Status_ID::HP, 0);
+	_status.try_emplace(Status_ID::最大HP, 0);
+	_status.try_emplace(Status_ID::MP, 0);
+	_status.try_emplace(Status_ID::最大MP, 0);
+	_status.try_emplace(Status_ID::お金, 99999);
+	_status.try_emplace(Status_ID::攻撃力, 0);
+	_status.try_emplace(Status_ID::防御力, 0);
+	_status.try_emplace(Status_ID::敏捷, 0);
+	_status.try_emplace(Status_ID::回復, 0);
 
 	
-	_statusUp.try_emplace(STATUS_UP::強化_攻撃力, 0);
-	_statusUp.try_emplace(STATUS_UP::強化_防御力, 0);
-	_statusUp.try_emplace(STATUS_UP::強化_敏捷, 0);
-	_statusUp.try_emplace(STATUS_UP::強化_回復, 0);
-	_statusUp.try_emplace(STATUS_UP::強化_最大HP, 0);
-	_statusUp.try_emplace(STATUS_UP::強化_最大MP, 0);
-	_statusUp.try_emplace(STATUS_UP::残るボーナスポイント, 10);
+	_statusUp.try_emplace(Status_Up_ID::攻撃力, 0);
+	_statusUp.try_emplace(Status_Up_ID::防御力, 0);
+	_statusUp.try_emplace(Status_Up_ID::敏捷, 0);
+	_statusUp.try_emplace(Status_Up_ID::回復, 0);
+	_statusUp.try_emplace(Status_Up_ID::最大HP, 0);
+	_statusUp.try_emplace(Status_Up_ID::最大MP, 0);
+	_statusUp.try_emplace(Status_Up_ID::残るボーナスポイント, 10);
 	
 	for (int x = 1; x < 99; x++)
 	{	
@@ -658,13 +651,13 @@ void Player::StatusInit(void)
 
 	_level = 1;
 	
-	_status[STATUS::最大HP] = static_cast<int>(100 + _statusUp[STATUS_UP::強化_最大HP] * 1.3);
+	_status[Status_ID::最大HP] = static_cast<int>(100 + _statusUp[Status_Up_ID::最大HP] * 1.3);
 
-	_status[STATUS::最大MP] = static_cast<int>(100 + _statusUp[STATUS_UP::強化_最大MP] * 1.3);
-	_status[STATUS::回復] = static_cast<int>(5 + _statusUp[STATUS_UP::強化_回復] * 1.3);
+	_status[Status_ID::最大MP] = static_cast<int>(100 + _statusUp[Status_Up_ID::最大MP] * 1.3);
+	_status[Status_ID::回復] = static_cast<int>(5 + _statusUp[Status_Up_ID::回復] * 1.3);
 
-	_status[STATUS::HP] = _status[STATUS::最大HP];
-	_status[STATUS::MP] = _status[STATUS::最大MP];
+	_status[Status_ID::HP] = _status[Status_ID::最大HP];
+	_status[Status_ID::MP] = _status[Status_ID::最大MP];
 }
 
 

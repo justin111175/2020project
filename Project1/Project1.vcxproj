@@ -162,6 +162,8 @@
     <ClCompile Include="Select.cpp" />
     <ClCompile Include="Slash.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="id\Status_ID.cpp" />
+    <ClCompile Include="id\Status_Up_ID.cpp" />
     <ClCompile Include="_debug\_DeBugConOut.cpp" />
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
@@ -195,6 +197,8 @@
     <ClInclude Include="Select.h" />
     <ClInclude Include="Slash.h" />
     <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="id\Status_ID.h" />
+    <ClInclude Include="id\Status_Up_ID.h" />
     <ClInclude Include="_debug\_DeBugConOut.h" />
     <ClInclude Include="_debug\_DebugDispOut.h" />
   </ItemGroup>

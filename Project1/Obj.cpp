@@ -66,6 +66,13 @@ Obj::~Obj()
 // どのアニメションを再生するか指定する
 bool Obj::stateDir(const STATE state, const DIR_ID dir)
 {
+	stateDir(state);
+	_dir = dir;
+	return true;
+}
+
+bool Obj::stateDir(const STATE state)
+{
 	if (_animMap[static_cast<int>(_dir)].find(state) == _animMap[static_cast<int>(_dir)].end())
 	{
 		return false;
@@ -76,7 +83,6 @@ bool Obj::stateDir(const STATE state, const DIR_ID dir)
 		_animFrame = 0;
 	}
 	_state = state;
-	_dir = dir;
 	return true;
 }
 
@@ -94,16 +100,17 @@ bool Obj::SetAlive(bool alive)
 	return true;
 }
 
-bool Obj::SetAnim(const STATE state,const DIR_ID _dir, AnimVector& data)
-{
-	return (_animMap[static_cast<int>(_dir)].try_emplace(state, std::move(data))).second;
-}
+
 
 bool Obj::SetAnim(const STATE state, AnimVector& data)
 {
 	return (_animMap[static_cast<int>(_dir)].try_emplace(state, std::move(data))).second;
 }
 
+bool Obj::SetAnim(const STATE state,const DIR_ID _dir, AnimVector& data)
+{
+	return (_animMap[static_cast<int>(_dir)].try_emplace(state, std::move(data))).second;
+}
 
 // アニメがおわったかどうか
 bool Obj::isAnimEnd(void)

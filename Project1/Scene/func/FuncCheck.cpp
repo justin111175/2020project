@@ -46,7 +46,7 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 				{
 					//actQue.second._level._status[STATUS::HP] -= 20;
 					//actQue.second.SetAlive(false);
-					(*obj)._status[STATUS::HP] -= 100;
+					(*obj)._status[Status_ID::HP] -= 100;
 					return true;
 				}
 			}
@@ -68,7 +68,7 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 				{
 					//actQue.second._level._status[STATUS::HP] -= 20;
 					actQue.second.SetAlive(false);
-					(*obj)._status[STATUS::HP] -= 50;
+					(*obj)._status[Status_ID::HP] -= 50;
 					//(*obj).SetAlive(false);
 					return true;
 				}

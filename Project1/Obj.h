@@ -5,6 +5,8 @@
 #include <map>
 #include <memory>
 #include "DIR_ID.h"
+#include "Status_ID.h"
+#include "Status_Up_ID.h"
 
 
 
@@ -28,32 +30,9 @@ enum class UNIT_ID
 	LevelUp						// レベルアップ
 };
 
-enum STATUS_UP													//強化ステータス
-{
-	強化_攻撃力,
-	強化_防御力,
-	強化_敏捷,
-	強化_回復,
-	強化_最大HP,
-	強化_最大MP,
-	残るボーナスポイント,
-	強化_MAX
 
-};
 
-enum STATUS														//強化ステータス
-{
-	HP,
-	最大HP,
-	MP,
-	最大MP,
-	攻撃力,
-	防御力,
-	敏捷,
-	回復,
-	お金,
-	MAX
-};
+
 
 class Obj;
 class Player;
@@ -73,13 +52,13 @@ public:
 	virtual ~Obj();
 
 	bool stateDir(const STATE state,const DIR_ID dir);										// ゲット関数-どのアニメションを再生するか指定する
+	bool stateDir(const STATE state);										// ゲット関数-どのアニメションを再生するか指定する
 
 	UNIT_ID _unitID;													// ユニットID
 	virtual bool SetAlive(bool alive);									// 生きているかどうか設定
 
-	
-	bool SetAnim(const STATE state, const DIR_ID _dir, AnimVector& data);					// アニメの設定
 	bool SetAnim(const STATE state, AnimVector& data);					// アニメの設定
+	bool SetAnim(const STATE state, const DIR_ID _dir, AnimVector& data);					// アニメの設定
 
 	bool isAlive(void) { return _alive; }								// 生きている管理
 	bool isDead(void) { return _dead; }									// 死んでいる管理
@@ -91,8 +70,8 @@ public:
 	Vector2Dbl sizeGet(void);											//大きさ
 	const 	DIR_ID dirGet(void)const;
 
-	std::map<int, int> _status;											//ステータス用
-	std::map<int, int> _statusUp;										//ステータス強化用
+	std::map<Status_ID, int> _status;											//ステータス用
+	std::map<Status_Up_ID, int> _statusUp;										//ステータス強化用
 	
 	std::map<int, int> _experience;
 	
