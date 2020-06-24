@@ -28,7 +28,8 @@ void Player::Update(sharedObj plObj)
 	{
 		return;
 	}
-
+	_dbgDrawFormatString(0, 150, 0xFFFFFF, "プレイヤーの座標 X:%.0f,Y:%.0f", _pos.x,_pos.y);
+	_dbgDrawFormatString(0, 200, 0xFFFFFF, "Mapの座標 X:%.0f,Y:%.0f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 
 
 	if (_experience[_level] <= 0)

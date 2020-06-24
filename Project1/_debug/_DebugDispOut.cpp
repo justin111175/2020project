@@ -21,7 +21,8 @@ void _DebugDispOut::SetScreen(void)
 {
 	ghBefor = GetDrawScreen();
 	SetDrawScreen(_DbgScreen);
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, _alpha);
+	//SetFontSize(30);
+	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, _alpha);
 }
 
 void _DebugDispOut::RevScreen(void)
@@ -81,6 +82,8 @@ void _DebugDispOut::WaitMode(void)
 	}
 }
 
+
+
 int _DebugDispOut::DrawGraph(int x, int y, int GrHandle, int TransFlag)
 {
 	SetScreen();
@@ -105,6 +108,11 @@ int _DebugDispOut::DrawString(int x, int y, char* String, unsigned int Color)
 	return rtnFlag;
 }
 
+//int _DebugDispOut::DrawFormatString(int x, int y, unsigned int Color, const char* FormatString, ...)
+//{
+//	DrawFormatString(x, y, Color, FormatString, ...);
+//}
+
 //int _DebugDispOut::DrawFormatString(int x, int y, unsigned int Color,const char* FormatString, ...)
 //{
 //	SetScreen();
@@ -115,6 +123,8 @@ int _DebugDispOut::DrawString(int x, int y, char* String, unsigned int Color)
 //	return rtnFlag;
 //
 //}
+
+
 
 
 
@@ -188,7 +198,7 @@ bool _DebugDispOut::AddDrawDebug(void)
 	}
 	if (dispFlag)
 	{
-		IpSceneMng.AddDrawQue({ _DbgScreen,{IpSceneMng.ScreenSize.x / 2.0,IpSceneMng.ScreenSize.y / 2.0},{0,0},{1.0f,1.0f},0,INT_MAX,LAYER::UI });
+		IpSceneMng.AddDrawQue({ _DbgScreen,{0,0},{0,0},{1.0f,1.0f},0,INT_MAX,LAYER::UI });
 	}
 	WaitMode();
 	return true;

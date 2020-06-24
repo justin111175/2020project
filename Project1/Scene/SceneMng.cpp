@@ -118,8 +118,10 @@ void SceneMng::Draw(void)
 		{
 			SetDrawScreen(_screenID[layer_id]);
 		}
+		
 
 		//DrawString(pos.x, pos.y, key, 0xFFFFFF);
+		SetFontSize(40);
 
 		switch (layer_id)
 		{
@@ -150,7 +152,6 @@ void SceneMng::Draw(void)
 
 
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
-	SetFontSize(40);
 	SetFontThickness(3);
 
 
@@ -186,7 +187,7 @@ void SceneMng::Run(void)
 		(*_input).Update();
 
 		Draw();
-
+		
 		_frames++;
 	}
 }

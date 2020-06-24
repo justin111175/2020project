@@ -82,6 +82,7 @@ public:
 
 private:
 
+
 	std::map <STATE, AnimVector> _animMap[static_cast<int>(DIR_ID::MAX)];								// キー、アニメフレーム
 
 	STATE _state;														// 状態
@@ -103,3 +104,4 @@ protected:
 	DIR_ID _dir;													// 向き
 
 };
+
