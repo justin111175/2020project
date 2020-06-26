@@ -306,22 +306,22 @@ void Player::Init(void)
 
 void Player::UIDraw(void)
 {
-	IpSceneMng.AddDrawQue({ IMAGE_ID("UI背景")[0], {0 ,0},{0,0},{0.7f,0.25f},0,0,LAYER::UI });
-	IpSceneMng.AddDrawQue({ IMAGE_ID("プレイヤー歩く")[0], {220 ,0},{0,0},{2.5f,2.4f},0,1,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("UI背景")[0], {0 ,0},{0,0},{0.7f,0.25f},false,0,0,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("プレイヤー歩く")[0], {220 ,0},{0,0},{2.5f,2.4f},false,0,1,LAYER::UI });
 
 
 	HpRatio =0.4f* static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
 	MpRatio = 0.4f * static_cast<float>(_status[Status_ID::MP]) / static_cast<float>(_status[Status_ID::最大MP]);
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {20 ,30},{0,0},{0.4f,0.4f},0,2,LAYER::UI });
-	IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {78 ,38},{0,0},{ HpRatio,0.3f},0,1,LAYER::UI});
+	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {20 ,30},{0,0},{0.4f,0.4f},false,0,2,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {78 ,38},{0,0},{ HpRatio,0.3f},false,0,1,LAYER::UI});
 	IpSceneMng.AddDrawQue({ "HP     /",{51,23}, {0.6f,0.6f},0,LAYER::UI });
 	number.Draw({ 120, 28 }, {0.15f,0.15f }, _status[Status_ID::HP]);
 	number.Draw({ 190, 28 }, { 0.15f,0.15f }, _status[Status_ID::最大HP]);
 
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {30 ,65},{0,0},{0.4f,0.4f},0,2,LAYER::UI });
-	IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {88 ,73},{0,0},{ MpRatio,0.3f},0,1,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {30 ,65},{0,0},{0.4f,0.4f},false,0,2,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {88 ,73},{0,0},{ MpRatio,0.3f},false,0,1,LAYER::UI });
 	IpSceneMng.AddDrawQue({ "MP     /",{61,60}, {0.6f,0.6f},0,LAYER::UI});
 	number.Draw({ 130, 63 }, { 0.15f,0.15f }, _status[Status_ID::MP]);
 	number.Draw({ 200, 63 }, { 0.15f,0.15f }, _status[Status_ID::最大MP]);
@@ -340,27 +340,27 @@ void Player::MeanDraw(void)
 	switch (MeanState)
 	{
 	case ME_ST::MEAN_OUT:
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], {0 ,0},{0,0},{1.0f,1.0f},0,0,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メニュー")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::MEAN });
 		
 		HpRatio = 0.7f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
 		MpRatio = 0.7f * static_cast<float>(_status[Status_ID::MP]) / static_cast<float>(_status[Status_ID::最大MP]);
 
 
-		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {300 ,250},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {400 ,265},{0,0},{HpRatio,0.6f},0,1,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {300 ,250},{0,0},{0.7f,0.7f},false,0,2,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {400 ,265},{0,0},{HpRatio,0.6f},false,0,1,LAYER::MEAN });
 		IpSceneMng.AddDrawQue({ "HP     /",{350,240}, {1.0f,1.0f},0,LAYER::UI });
 		number.Draw({ 480, 240 }, { 0.3f,0.3f }, _status[Status_ID::HP]);
 		number.Draw({ 590, 240 }, { 0.3f,0.3f }, _status[Status_ID::最大HP]);
 
 
-		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {350 ,310},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {450 ,325},{0,0},{MpRatio,0.6f},0,1,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {350 ,310},{0,0},{0.7f,0.7f},false,0,2,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {450 ,325},{0,0},{MpRatio,0.6f},false,0,1,LAYER::MEAN });
 
 		IpSceneMng.AddDrawQue({ "MP     /",{400,300}, {1.0f,1.0f},0,LAYER::UI });
 		number.Draw({ 530, 300 }, { 0.3f,0.3f }, _status[Status_ID::MP]);
 		number.Draw({ 640, 300 }, { 0.3f,0.3f }, _status[Status_ID::最大MP]);
 
-		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], {115 + 255.0 * IpSceneMng.select.s_id.Mean ,385 + sin(IpSceneMng.frames() / 5) * 10.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("メッセージ")[0], {115 + 255.0 * IpSceneMng.select.s_id.Mean ,385 + sin(IpSceneMng.frames() / 5) * 10.0},{0,0},{1.0f,1.0f},false,0,1,LAYER::MEAN });
 		
 		number.Draw({ 260, 80 }, { 0.4f, 0.3f }, _level);
 		number.Draw({ 700, 80 }, { 0.4f, 0.3f }, _status[Status_ID::お金]);
@@ -372,14 +372,14 @@ void Player::MeanDraw(void)
 		switch (_select.s_id.Mean)
 		{
 		case ステータス:
-			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0],{ 0 ,0},{0,0},{1.0f,1.0f},0,0,LAYER::MEAN });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], {1010.0 ,205 + static_cast<int>(statusupId) * 53.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("ステータス")[0],{ 0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("加減")[0], {1010.0 ,205 + static_cast<int>(statusupId) * 53.0},{0,0},{1.0f,1.0f},false,0,1,LAYER::MEAN });
 
 			HpRatio = 0.7f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
 			MpRatio = 0.7f * static_cast<float>(_status[Status_ID::MP]) / static_cast<float>(_status[Status_ID::最大MP]);
 
-			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {200 ,150},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {300 ,165},{0,0},{HpRatio,0.7f},0,1,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {200 ,150},{0,0},{0.7f,0.7f},false,0,2,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {300 ,165},{0,0},{HpRatio,0.7f},false,0,1,LAYER::MEAN });
 			
 			IpSceneMng.AddDrawQue({ "HP     /",{250,145}, {1.0f,1.0f},0,LAYER::UI });
 			number.Draw({ 380, 145 }, { 0.3f,0.3f }, _status[Status_ID::HP]);
@@ -387,15 +387,15 @@ void Player::MeanDraw(void)
 
 
 
-			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {250 ,200},{0,0},{0.7f,0.7f},0,2,LAYER::MEAN });
-			IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {350 ,215},{0,0},{MpRatio,0.7f},0,1,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {250 ,200},{0,0},{0.7f,0.7f},false,0,2,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {350 ,215},{0,0},{MpRatio,0.7f},false,0,1,LAYER::MEAN });
 			
 			IpSceneMng.AddDrawQue({ "MP     /",{300,195}, {1.0f,1.0f},0,LAYER::UI });
 			number.Draw({ 430, 195 }, { 0.3f,0.3f }, _status[Status_ID::MP]);
 			number.Draw({ 540, 195 }, { 0.3f,0.3f }, _status[Status_ID::最大MP]);
 
 
-			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], {750 + sin(IpSceneMng.frames() / 5) * 10.0 ,205 + static_cast<int>(statusupId) * 53.0},{0,0},{1.0f,1.0f},0,1,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], {750 + sin(IpSceneMng.frames() / 5) * 10.0 ,205 + static_cast<int>(statusupId) * 53.0},{0,0},{1.0f,1.0f},false,0,1,LAYER::MEAN });
 
 			number.Draw({ 240,300 }, {0.4f,0.4f},_status[Status_ID::攻撃力]);
 			number.Draw({ 240, 370 }, { 0.4f,0.4f }, _status[Status_ID::防御力]);
@@ -419,7 +419,7 @@ void Player::MeanDraw(void)
 
 			break;
 		case 装備:
-			IpSceneMng.AddDrawQue({ IMAGE_ID("装備")[0], {0 ,0},{0,0},{1.0f,1.0f},0,0,LAYER::MEAN });
+			IpSceneMng.AddDrawQue({ IMAGE_ID("装備")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::MEAN });
 
 			break;
 		case 保存:

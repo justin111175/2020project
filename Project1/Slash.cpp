@@ -16,11 +16,10 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, DIR_ID movetype)
 {
 	_unitID = unitID;
 	_exrate = { 1.0f,1.0f };
-	_size = { 43,11 };
-	//_size = { 380,384 };
-	//_pos.x = pos.x-_size.x/2;
-	//_pos.y = pos.y - _size.y / 2;
-	switch (movetype)
+	_size = { 48,49 };
+	_dir = movetype;
+
+	switch (_dir)
 	{
 	case DIR_ID::UP:
 		_pos.x = pos.x + size.x / 2;
@@ -40,7 +39,7 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, DIR_ID movetype)
 		_pos.y = pos.y+size.y/2;
 
 		_rad = 270 * DEG;
-		//_rad = 180 * DEG;
+
 		break;
 	case DIR_ID::RIGHT:
 
@@ -48,7 +47,8 @@ Slash::Slash(UNIT_ID unitID, Vector2Dbl pos, Vector2Dbl size, DIR_ID movetype)
 		_pos.x = pos.x + size.x / 2;
 		_pos.y = pos.y + size.y / 2;
 
-		_rad = 90 * DEG;
+		_rad = 180 * DEG;
+
 		break;
 	default:
 		break;
@@ -82,8 +82,20 @@ void Slash::Update(sharedObj plObj)
 
 	if (IpSceneMng.frames()%60)
 	{
-		cnt += 3;
-		_rad -= cnt * DEG;
+		switch (_dir)
+		{
+
+		case DIR_ID::RIGHT:
+			cnt += 3;
+			_rad += cnt * DEG;
+			break;
+
+		default:
+			cnt += 3;
+			_rad -= cnt * DEG;
+			break;
+		}
+
 	}
 
 
@@ -115,15 +127,20 @@ void Slash::Init(void)
 	AnimVector data;
 	data.reserve(1);
 	data.emplace_back(IMAGE_ID("ŽaŒ‚2")[0], 0);
+	SetAnim(STATE::NORMAL, DIR_ID::LEFT,data);
+	
+	data.emplace_back(IMAGE_ID("ŽaŒ‚2")[0], 0);
+	SetAnim(STATE::NORMAL, DIR_ID::UP, data);
+	data.emplace_back(IMAGE_ID("ŽaŒ‚1")[0], 0);
+	SetAnim(STATE::NORMAL, DIR_ID::DOWN, data);
+	data.emplace_back(IMAGE_ID("ŽaŒ‚1")[0], 0);
 
-
-	SetAnim(STATE::NORMAL, data);
-
+	SetAnim(STATE::NORMAL, DIR_ID::RIGHT, data);
 	data.reserve(1);
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
 
-	stateDir(STATE::NORMAL,DIR_ID::DOWN);
+	stateDir(STATE::NORMAL);
 }
 
 bool Slash::DestroyPrpc(void)

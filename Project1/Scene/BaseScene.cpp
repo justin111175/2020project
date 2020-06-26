@@ -35,7 +35,7 @@ bool BaseScene::FadeUpdate(void)
 {
 	if (IpSceneMng._blendCnt)
 	{		
-		IpSceneMng.AddDrawQue({ IpImageMng.GetID(_fadeType)[0], {IpSceneMng.ScreenSize.x / 2.0, IpSceneMng.ScreenSize.y / 2.0},{0,0} ,{0,0},0, 3, LAYER::EX });
+		IpSceneMng.AddDrawQue({ IpImageMng.GetID(_fadeType)[0], {IpSceneMng.ScreenSize.x / 2.0, IpSceneMng.ScreenSize.y / 2.0},{0,0} ,{0,0},false,0, 3, LAYER::EX });
 		IpSceneMng._blendCnt -=5;
 	}
 

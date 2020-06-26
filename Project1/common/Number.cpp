@@ -24,7 +24,7 @@ void Number::Draw(Vector2Dbl pos,Vector2Dbl exrate, int score)
 	//”š•`‰æ
 	for (int i = 0; i < numLen; i++)
 	{
-		IpSceneMng.AddDrawQue({ IMAGE_ID("”š1")[score % 10], {pos.x - 90 * exrate.x * i,pos.y} ,{0,0},{exrate.x,exrate.y},0,0,LAYER::NUMBER });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("”š1")[score % 10], {pos.x - 90 * exrate.x * i,pos.y} ,{0,0},{exrate.x,exrate.y},0,false,0,LAYER::NUMBER });
 		score /= 10;
 	}
 

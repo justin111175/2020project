@@ -46,8 +46,8 @@ void Enemy::Update(sharedObj plObj)
 
 	if (_status[Status_ID::HP] != _status[Status_ID::ç≈ëÂHP])
 	{ 
-		IpSceneMng.AddDrawQue({ IMAGE_ID("ìGHP_BAR")[0], {HpPos.x,HpPos.y},{0,0},{1.0f,0.5f},0,1,LAYER::CHAR });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("ìGHP")[0], {HpPos.x,HpPos.y},{0,0},{HpRatio,0.5f},0,2,LAYER::CHAR });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("ìGHP_BAR")[0], {HpPos.x,HpPos.y},{0,0},{1.0f,0.5f},false,0,1,LAYER::CHAR });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("ìGHP")[0], {HpPos.x,HpPos.y},{0,0},{HpRatio,0.5f},false,0,2,LAYER::CHAR });
 	}
 
 	

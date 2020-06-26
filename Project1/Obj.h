@@ -68,7 +68,7 @@ public:
 	Vector2Dbl posGet(void);											//今の座標
 	Vector2Dbl posOldGet(void);											//昔の座標
 	Vector2Dbl sizeGet(void);											//大きさ
-	const 	DIR_ID dirGet(void)const;
+	const DIR_ID dirGet(void)const;
 
 	std::map<Status_ID, int> _status;											//ステータス用
 	std::map<Status_Up_ID, int> _statusUp;										//ステータス強化用
@@ -102,6 +102,7 @@ protected:
 	Vector2Dbl _size;													// サイズ
 	Vector2Dbl _exrate;													// XとYの拡大縮小率
 	DIR_ID _dir;													// 向き
+	bool _turnFlag;
 
 };
 

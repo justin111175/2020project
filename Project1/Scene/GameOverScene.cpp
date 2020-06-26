@@ -33,13 +33,13 @@ unique_Base GameOverScene::Update(unique_Base own)
 		}
 	}
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("BG")[0], {0,0},{0,0},{1.0f,1.0f},0,1,LAYER::BG });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("BG")[0], {0,0},{0,0},{1.0f,1.0f},false,0,1,LAYER::BG });
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバー")[0], {0,cnt*1.0},{0,0},{1.0f,1.0f},0,1,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバー")[0], {0,cnt*1.0},{0,0},{1.0f,1.0f},false,0,1,LAYER::UI });
 	if (cnt >= 0)
 	{
-		IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバーSel")[0], {0,0},{0,0},{1.0f,1.0f},0,1,LAYER::UI });
-		IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], {480.0,415 + (_select.s_id.GameOver) * 110.0},{0,0},{1.0f,1.0f},0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("ゲームオーバーSel")[0], {0,0},{0,0},{1.0f,1.0f},false,0,1,LAYER::UI });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("messagecursorD3")[0], {480.0,415 + (_select.s_id.GameOver) * 110.0},{0,0},{1.0f,1.0f},false,0,1,LAYER::UI });
 
 	}
 	

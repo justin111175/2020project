@@ -1,35 +1,21 @@
 #include "FuncCheck.h"
 #include <SceneMng.h>
 #include <GameScene.h>
+#include "HitCheck.h"
+#include "_DebugDispOut.h"
 
 bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 {
 	UNIT_ID unitID;
 
+	auto S_pos = [](Vector2Dbl pos,Vector2Dbl size) {
+	
+		return Vector2Dbl(pos.x - size.x / 2, pos.y - size.y / 2);
+	};
+
 
 	switch (actQue.second._unitID)
 	{
-	//case UNIT_ID::ENEMY:
-	//	unitID = UNIT_ID::PLAYER;
-	//	unitID = UNIT_ID::ENEMY;
-	//	for (auto obj : ((GameScene*)scene)->_objList)
-	//	{
-	//		if ((obj->_unitID == unitID) && (*obj).isAlive())
-	//		{
-
-	//			if (actQue.second.posGet().x + actQue.second.sizeGet().x > (*obj).posGet().x&&
-	//				actQue.second.posGet().x < (*obj).posGet().x + (*obj).sizeGet().x&&
-	//				actQue.second.posGet().y<(*obj).posGet().y + (*obj).sizeGet().y&&
-	//				actQue.second.posGet().y + actQue.second.sizeGet().y>(*obj).posGet().y)
-	//			{
-	//				//actQue.second._level._status[STATUS::HP] -= 20;
-	//				//actQue.second.SetAlive(false);
-	//				(*obj).SetAlive(false);
-	//				return true;
-	//			}
-	//		}
-	//	}
-	//	return false;
 
 	case UNIT_ID::PLaS:
 
@@ -39,16 +25,52 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 			if ((obj->_unitID == unitID) && (*obj).isAlive())
 			{
 
-				if (actQue.second.posGet().x + actQue.second.sizeGet().x > (*obj).posGet().x &&
-					actQue.second.posGet().x < (*obj).posGet().x + (*obj).sizeGet().x &&
-					actQue.second.posGet().y<(*obj).posGet().y + (*obj).sizeGet().y &&
-					actQue.second.posGet().y + actQue.second.sizeGet().y>(*obj).posGet().y)
+				switch (actQue.second.dirGet())
 				{
-					//actQue.second._level._status[STATUS::HP] -= 20;
-					//actQue.second.SetAlive(false);
-					(*obj)._status[Status_ID::HP] -= 100;
-					return true;
+				case DIR_ID::UP:
+					
+					if (CheckBox({ S_pos(actQue.second.posGet(), actQue.second.sizeGet()).x,S_pos(actQue.second.posGet(), actQue.second.sizeGet()).y- actQue.second.sizeGet().y/2 }, actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
+					{
+						(*obj)._status[Status_ID::HP] -= 100;
+						return true;
+					}
+					break;
+				case DIR_ID::DOWN:
+					if (CheckBox({ S_pos(actQue.second.posGet(), actQue.second.sizeGet()).x,S_pos(actQue.second.posGet(), actQue.second.sizeGet()).y + actQue.second.sizeGet().y / 2 }, actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
+					{
+						(*obj)._status[Status_ID::HP] -= 100;
+						return true;
+					}
+
+					break;
+				case DIR_ID::LEFT:
+
+					if (CheckBox({ S_pos(actQue.second.posGet(), actQue.second.sizeGet()).x - actQue.second.sizeGet().x / 2,S_pos(actQue.second.posGet(), actQue.second.sizeGet()).y  }, actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
+					{
+						(*obj)._status[Status_ID::HP] -= 100;
+						return true;
+					}
+
+					break;
+				case DIR_ID::RIGHT:
+					if (CheckBox({ S_pos(actQue.second.posGet(), actQue.second.sizeGet()).x + actQue.second.sizeGet().x / 2,S_pos(actQue.second.posGet(), actQue.second.sizeGet()).y }, actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
+					{
+						(*obj)._status[Status_ID::HP] -= 100;
+						return true;
+					}
+
+					break;
+				default:
+					break;
 				}
+				
+				//if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::íÜêS))
+				//{
+				//	//actQue.second._level._status[STATUS::HP] -= 20;
+				//	//actQue.second.SetAlive(false);
+				//	(*obj)._status[Status_ID::HP] -= 100;
+				//	return true;
+				//}
 			}
 		}
 		return false;
@@ -61,10 +83,7 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 			if ((obj->_unitID == unitID) &&(*obj).isAlive())
 			{
 
-				if (actQue.second.posGet().x + actQue.second.sizeGet().x > (*obj).posGet().x &&
-					actQue.second.posGet().x < (*obj).posGet().x + (*obj).sizeGet().x &&
-					actQue.second.posGet().y<(*obj).posGet().y + (*obj).sizeGet().y &&
-					actQue.second.posGet().y + actQue.second.sizeGet().y>(*obj).posGet().y)
+				if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(),TYPE::ç∂è„))
 				{
 					//actQue.second._level._status[STATUS::HP] -= 20;
 					actQue.second.SetAlive(false);

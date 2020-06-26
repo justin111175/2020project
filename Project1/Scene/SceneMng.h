@@ -17,6 +17,7 @@ enum class DRAW_QUE
 	SIZE,										// サイズ
 	EXRATE,										// 拡大縮小率
 	RAD,										// 角度
+	TURN,
 	ZODER,										// Zオーダー（レイヤーの前後順番-数値の低い方が奥）
 	LAYER,										// レイヤーID（数値の低い方が奥）
 };
@@ -33,7 +34,7 @@ enum class TEXT_QUE
 };
 class Obj;
 
-using DrawQueT = std::tuple<int, Vector2Dbl, Vector2Dbl,Vector2Dbl, double, int, LAYER>;
+using DrawQueT = std::tuple<int, Vector2Dbl, Vector2Dbl,Vector2Dbl, double,bool, int, LAYER>;
 
 using TextQueT = std::tuple<const char*, Vector2Dbl, Vector2Dbl,int, LAYER>;
 
@@ -88,7 +89,6 @@ public:
 
 	Vector2Dbl mapPos;
 
-	//void _DrawFormatString(int x, int y, unsigned int Color,const char* FormatString, ...);
 
 
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報

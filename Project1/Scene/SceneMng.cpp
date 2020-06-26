@@ -48,10 +48,10 @@ void SceneMng::Draw(void)
 		Vector2Dbl size;
 		Vector2Dbl ExRate;
 		LAYER layer_id;
-		
+		bool turnFlag;
 		// いらないことを飛ばす
 		// tie:同期する出力ストリームオブジェクトを取得・設定する
-		std::tie(id, pos, size,ExRate, rad, std::ignore, layer_id) = dQue;
+		std::tie(id, pos, size,ExRate, rad, turnFlag, std::ignore, layer_id) = dQue;
 
 		if (_screenID[layer_id] != GetDrawScreen())
 		{
@@ -63,17 +63,17 @@ void SceneMng::Draw(void)
 		case LAYER::MEAN:
 			DrawRotaGraph3(static_cast<int>(pos.x) , static_cast<int>(pos.y) ,
 				0, 0,
-				ExRate.x, ExRate.y, rad, id, true);
+				ExRate.x, ExRate.y, rad, id, true, turnFlag);
 			break;
 		case LAYER::UI:
 			DrawRotaGraph3(static_cast<int>(pos.x), static_cast<int>(pos.y),
 				0, 0,
-				ExRate.x, ExRate.y, rad, id, true);
+				ExRate.x, ExRate.y, rad, id, true, turnFlag);
 			break;
 		case LAYER::NUMBER:
 			DrawRotaGraph3(static_cast<int>(pos.x), static_cast<int>(pos.y),
 				0, 0,
-				ExRate.x, ExRate.y, rad, id, true);
+				ExRate.x, ExRate.y, rad, id, true, turnFlag);
 			break;
 		case LAYER::PUTTOM:
 			//// ボタン描画表示するブレント
@@ -84,13 +84,13 @@ void SceneMng::Draw(void)
 		case LAYER::EX:
 			// シン変更するときブレント用
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, IpSceneMng._blendCnt);
-			DrawRotaGraph(pos.x, pos.y , 1.0, rad, id, true);
+			DrawRotaGraph(pos.x, pos.y , 1.0, rad, id, true, turnFlag);
 			SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 			break;
 		default:
 			DrawRotaGraph3(pos.x+mapPos.x, pos.y+mapPos.y,
 				0,0,
-				ExRate.x, ExRate.y, rad, id, true);
+				ExRate.x, ExRate.y, rad, id, true, turnFlag);
 			break;
 		}
 	}
