@@ -46,6 +46,7 @@ private:
 	void StatusInit(void);
 	void StatusUpData(void);									//ステータス更新
 
+	void Repel(bool repel);
 	ME_ST MeanState;											//メニューの状態
 
 	Status_Up_ID statusupId;										//ステータスのID
@@ -63,5 +64,6 @@ private:
 
 	float HpRatio;
 	float MpRatio;
+	
 };
 

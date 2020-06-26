@@ -9,6 +9,7 @@ Obj::Obj()
 {
 	_alive = true;
 	_dead = false;
+	_repelFlag = false;
 	_animCount = 0;
 	_animFrame = 0;
 	_rad = 0;
@@ -94,10 +95,15 @@ bool Obj::SetAlive(bool alive)
 	_alive = alive;
 	if (!_alive)
 	{
-		stateDir(STATE::DETH,DIR_ID::DOWN);
+		stateDir(STATE::DETH);
 	}
 
 	return true;
+}
+
+bool Obj::SetRepel(bool repel)
+{
+	return _repelFlag= repel;
 }
 
 

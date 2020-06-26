@@ -33,14 +33,17 @@ void Enemy::Update(sharedObj plObj)
 			(*plObj)._experience[(*plObj)._level] -= _experience[0];
 
 		}
-	}
-
+	}	
+	
 	if (DestroyPrpc())
 	{	
 
-
 		return;
 	}
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+
+
+
 	auto HpRatio = 1.0f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
 	Vector2Dbl HpPos = { _pos.x + _size.x / 2 - 30 ,_pos.y - 10 };
 
@@ -118,20 +121,17 @@ void Enemy::Init(void)
 		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+2], 30);
 		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+1], 40);
 		SetAnim(STATE::NORMAL, dir, data);
-
-	}
-
-
-	for (int i = 0; i < 24; i++)
-	{
-		data.emplace_back(IMAGE_ID("blast")[i], i);
-	}
-	data.emplace_back(-1, 35);
-	
-	for (auto dir : DIR_ID())
-	{
+		
+		for (int i = 0; i < 24; i++)
+		{
+			data.emplace_back(IMAGE_ID("blast")[i], i);
+		}
+		data.emplace_back(-1, 25);
 		SetAnim(STATE::DETH, dir, data);
+
 	}
+
+
 
 	switch (_type)
 	{

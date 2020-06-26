@@ -9,6 +9,8 @@
 #include "Status_Up_ID.h"
 
 
+#define PI 3.1415926f
+#define DEG (PI/180.0)
 
 // 状態管理
 enum class STATE
@@ -56,6 +58,7 @@ public:
 
 	UNIT_ID _unitID;													// ユニットID
 	virtual bool SetAlive(bool alive);									// 生きているかどうか設定
+	virtual bool SetRepel(bool repel);						//撃退するかどうか管理
 
 	bool SetAnim(const STATE state, AnimVector& data);					// アニメの設定
 	bool SetAnim(const STATE state, const DIR_ID _dir, AnimVector& data);					// アニメの設定
@@ -70,8 +73,8 @@ public:
 	Vector2Dbl sizeGet(void);											//大きさ
 	const DIR_ID dirGet(void)const;
 
-	std::map<Status_ID, int> _status;											//ステータス用
-	std::map<Status_Up_ID, int> _statusUp;										//ステータス強化用
+	std::map<Status_ID, int> _status;									//ステータス用
+	std::map<Status_Up_ID, int> _statusUp;								//ステータス強化用
 	
 	std::map<int, int> _experience;
 	
@@ -103,6 +106,7 @@ protected:
 	Vector2Dbl _exrate;													// XとYの拡大縮小率
 	DIR_ID _dir;													// 向き
 	bool _turnFlag;
+	bool _repelFlag;//撃退用
 
 };
 

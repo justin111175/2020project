@@ -8,6 +8,7 @@
 #include <map>
 #include <InputState.h>
 #include <Select.h>
+#include "TimeCount.h"
 
 
 enum class DRAW_QUE
@@ -83,6 +84,8 @@ public:
 	bool AddDrawQue(TextQueT tQue);								// 描画を増加する
 	
 	bool AddActQue(ActQueT aQue);								// 活動を増加する
+	
+
 
 	const Vector2 ScreenSize;									// 全画面サイズ
 	const Vector2 GameScreenSize;								// 全画面サイズの4分の１
@@ -108,7 +111,6 @@ private:
 	void Draw(void);											// 描画
 	int _frames;												// フレーム数
 	int _layerGID;												// レイヤーID
-
 	std::map<LAYER, int> _screenID;								
 	
 	std::vector<DrawQueT> _drawList;							// 描画リスト
@@ -117,6 +119,8 @@ private:
 	
 	std::vector<ActQueT> _actList;								// 活動リスト
 
+	int _count;
+	bool countFlag;
 	~SceneMng();
 	SceneMng();
 	bool SysInit(void);											// システム初期化

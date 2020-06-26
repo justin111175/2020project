@@ -3,8 +3,6 @@
 
 
 
-#define PI 3.1415926f
-#define DEG (PI/180.0)
 
 Slash::Slash()
 {

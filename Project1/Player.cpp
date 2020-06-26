@@ -28,6 +28,7 @@ void Player::Update(sharedObj plObj)
 	{
 		return;
 	}
+	Repel(_repelFlag);
 	_dbgDrawFormatString(0, 150, 0xFFFFFF, "ƒvƒŒƒCƒ„[‚ÌÀ•W X:%.0f,Y:%.0f", _pos.x,_pos.y);
 	_dbgDrawFormatString(0, 200, 0xFFFFFF, "Map‚ÌÀ•W X:%.0f,Y:%.0f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 
@@ -140,23 +141,38 @@ void Player::PlayerMove(void)
 		}
 	}
 
-	if ((*_Input).state(INPUT_ID::BTN_2).first && !(*_Input).state(INPUT_ID::BTN_2).second)
+	if (!_timeCount.GetFlag("’e"))
 	{
-		if (_status[Status_ID::MP] >= BulletCost)
-		{			
-			_status[Status_ID::MP] -= BulletCost;
+		if ((*_Input).state(INPUT_ID::BTN_2).first && !(*_Input).state(INPUT_ID::BTN_2).second)
+		{
 
-			IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+			if (_status[Status_ID::MP] >= BulletCost)
+			{			
+
+				if (IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this }))
+				{
+					_status[Status_ID::MP] -= BulletCost;
+
+					_timeCount.Set("’e",true, 0.5);
+				}
+			}
 		}
-			
 	}
 
-	if ((*_Input).state(INPUT_ID::BTN_3).first && !(*_Input).state(INPUT_ID::BTN_3).second)
+
+
+	if (!_timeCount.GetFlag("ŽaŒ‚"))
 	{
-		_posOld = _pos;
-		IpSceneMng.AddActQue({ ACT_QUE::SLASH , *this });
+		if ((*_Input).state(INPUT_ID::BTN_3).first && !(*_Input).state(INPUT_ID::BTN_3).second)
+		{
+			_posOld = _pos;
+
+			if (IpSceneMng.AddActQue({ ACT_QUE::SLASH , *this }))
+			{
+				_timeCount.Set("ŽaŒ‚", true, 0.5);
+			}
+		}
 	}
-	
 
 
 	if (abs(_pos.x - _mapPos.x) > IpSceneMng.ScreenSize.x/2)
@@ -545,6 +561,30 @@ void Player::StatusUpData(void)
 
 
 
+}
+
+void Player::Repel(bool repel)
+{
+	if (repel)
+	{
+
+			//_pos.x+=10;
+
+
+	}
+
+	
+
+
+
+	
+	//for (int t = 0; t < 50; t++)
+	//{
+
+	//	_pos.x += (3 * cos(90) * t)/100;
+	//	_pos.y += (3 * sin(90) * t - (1 / 2) * 3 * t * t)/100;
+
+	//}
 }
 
 void Player::Save(void)

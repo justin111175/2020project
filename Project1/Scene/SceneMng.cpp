@@ -189,6 +189,7 @@ void SceneMng::Run(void)
 		Draw();
 		
 		_frames++;
+		_timeCount.Run();
 	}
 }
 
@@ -236,10 +237,15 @@ bool SceneMng::AddActQue(ActQueT aQue)
 	return true;
 }
 
-//void SceneMng::_DrawFormatString(int x, int y, unsigned int Color,const char* FormatString, ...)
-//{
-//	DrawFormatString(x, y, Color, FormatString);
-//}
+
+
+
+
+
+
+
+
+
 
 // フレーム数のゲット関数
 const int SceneMng::frames(void) const

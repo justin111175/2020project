@@ -16,6 +16,20 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 
 	switch (actQue.second._unitID)
 	{
+	case UNIT_ID::ENEMY:
+		unitID = UNIT_ID::PLAYER;
+		for (auto obj : ((GameScene*)scene)->_objList)
+		{
+			if ((obj->_unitID == unitID) && (*obj).isAlive())
+			{
+				if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
+				{
+					(*obj).SetRepel(true);
+					return true;
+				}
+			}
+		}
+		return false;
 
 	case UNIT_ID::PLaS:
 
