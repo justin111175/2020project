@@ -75,12 +75,7 @@ void SceneMng::Draw(void)
 				0, 0,
 				ExRate.x, ExRate.y, rad, id, true, turnFlag);
 			break;
-		case LAYER::PUTTOM:
-			//// ボタン描画表示するブレント
-			//SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs(250 * sin(_frames / 25.0)));
-			//DrawRotaGraph(static_cast<int>(x)/*+size.x/2*/ , static_cast<int>(y) /*+ size.y / 2*/, 1.0, rad, id, true);
-			//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-			break;
+
 		case LAYER::EX:
 			// シン変更するときブレント用
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, IpSceneMng._blendCnt);
@@ -274,20 +269,17 @@ bool SceneMng::SysInit(void)
 
 	// レイヤーの設定
 	_screenID.try_emplace(LAYER::BG, MakeScreen(ScreenSize.x, ScreenSize.y, true));
+	_screenID.try_emplace(LAYER::CHIP, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 	_screenID.try_emplace(LAYER::CHAR, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 	_screenID.try_emplace(LAYER::UI, MakeScreen(ScreenSize.x, ScreenSize.y, true));
-	_screenID.try_emplace(LAYER::PUTTOM, MakeScreen(ScreenSize.x, ScreenSize.y, true));
+	_screenID.try_emplace(LAYER::MEAN, MakeScreen(ScreenSize.x, ScreenSize.y, true));
+	_screenID.try_emplace(LAYER::NUMBER, MakeScreen(ScreenSize.x, ScreenSize.y, true));
+	_screenID.try_emplace(LAYER::LETTER, MakeScreen(ScreenSize.x, ScreenSize.y, true));
+	
 	_screenID.try_emplace(LAYER::EX, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 
 
 
-	for (int y = 0; y < 50; y++)
-	{
-		for (int x = 0; x < 50; x++)
-		{
-			IpSceneMng.mapNow[y][x] = 0;
-		}
-	}
 
 	_frames = 0;
 

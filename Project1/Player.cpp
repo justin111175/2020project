@@ -6,7 +6,7 @@
 #include "_DebugDispOut.h"
 #include "SceneMng.h"
 #include "KeyState.h"
-
+#include <math.h>
 Player::Player()
 {
 	Init();
@@ -29,6 +29,10 @@ void Player::Update(sharedObj plObj)
 		return;
 	}
 	Repel(_repelFlag);
+	
+	CameraUpdata();
+	
+	
 	_dbgDrawFormatString(0, 150, 0xFFFFFF, "プレイヤーの座標 X:%.0f,Y:%.0f", _pos.x,_pos.y);
 	_dbgDrawFormatString(0, 200, 0xFFFFFF, "Mapの座標 X:%.0f,Y:%.0f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 
@@ -43,12 +47,14 @@ void Player::Update(sharedObj plObj)
 	}
 
 
-
-	HpRatio = static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
-	MpRatio = static_cast<float>(_status[Status_ID::MP]) / static_cast<float>(_status[Status_ID::最大MP]);
-
 	StatusData();
 
+	PlayerState();
+
+}
+
+void Player::PlayerState(void)
+{
 	if (!meanFlag)
 	{
 		UIDraw();
@@ -120,10 +126,31 @@ void Player::Update(sharedObj plObj)
 			}
 		}
 
-
-
-
 	}
+}
+
+void Player::CameraUpdata(void)
+{
+	auto cameraPos = [](double pos, double& mapPos,double screenSize) {
+		if (pos + mapPos != screenSize / 2)
+		{
+			if (pos + mapPos > screenSize / 2)
+			{
+				mapPos -= 4;
+
+			}
+			if (pos + mapPos < screenSize / 2)
+			{
+				if (mapPos <= 0)
+				{
+					mapPos += 4;
+				}
+			}
+		}
+	};
+
+	cameraPos(_pos.x, _mapPos.x, IpSceneMng.ScreenSize.x);
+	cameraPos(_pos.y, _mapPos.y, IpSceneMng.ScreenSize.y);
 
 }
 
@@ -175,15 +202,7 @@ void Player::PlayerMove(void)
 	}
 
 
-	if (abs(_pos.x - _mapPos.x) > IpSceneMng.ScreenSize.x/2)
-	{
-		_mapPos.x-=speed.x;
-	}
-	if (abs(_pos.y - _mapPos.y) > IpSceneMng.ScreenSize.y/2)
-	{
-		_mapPos.y -= speed.y;
 
-	}
 
 	speed = { 0,0 };
 	if (CheckHitKey(KEY_INPUT_UP))
@@ -563,12 +582,30 @@ void Player::StatusUpData(void)
 
 }
 
-void Player::Repel(bool repel)
+void Player::Repel(bool& repel)
 {
 	if (repel)
 	{
+		switch (_funcDir)
+		{
+		case DIR_ID::DOWN:
+			_pos.y-=50;
+			break;
+		case DIR_ID::LEFT:
+			_pos.x+=50;
+			break;
+		case DIR_ID::RIGHT:
+			_pos.x-=50;
+			break;
+		case DIR_ID::UP:
+			_pos.y+=50;
+			break;
 
-			//_pos.x+=10;
+		default:
+			break;
+		}
+
+		repel = false;
 
 
 	}

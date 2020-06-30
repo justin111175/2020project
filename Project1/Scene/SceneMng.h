@@ -77,7 +77,8 @@ public:
 	}
 	void Run(void);
 	
-	int mapNow[50][50];
+	std::map<int, int> _mapNow;
+
 
 
 	bool AddDrawQue(DrawQueT dQue);								// •`‰æ‚ğ‘‰Á‚·‚é

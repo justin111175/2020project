@@ -141,6 +141,16 @@ bool Obj::isAnimEnd(void)
 }
 
 
+const Vector2Dbl Obj::funcPos(Vector2Dbl pos)
+{
+	return _funcPos = pos;
+}
+
+const DIR_ID Obj::funcDir(DIR_ID dir)
+{
+	return _funcDir=dir;
+}
+
 Vector2Dbl Obj::posGet(void)
 {
 	return _pos;
@@ -160,6 +170,11 @@ Vector2Dbl Obj::sizeGet(void)
 const DIR_ID Obj::dirGet(void) const
 {
 	return _dir;
+}
+
+const bool Obj::repelFlagGet(void) const
+{
+	return _repelFlag;
 }
 
 // 爆発アニメが終わったかどうか確認、終わったら、消滅する

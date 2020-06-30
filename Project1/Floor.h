@@ -1,10 +1,10 @@
 #pragma once
 #include "Obj.h"
-#include <Outside_A1_ID.h>
+#include <functional>
 
 enum class FLOOR_TYPE		//°‚Ì•`‰æ‚Ìƒ^ƒCƒv
 {
-	Outside_A1_ID,
+	“–‚½‚è”»’è
 };
 
 enum class FLOOR_STATE
@@ -16,8 +16,7 @@ enum class FLOOR_STATE
 	MAX
 };
 
-
-using FloorState = std::tuple<FLOOR_TYPE, Vector2Dbl, Vector2Dbl, Outside_A1_ID>;
+using FloorState = std::tuple < FLOOR_TYPE, Vector2Dbl, Vector2Dbl> ;
 
 class Floor;
 
@@ -33,6 +32,7 @@ public:
 private:
 	void Init(void);												// ‰Šú‰»
 	FLOOR_TYPE _type;												// í—Ş
-	Outside_A1_ID A1_ID;											//•`‰æA1‚ÌID
+
+	std::map<std::string, int> _id;
 };
 

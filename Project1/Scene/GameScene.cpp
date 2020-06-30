@@ -149,20 +149,24 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 void GameScene::MapInit_1(void)
 {
 	// 描画を読み込む
-	
-	//IpImageMng.GetID("Outside_A2", "image/chip/Outside_A2.png", { 768,576 }, { 16,12 });
+	for (int x = 0; x < 50*60; x++)
+	{
+		IpSceneMng._mapNow.try_emplace(x, NULL);
+	}
 
-	IpImageMng.GetID("Outside_A1", "image/chip/Outside_A1.png", { 48,48 }, { 8,16 });
+	IpImageMng.GetID("block", "image/chip/block.png", { 32,32 }, { 1,1});
+	IpImageMng.GetID("1_1", "image/chip/1_1.png", { 1600,1920 }, { 1,1});
 
 	// csvファイルを読み込む
 	int type = NULL;
 	int y = 0;
 	int x = 0;
+	
 	FILE* fp = NULL;
-	fopen_s(&fp, "csv/test1.csv", "rb");
+	fopen_s(&fp, "csv/1_1_1.csv", "rb");
 	while (fscanf_s(fp, "%d", &type) != EOF)
 	{
-		IpSceneMng.mapNow[y][x] = type;
+		IpSceneMng._mapNow[x]=type;
 		x++;
 	}
 	
@@ -171,23 +175,23 @@ void GameScene::MapInit_1(void)
 
 
 	MoveState tmpMoveState;
-	for (auto i : Outside_A1_ID())
+
+
+	for (int x = 0; x < 50*60; x++)
 	{
 
-		for (int x = 0; x < 50; x++)
-		{
-			for (int y = 0; y < 20; y++)
-			{
 
-				if (IpSceneMng.mapNow[y][x] == static_cast<int>(i))
-				{
-					Flrdata = { FLOOR_TYPE::Outside_A1_ID,{48.0*x,48.0*y},{48.0,48.0} ,i };
-					_objList.emplace_back(new Floor(Flrdata));
-				}
-			}
+		if (IpSceneMng._mapNow[x] == 0)
+		{
+			Flrdata = { FLOOR_TYPE::当たり判定,{32.0*(x%50),32.0*(x/50)},{32.0,32.00}};
+			_objList.emplace_back(new Floor(Flrdata));
 		}
-		
+
 	}
+		
+	
+
+
 
 	//敵増加－ラムダ式
 	auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate) {
@@ -201,9 +205,9 @@ void GameScene::MapInit_1(void)
 		_objList.emplace_back(new Enemy(data));
 	};
 
-	for (int x = 0; x < 5; x++)
+	for (int x = 0; x < 1; x++)
 	{
-		for (int y = 0; y < 5; y++)
+		for (int y = 0; y < 1; y++)
 		{
 			EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400+ x * 30.0,300+ y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
 

@@ -66,21 +66,22 @@ public:
 	bool isAlive(void) { return _alive; }								// 生きている管理
 	bool isDead(void) { return _dead; }									// 死んでいる管理
 	bool isAnimEnd(void);												// アニメがおわったかどうか
+	const Vector2Dbl funcPos(Vector2Dbl pos);
+	const DIR_ID funcDir(DIR_ID dir);
 
 	//ゲット関数
 	Vector2Dbl posGet(void);											//今の座標
 	Vector2Dbl posOldGet(void);											//昔の座標
 	Vector2Dbl sizeGet(void);											//大きさ
+	
 	const DIR_ID dirGet(void)const;
-
+	const bool repelFlagGet(void)const;
 	std::map<Status_ID, int> _status;									//ステータス用
 	std::map<Status_Up_ID, int> _statusUp;								//ステータス強化用
-	
 	std::map<int, int> _experience;
 	
 	
 	int _level;															//レベル
-	//int _experience[99];												//経験値【レベル】
 
 
 private:
@@ -101,12 +102,16 @@ protected:
 	double _rad;														// 角度
 	int _zorder;														// 描画優先度用
 	Vector2Dbl _pos;													// 今の座標
+
 	Vector2Dbl _posOld;													// 昔の座標
 	Vector2Dbl _size;													// サイズ
 	Vector2Dbl _exrate;													// XとYの拡大縮小率
 	DIR_ID _dir;													// 向き
 	bool _turnFlag;
 	bool _repelFlag;//撃退用
+	
+	Vector2Dbl _funcPos;
+	DIR_ID _funcDir;
 
 };
 

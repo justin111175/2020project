@@ -37,6 +37,8 @@ public:
 private:
 	bool SetAlive(bool alive);
 
+	void PlayerState(void);
+	void CameraUpdata(void);
 	void PlayerMove(void);										// プレイヤーの移動
 	void Init(void);											// 初期化
 	void Save(void);
@@ -46,7 +48,7 @@ private:
 	void StatusInit(void);
 	void StatusUpData(void);									//ステータス更新
 
-	void Repel(bool repel);
+	void Repel(bool& repel);
 	ME_ST MeanState;											//メニューの状態
 
 	Status_Up_ID statusupId;										//ステータスのID
