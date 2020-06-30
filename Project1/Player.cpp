@@ -32,7 +32,7 @@ void Player::Update(sharedObj plObj)
 	
 	CameraUpdata();
 	
-	
+	IpSceneMng.AddDrawQue({ IMAGE_ID("1_1")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::BG });
 	_dbgDrawFormatString(0, 150, 0xFFFFFF, "プレイヤーの座標 X:%.0f,Y:%.0f", _pos.x,_pos.y);
 	_dbgDrawFormatString(0, 200, 0xFFFFFF, "Mapの座標 X:%.0f,Y:%.0f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 
@@ -131,26 +131,49 @@ void Player::PlayerState(void)
 
 void Player::CameraUpdata(void)
 {
-	auto cameraPos = [](double pos, double& mapPos,double screenSize) {
-		if (pos + mapPos != screenSize / 2)
+
+	if (_pos.x + _mapPos.x != IpSceneMng.ScreenSize.x / 2)
+	{
+		if (_pos.x + _mapPos.x > IpSceneMng.ScreenSize.x / 2)
 		{
-			if (pos + mapPos > screenSize / 2)
+			if (_mapPos.x >= -320)
 			{
-				mapPos -= 4;
+				_mapPos.x -= 4;
 
 			}
-			if (pos + mapPos < screenSize / 2)
+
+		}
+		if (_pos.x + _mapPos.x < IpSceneMng.ScreenSize.x / 2)
+		{
+			if (_mapPos.x <= 0)
 			{
-				if (mapPos <= 0)
-				{
-					mapPos += 4;
-				}
+				_mapPos.x += 4;
 			}
 		}
-	};
+	}
+	
+	if (_pos.y + _mapPos.y != IpSceneMng.ScreenSize.y / 2)
+	{
+		if (_pos.y + _mapPos.y > IpSceneMng.ScreenSize.y / 2)
+		{
+			if (_mapPos.y >= (-1200))
+			{
+				_mapPos.y -= 4;
 
-	cameraPos(_pos.x, _mapPos.x, IpSceneMng.ScreenSize.x);
-	cameraPos(_pos.y, _mapPos.y, IpSceneMng.ScreenSize.y);
+			}
+
+		}
+		
+		if(_pos.y + _mapPos.y < IpSceneMng.ScreenSize.y / 2)
+		{
+			if (_mapPos.y <= 0)
+			{
+				_mapPos.y += 4;
+			}
+		}
+	}
+	//cameraPos(_pos.x, _mapPos.x, IpSceneMng.ScreenSize.x);
+	//cameraPos(_pos.y, _mapPos.y, IpSceneMng.ScreenSize.y);
 
 }
 

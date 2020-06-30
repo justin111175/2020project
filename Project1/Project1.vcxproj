@@ -74,8 +74,8 @@
     <LibraryPath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(SolutionDir)\id;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(IncludePath)</IncludePath>
-    <LibraryPath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(SolutionDir)\id;$(IncludePath)</IncludePath>
+    <LibraryPath>$(dxlib);$(SolutionDir);$(SolutionDir)\Scene;$(SolutionDir)\Scene\func;$(SolutionDir)\common;$(SolutionDir)\_debug;$(SolutionDir)\Input;$(SolutionDir)\id;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

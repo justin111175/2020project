@@ -30,7 +30,7 @@ Floor::Floor(FloorState & state)
 
 void Floor::Update(sharedObj plObj)
 {
-	IpSceneMng.AddDrawQue({ IMAGE_ID("1_1")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::CHIP });
+	//IpSceneMng.AddDrawQue({ IMAGE_ID("1_1")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::BG });
 
 }
 

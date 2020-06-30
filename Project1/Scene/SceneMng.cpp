@@ -269,7 +269,6 @@ bool SceneMng::SysInit(void)
 
 	// ÉåÉCÉÑÅ[ÇÃê›íË
 	_screenID.try_emplace(LAYER::BG, MakeScreen(ScreenSize.x, ScreenSize.y, true));
-	_screenID.try_emplace(LAYER::CHIP, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 	_screenID.try_emplace(LAYER::CHAR, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 	_screenID.try_emplace(LAYER::UI, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 	_screenID.try_emplace(LAYER::MEAN, MakeScreen(ScreenSize.x, ScreenSize.y, true));
