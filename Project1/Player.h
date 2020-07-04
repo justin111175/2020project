@@ -61,7 +61,6 @@ private:
 	Number number;												//”š—p
 	Letter letter;												//•¶š—p
 	
-	Vector2Dbl speed;											//ˆÚ“®‘¬“x
 
 
 	float HpRatio;

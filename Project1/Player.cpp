@@ -37,6 +37,8 @@ void Player::Update(sharedObj plObj)
 	_dbgDrawFormatString(0, 200, 0xFFFFFF, "MapÇÃç¿ïW X:%.0f,Y:%.0f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 
 
+
+
 	if (_experience[_level] <= 0)
 	{
 		_level++;
@@ -60,7 +62,9 @@ void Player::PlayerState(void)
 		UIDraw();
 		if (!LetterFlag)
 		{
+
 			PlayerMove();
+
 			if ((*_Input).state(INPUT_ID::ESC).first && !(*_Input).state(INPUT_ID::ESC).second)
 			{
 				meanFlag = true;
@@ -172,8 +176,6 @@ void Player::CameraUpdata(void)
 			}
 		}
 	}
-	//cameraPos(_pos.x, _mapPos.x, IpSceneMng.ScreenSize.x);
-	//cameraPos(_pos.y, _mapPos.y, IpSceneMng.ScreenSize.y);
 
 }
 
@@ -182,6 +184,9 @@ void Player::PlayerMove(void)
 {
 	//TRACE("%\n", HpRatio);
 	
+
+
+
 	if ((*_Input).state(INPUT_ID::P).first && !(*_Input).state(INPUT_ID::P).second)
 	{
 		if (_status[Status_ID::HP] < _status[Status_ID::ç≈ëÂHP])
@@ -190,6 +195,8 @@ void Player::PlayerMove(void)
 
 		}
 	}
+
+
 
 	if (!_timeCount.GetFlag("íe"))
 	{
@@ -209,8 +216,6 @@ void Player::PlayerMove(void)
 		}
 	}
 
-
-
 	if (!_timeCount.GetFlag("éaåÇ"))
 	{
 		if ((*_Input).state(INPUT_ID::BTN_3).first && !(*_Input).state(INPUT_ID::BTN_3).second)
@@ -225,45 +230,52 @@ void Player::PlayerMove(void)
 	}
 
 
-
-
 	speed = { 0,0 };
-	if (CheckHitKey(KEY_INPUT_UP))
-	{
-		speed.y = -4;
-		_pos.y += speed.y;
-		stateDir(STATE::NORMAL, DIR_ID::UP);
-
-		
-	}
+	int chipNumber = (_pos.y / 32) * 50 + (static_cast<int>(_pos.x) % 32);
+	
+	auto movePos = [&](INPUT_ID input,DIR_ID dir,Vector2Dbl speed) {
 
 
-	if (CheckHitKey(KEY_INPUT_DOWN))
-	{
-		speed.y = 4;
-		_pos.y += speed.y;
-		stateDir(STATE::NORMAL, DIR_ID::DOWN);
+		if ((*_Input).state(input).first /*&& !(*_Input).state(input).second*/)
+		{							
+			Player::speed = speed;
 
-	}
+			
+			if (_dir == dir)
+			{
+				if (_dirFlag[dir])
+				{
+
+					_pos += speed;
+				}
+			}
+			stateDir(STATE::NORMAL, dir);
+			IpSceneMng.AddActQue({ ACT_QUE::MOVE , *this });
+
+		}
 
 
-	if (CheckHitKey(KEY_INPUT_LEFT))
-	{
+	};
 
-		speed.x = -4;
-		_pos.x += speed.x;
-		stateDir(STATE::NORMAL, DIR_ID::LEFT);
+	//if()
 
-	}
+	movePos(INPUT_ID::UP, DIR_ID::UP, { 0,-4 });
+			
+
+	movePos(INPUT_ID::RIGHT, DIR_ID::RIGHT, { 4,0 });
+
+			
 
 
-	if (CheckHitKey(KEY_INPUT_RIGHT))
-	{
+	movePos(INPUT_ID::DOWN, DIR_ID::DOWN, { 0,4 });
 
-		speed.x = 4;
-		_pos.x += speed.x;
-		stateDir(STATE::NORMAL, DIR_ID::RIGHT);
-	}
+	movePos(INPUT_ID::LEFT, DIR_ID::LEFT, { -4,0 });
+			
+	
+
+
+
+
 	
 	if (speed.x==0)
 	{
@@ -294,10 +306,6 @@ void Player::PlayerMove(void)
 		}
 
 	}
-
-	
-
-
 
 }
 
@@ -332,7 +340,8 @@ void Player::Init(void)
 
 		data.emplace_back(IMAGE_ID("ÉvÉåÉCÉÑÅ[ï‡Ç≠")[(__int64)dirCnt + 0], 10);
 		SetAnim(STATE::STAY, dir, data);
-
+		
+		_dirFlag.try_emplace(dir, true);
 
 	}
 
@@ -609,24 +618,27 @@ void Player::Repel(bool& repel)
 {
 	if (repel)
 	{
-		switch (_funcDir)
-		{
-		case DIR_ID::DOWN:
-			_pos.y-=50;
-			break;
-		case DIR_ID::LEFT:
-			_pos.x+=50;
-			break;
-		case DIR_ID::RIGHT:
-			_pos.x-=50;
-			break;
-		case DIR_ID::UP:
-			_pos.y+=50;
-			break;
 
-		default:
-			break;
-		}
+		Vector2Dbl test = (_funcPos - _pos);
+		_pos += (-test);
+		//switch (_funcDir)
+		//{
+		//case DIR_ID::DOWN:
+		//	_pos.y-=50;
+		//	break;
+		//case DIR_ID::LEFT:
+		//	_pos.x+=50;
+		//	break;
+		//case DIR_ID::RIGHT:
+		//	_pos.x-=50;
+		//	break;
+		//case DIR_ID::UP:
+		//	_pos.y+=50;
+		//	break;
+
+		//default:
+		//	break;
+		//}
 
 		repel = false;
 

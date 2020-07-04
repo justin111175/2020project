@@ -283,5 +283,5 @@ bool SceneMng::SysInit(void)
 	_frames = 0;
 
 
-	return false;
+	return true;
 }

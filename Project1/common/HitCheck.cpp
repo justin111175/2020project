@@ -30,6 +30,18 @@ bool CheckBox(Vector2Dbl pos1, Vector2Dbl size1, Vector2Dbl pos2, Vector2Dbl siz
 
 }
 
+bool CheckBox(Vector2Dbl pos1, Vector2Dbl size1, Vector2Dbl speed, Vector2Dbl pos2, Vector2Dbl size2, TYPE type)
+{
+	if (pos1.x + size1.x+speed.x > pos2.x- size1.x &&
+		pos1.x + speed.x < pos2.x + size2.x &&
+		pos1.y	+speed.y			<	pos2.y + size2.y &&
+		pos1.y + size1.y+speed.y	>	pos2.y- size1.y)
+	{
+		return true;;
+	}
+	return false;
+}
+
 bool CheckCircle(Vector2Dbl pos1, double rang1, Vector2Dbl pos2, double rang2)
 {
 	Vector2Dbl Long = { pos1.x - pos2.x	,pos1.y - pos2.y };

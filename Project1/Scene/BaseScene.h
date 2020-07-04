@@ -12,7 +12,8 @@ enum class ACT_QUE
 	SHOT,
 	SLASH,
 	CHECK,
-	LEVELUP
+	LEVELUP,
+	MOVE
 };
 
 enum class ACT_STATE

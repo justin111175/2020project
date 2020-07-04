@@ -6,6 +6,8 @@
 #include <FuncBullet.h>
 #include <FuncSlash.h>
 #include <FuncCheck.h>
+#include "FuncMove.h"
+
 #include <FuncLevelUp.h>
 #include <InputState.h>
 // ファンク
@@ -27,6 +29,7 @@ private:
 	friend FuncSlash;
 	friend FuncCheck;
 	friend FuncLevelUp;
+	friend FuncMove;
 
 	void funcInit(void);											// ファンク初期化
 	void RunActQue(std::vector<ActQueT> actList) override;			// ファンク活動キュー

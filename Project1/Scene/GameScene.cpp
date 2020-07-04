@@ -21,7 +21,7 @@ GameScene::GameScene()
 
 		
 	// 描画を増加
-	IpImageMng.GetID("プレイヤー歩く", "image/Player/walk.png", { 48,49 }, { 3,4 });
+	IpImageMng.GetID("プレイヤー歩く", "image/Player/walk.png", { 32,32 }, { 3,4 });
 	IpImageMng.GetID("プレイヤー死ぬ", "image/Player/dead.png", { 50,55 }, { 3,1 });
 	
 	IpImageMng.GetID("モンスター歩く", "image/Monsters/walk.png", { 48,48 }, { 3,32 });
@@ -64,7 +64,6 @@ GameScene::GameScene()
 
 
 	
-	_objList.emplace_back(new Player({ 0,0 }, { 48,49 }, {1.0f,1.0f}));
 
 
 
@@ -187,6 +186,12 @@ void GameScene::MapInit_1(void)
 			_objList.emplace_back(new Floor(Flrdata));
 		}
 
+		if (IpSceneMng._mapNow[x] == 1)
+		{
+			_objList.emplace_back(new Player({ 32.0 * (x % 50),32.0 * (x / 50) }, { 32,32 }, { 1.0f,1.0f }));
+
+		}
+
 	}
 		
 	
@@ -205,12 +210,11 @@ void GameScene::MapInit_1(void)
 		_objList.emplace_back(new Enemy(data));
 	};
 
-	for (int x = 0; x < 5; x++)
+	for (int x = 0; x < 1; x++)
 	{
-		for (int y = 0; y < 5; y++)
+		for (int y = 0; y < 1; y++)
 		{
 			EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400+ x * 30.0,300+ y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
-
 		}
 	}
 
@@ -244,5 +248,6 @@ void GameScene::funcInit(void)
 	funcQue[ACT_QUE::SLASH] = FuncSlash();
 	funcQue[ACT_QUE::LEVELUP] = FuncLevelUp();
 	funcQue[ACT_QUE::CHECK] = FuncCheck();
+	funcQue[ACT_QUE::MOVE] = FuncMove();
 
 }

@@ -54,6 +54,6 @@ void Floor::Init(void)
 	}
 
 
-	stateDir(STATE::NORMAL,DIR_ID::DOWN);
+	stateDir(STATE::NORMAL);
 
 }

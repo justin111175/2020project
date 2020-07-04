@@ -76,12 +76,16 @@ public:
 	
 	const DIR_ID dirGet(void)const;
 	const bool repelFlagGet(void)const;
+	
+	
 	std::map<Status_ID, int> _status;									//ステータス用
 	std::map<Status_Up_ID, int> _statusUp;								//ステータス強化用
 	std::map<int, int> _experience;
 	
-	
+	std::map < DIR_ID, bool> _dirFlag;									// true:移動、false：停止
 	int _level;															//レベル
+	
+	Vector2Dbl speed;											//移動速度
 
 
 private:
@@ -106,7 +110,7 @@ protected:
 	Vector2Dbl _posOld;													// 昔の座標
 	Vector2Dbl _size;													// サイズ
 	Vector2Dbl _exrate;													// XとYの拡大縮小率
-	DIR_ID _dir;													// 向き
+	DIR_ID _dir;														// 向き
 	bool _turnFlag;
 	bool _repelFlag;//撃退用
 	

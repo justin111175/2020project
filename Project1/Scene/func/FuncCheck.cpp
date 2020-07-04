@@ -25,7 +25,7 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 				if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
 				{
 					
-					(*obj).funcDir(actQue.second.dirGet());
+					(*obj).funcPos(actQue.second.posGet());
 					(*obj).SetRepel(true);
 					return true;
 				}
@@ -80,13 +80,7 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 					break;
 				}
 				
-				//if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::íÜêS))
-				//{
-				//	//actQue.second._level._status[STATUS::HP] -= 20;
-				//	//actQue.second.SetAlive(false);
-				//	(*obj)._status[Status_ID::HP] -= 100;
-				//	return true;
-				//}
+
 			}
 		}
 		return false;
@@ -111,6 +105,8 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 			}
 		}
 		return false;
+
+
 
 	default:
 		break;

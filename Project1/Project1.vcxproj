@@ -137,6 +137,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="common\HitCheck.cpp" />
+    <ClCompile Include="Scene\func\FuncMove.cpp" />
     <ClCompile Include="id\DIR_ID.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="common\HitCheck.h" />
+    <ClInclude Include="Scene\func\FuncMove.h" />
     <ClInclude Include="id\DIR_ID.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMove.h" />
