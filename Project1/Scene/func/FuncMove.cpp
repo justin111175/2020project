@@ -15,14 +15,39 @@ bool FuncMove::operator()(ActQueT& actQue, void* scene)
 	default:
 		break;
 	}
-	
-
 
 
 	for (auto obj : ((GameScene*)scene)->_objList)
 	{
 		if ((obj->_unitID == unitID) && (*obj).isAlive())
-		{
+		{	
+			//auto test = [&](DIR_ID dir) {
+
+			//		if (CheckBox(actQue.second.posGet()+ actQue.second.speed, actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
+			//		{
+			//			actQue.second._dirFlag[dir] = false;
+			//			return true;
+			//		}
+			//		else
+			//		{
+			//			actQue.second._dirFlag[dir] = true;
+
+			//		}
+			//	
+			//};
+
+			//for (auto dir : DIR_ID())
+			//{
+			//	if (actQue.second.dirGet() == dir)
+			//	{
+			//		if (test(dir))
+			//		{
+			//			return true;
+			//		}
+			//	}
+
+			//}
+
 			switch (actQue.second.dirGet())
 			{
 			case DIR_ID::UP:
@@ -78,24 +103,12 @@ bool FuncMove::operator()(ActQueT& actQue, void* scene)
 			default:
 				break;
 			}
-			//if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), actQue.second.speed,(*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
-			//{
-			//	
-			//	actQue.second._dirFlag[DIR_ID::UP] = false;
-			//	return true;
-			//}
-			//else
-			//{
-			//	actQue.second._dirFlag[DIR_ID::UP] = true;;
-			//}
+
 			
 		
 		}
 	}
 	return true;
-	//for (auto dir : DIR_ID())
-	//{
-	//	actQue.second._dirFlag[dir] = true;
-	//}
+
 
 }
