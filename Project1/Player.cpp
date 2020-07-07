@@ -32,7 +32,7 @@ void Player::Update(sharedObj plObj)
 	
 	CameraUpdata();
 	
-	IpSceneMng.AddDrawQue({ IMAGE_ID("1_1")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::BG });
+	
 	_dbgDrawFormatString(0, 150, 0xFFFFFF, "プレイヤーの座標 X:%.0f,Y:%.0f", _pos.x,_pos.y);
 	_dbgDrawFormatString(0, 200, 0xFFFFFF, "Mapの座標 X:%.0f,Y:%.0f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 
@@ -140,7 +140,7 @@ void Player::CameraUpdata(void)
 	{
 		if (_pos.x + _mapPos.x > IpSceneMng.ScreenSize.x / 2)
 		{
-			if (_mapPos.x >= -320)
+			if (_mapPos.x >= -IpSceneMng.mapSize.x + IpSceneMng.ScreenSize.x)
 			{
 				_mapPos.x -= 4;
 
@@ -160,7 +160,7 @@ void Player::CameraUpdata(void)
 	{
 		if (_pos.y + _mapPos.y > IpSceneMng.ScreenSize.y / 2)
 		{
-			if (_mapPos.y >= (-1200))
+			if (_mapPos.y >= (-IpSceneMng.mapSize.y+ IpSceneMng.ScreenSize.y))
 			{
 				_mapPos.y -= 4;
 
@@ -312,6 +312,8 @@ void Player::PlayerMove(void)
 Player::~Player()
 {
 }
+
+
 
 
 bool Player::SetAlive(bool alive)

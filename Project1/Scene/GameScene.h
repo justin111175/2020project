@@ -13,6 +13,13 @@
 // ファンク
 using funcAct = std::function<bool(ActQueT&, void*)>;				
 
+enum class CHIP_TYPE
+{
+	森1,
+	森2,
+	森3
+};
+
 
 
 class GameScene :
@@ -33,13 +40,20 @@ private:
 
 	void funcInit(void);											// ファンク初期化
 	void RunActQue(std::vector<ActQueT> actList) override;			// ファンク活動キュー
+
+	std::map<CHIP_TYPE, std::function<void(void)>> _Draw;			// 描画関数化	
+	std::map<CHIP_TYPE, std::function<void(void)>> _Init;			// 描画関数化	
+
+
+
 	std::vector<sharedObj> _objList;								// シェアポインタ-Obj
 	std::map<ACT_QUE, funcAct> funcQue;								// ファンク活動キュー
 
 	std::shared_ptr<InputState>_input;								// ｲﾝﾌﾟｯﾄのﾕﾆｰｸﾎﾟｲﾝﾀ宣言
 
+
 	// マップ初期化
-	void MapInit_1(void);											// クラス1
+	void MapInit(void);											// クラス1
 
 	// 音初期化
 	int _shakeCount;

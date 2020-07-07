@@ -9,6 +9,7 @@
 #include <InputState.h>
 #include <Select.h>
 #include "TimeCount.h"
+#include "GameScene.h"
 
 
 enum class DRAW_QUE
@@ -33,6 +34,9 @@ enum class TEXT_QUE
 	LAYER										// レイヤーID（数値の低い方が奥）
 
 };
+
+
+
 class Obj;
 
 using DrawQueT = std::tuple<int, Vector2Dbl, Vector2Dbl,Vector2Dbl, double,bool, int, LAYER>;
@@ -92,7 +96,7 @@ public:
 	const Vector2 GameScreenSize;								// 全画面サイズの4分の１
 
 	Vector2Dbl mapPos;
-
+	Vector2 mapSize;
 
 
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報

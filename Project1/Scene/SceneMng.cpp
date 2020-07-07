@@ -1,6 +1,5 @@
 #include <Dxlib.h>
 #include <SceneMng.h>
-#include <GameScene.h>
 #include <Obj.h>
 #include <time.h>
 #include <_DeBugConOut.h>

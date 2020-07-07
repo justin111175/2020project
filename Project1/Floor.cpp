@@ -30,7 +30,6 @@ Floor::Floor(FloorState & state)
 
 void Floor::Update(sharedObj plObj)
 {
-	//IpSceneMng.AddDrawQue({ IMAGE_ID("1_1")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::BG });
 
 }
 
@@ -47,6 +46,10 @@ void Floor::Init(void)
 	{
 	case FLOOR_TYPE::“–‚½‚è”»’è:
 		data.emplace_back(IMAGE_ID("block")[0], 30);
+		SetAnim(STATE::NORMAL, data);
+		break;
+	case FLOOR_TYPE::“`‘—:
+		data.emplace_back(IMAGE_ID("block")[10], 30);
 		SetAnim(STATE::NORMAL, data);
 		break;
 	default:

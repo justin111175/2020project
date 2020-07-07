@@ -33,8 +33,8 @@ public:
 	void Update(sharedObj plObj) override;									// 更新
 	~Player();													//デストラクタ
 
-
 private:
+
 	bool SetAlive(bool alive);
 
 	void PlayerState(void);
