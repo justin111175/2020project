@@ -67,13 +67,13 @@ unique_Base GameOverScene::Update(unique_Base own)
 			break;
 		}
 	}
-	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
+	//auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)
 		{
-			(*data).Update(*PlObj);
+			(*data).Update();
 		}
 	}
 

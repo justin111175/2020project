@@ -10,6 +10,8 @@
 
 #include <FuncLevelUp.h>
 #include <InputState.h>
+#include "LoadScene.h"
+
 // ƒtƒ@ƒ“ƒN
 using funcAct = std::function<bool(ActQueT&, void*)>;				
 
@@ -17,7 +19,8 @@ enum class CHIP_TYPE
 {
 	X1,
 	X2,
-	X3
+	X3,
+	MAX
 };
 
 

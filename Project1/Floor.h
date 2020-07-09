@@ -28,7 +28,7 @@ public:
 	Floor();
 	Floor(FloorState& state);
 
-	void Update(sharedObj plObj) override;							// 更新
+	void Update(void) override;							// 更新
 	~Floor();
 private:
 	void Init(void);												// 初期化

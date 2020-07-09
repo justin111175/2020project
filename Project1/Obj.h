@@ -28,7 +28,8 @@ enum class UNIT_ID
 	ENEMY,						// 敵
 	PLaS,						// プレイヤー近距離攻撃
 	PLaB,						// プレイヤーの弾
-	FLOOR,						// 床
+	当たり判定,					// 床
+	伝送,
 	LevelUp						// レベルアップ
 };
 
@@ -48,7 +49,7 @@ class Obj
 {
 public:
 	Obj();
-	virtual void Update(sharedObj plObj)=0;								// 純粋仮想関数
+	virtual void Update(void)=0;								// 純粋仮想関数
 	void Draw(void);
 	void Draw(int id);
 	virtual ~Obj();
@@ -87,7 +88,7 @@ public:
 	
 	Vector2Dbl speed;											//移動速度
 
-
+	bool _testFlag;
 private:
 
 

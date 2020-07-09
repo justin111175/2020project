@@ -2,9 +2,11 @@
 #include "algorithm"
 #include "SceneMng.h"
 #include <ImageMng.h>
-#include <GameScene.h>
 #include <Dxlib.h>
 #include <Select.h>
+#include "..\LoadScene.h"
+
+#include "GameScene.h"
 TitleScene::TitleScene()
 {
 	IpImageMng.GetID("タイトル", "image/title.png", { 1280,720 }, { 1,1 });
@@ -26,14 +28,13 @@ TitleScene::~TitleScene()
 
 unique_Base TitleScene::Update(unique_Base own)
 {	
-	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
 	
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)
 		{
-			(*data).Update(*PlObj);
+			(*data).Update();
 		}
 	}
 
@@ -64,7 +65,7 @@ unique_Base TitleScene::Update(unique_Base own)
 			break;
 			
 		case 1:		//データ読み込む
-
+			IpSceneMng._chipType.first = CHIP_TYPE::森1;
 			return std::make_unique<GameScene>();
 			break;
 		case 2:		//ゲーム終了

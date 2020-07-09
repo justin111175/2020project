@@ -10,7 +10,7 @@ bool FuncMove::operator()(ActQueT& actQue, void* scene)
 	switch (actQue.second._unitID)
 	{
 	case UNIT_ID::PLAYER:
-		unitID = UNIT_ID::FLOOR;
+		unitID = UNIT_ID::ìñÇΩÇËîªíË;
 		break;
 	default:
 		break;
@@ -21,32 +21,7 @@ bool FuncMove::operator()(ActQueT& actQue, void* scene)
 	{
 		if ((obj->_unitID == unitID) && (*obj).isAlive())
 		{	
-			//auto test = [&](DIR_ID dir) {
 
-			//		if (CheckBox(actQue.second.posGet()+ actQue.second.speed, actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
-			//		{
-			//			actQue.second._dirFlag[dir] = false;
-			//			return true;
-			//		}
-			//		else
-			//		{
-			//			actQue.second._dirFlag[dir] = true;
-
-			//		}
-			//	
-			//};
-
-			//for (auto dir : DIR_ID())
-			//{
-			//	if (actQue.second.dirGet() == dir)
-			//	{
-			//		if (test(dir))
-			//		{
-			//			return true;
-			//		}
-			//	}
-
-			//}
 
 			switch (actQue.second.dirGet())
 			{
@@ -104,8 +79,6 @@ bool FuncMove::operator()(ActQueT& actQue, void* scene)
 				break;
 			}
 
-			
-		
 		}
 	}
 	return true;

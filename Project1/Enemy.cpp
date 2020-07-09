@@ -23,14 +23,14 @@ Enemy::Enemy(EnemyState& state)
 }
 
 // XV
-void Enemy::Update(sharedObj plObj)
+void Enemy::Update(void)
 {	
 	if (isAlive())
 	{
 		if (_status[Status_ID::HP] <= 0)
 		{
 			SetAlive(false);
-			(*plObj)._experience[(*plObj)._level] -= _experience[0];
+			//(*plObj)._experience[(*plObj)._level] -= _experience[0];
 
 		}
 	}	
@@ -54,7 +54,7 @@ void Enemy::Update(sharedObj plObj)
 	}
 
 	
-	_moveCtl.Update(plObj);
+	_moveCtl.Update();
 	
 
 	switch (dirGet())

@@ -15,7 +15,7 @@ public:
 	~EnemyMove();
 
 	bool SetMoveState(MoveState& state, bool newFlag);	// 移動種類設定：新しい移動があれば古い移動を消す
-	void Update(sharedObj plObj) override;				// 更新
+	void Update(void) override;				// 更新
 private:
 	void SetMovePrg(void);								// セットムーブプログラム
 	void (EnemyMove::*_move)(void);						// ムーブ用関数ポインタ

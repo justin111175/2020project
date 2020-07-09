@@ -107,6 +107,29 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 		return false;
 
 
+		case UNIT_ID::PLAYER:
+
+		unitID = UNIT_ID::ì`ëó;
+		for (auto obj : ((GameScene*)scene)->_objList)
+		{
+			if ((obj->_unitID == unitID) && (*obj).isAlive())
+			{
+
+				if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
+				{
+					
+					actQue.second._testFlag = true;
+					return true;
+
+				}
+				else
+				{
+					actQue.second._testFlag = false;
+				}
+
+			}
+		}
+		return false;
 
 	default:
 		break;

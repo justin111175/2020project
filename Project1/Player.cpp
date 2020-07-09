@@ -22,7 +22,7 @@ Player::Player(Vector2Dbl pos, Vector2Dbl size,Vector2Dbl exrate)
 }
 
 // 更新
-void Player::Update(sharedObj plObj)
+void Player::Update(void)
 {		
 	if (DestroyPrpc())
 	{
@@ -35,6 +35,7 @@ void Player::Update(sharedObj plObj)
 	
 	_dbgDrawFormatString(0, 150, 0xFFFFFF, "プレイヤーの座標 X:%.0f,Y:%.0f", _pos.x,_pos.y);
 	_dbgDrawFormatString(0, 200, 0xFFFFFF, "Mapの座標 X:%.0f,Y:%.0f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 
 
@@ -324,7 +325,7 @@ bool Player::SetAlive(bool alive)
 // 初期化
 void Player::Init(void)
 {
-
+	_testFlag = false;
 	_alive = true;
 	_dead = false;
 	_unitID = UNIT_ID::PLAYER;

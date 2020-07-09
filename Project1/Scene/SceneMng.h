@@ -97,7 +97,7 @@ public:
 
 	Vector2Dbl mapPos;
 	Vector2 mapSize;
-
+	std::pair<CHIP_TYPE, CHIP_TYPE> _chipType;
 
 	std::shared_ptr<InputState> _input;							// シェアポインタ-キー情報
 

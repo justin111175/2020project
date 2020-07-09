@@ -174,13 +174,15 @@ void SceneMng::Run(void)
 		_textList.clear();
 		_dbgStartDraw();
 		// _activeScene->
+		
+
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		// moveはコピーしません、所有権を渡すだけ
 		(*_activeScene).RunActQue(std::move(_actList));
 
 		(*_input).Update();
-
 		Draw();
+
 		
 		_frames++;
 		_timeCount.Run();

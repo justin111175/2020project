@@ -17,7 +17,7 @@ public:
 
 private:
 	void Init(void);
-	void Update(sharedObj plObj) override;
+	void Update(void) override;
 	bool SetAlive(bool alive);										// ¶‚«‚Ä‚¢‚é‚©‚Ç‚¤‚©
 
 	bool DestroyPrpc(void);

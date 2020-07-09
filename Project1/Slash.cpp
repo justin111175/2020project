@@ -64,18 +64,18 @@ Slash::~Slash()
 
 
 
-void Slash::Update(sharedObj plObj)
+void Slash::Update(void)
 {
 	DestroyPrpc();
 
 
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
-	if ((*plObj).posGet()!= (*plObj).posOldGet())
-	{
-		_pos = (*plObj).posGet() - (*plObj).posOldGet() + _posOld;
+	//if ((*plObj).posGet()!= (*plObj).posOldGet())
+	//{
+	//	_pos = (*plObj).posGet() - (*plObj).posOldGet() + _posOld;
 
-	}
+	//}
 
 
 	if (IpSceneMng.frames()%60)

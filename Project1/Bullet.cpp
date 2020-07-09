@@ -64,7 +64,7 @@ Bullet::~Bullet()
 
 
 
-void Bullet::Update(sharedObj plObj)
+void Bullet::Update(void)
 {
 	
 	//’eˆÚ“®

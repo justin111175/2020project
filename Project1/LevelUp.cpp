@@ -53,7 +53,7 @@ void LevelUp::Init(void)
 	stateDir(STATE::NORMAL,DIR_ID::DOWN);
 }
 
-void LevelUp::Update(sharedObj plObj)
+void LevelUp::Update(void)
 {
 
 	//TRACE("E:%d\n", Player::_level._statusUp[STATUS_UP::残るボーナスポイント]);
@@ -61,11 +61,12 @@ void LevelUp::Update(sharedObj plObj)
 	//消失確認
 	DestroyPrpc();
 	//レベルアップして、アニメが終わってない、そしてプレイヤーの位置が変更した場合の補正
-	if ((*plObj).posGet() != (*plObj).posOldGet())
-	{
-		_pos = (*plObj).posGet() - (*plObj).posOldGet() + _posOld;
+	
+	//if ((*plObj).posGet() != (*plObj).posOldGet())
+	//{
+	//	_pos = (*plObj).posGet() - (*plObj).posOldGet() + _posOld;
 
-	}
+	//}
 
 
 }

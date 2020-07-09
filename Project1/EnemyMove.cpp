@@ -16,7 +16,7 @@ EnemyMove::~EnemyMove()
 {
 }
 
-void EnemyMove::Update(sharedObj plObj)
+void EnemyMove::Update(void)
 {
 	// 関数ポインタはnullptrだかどうか、確認する
 	if (_move != nullptr)

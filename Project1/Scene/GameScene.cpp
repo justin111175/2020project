@@ -19,32 +19,30 @@ GameScene::GameScene()
 	funcInit();
 	
 
-		
-	// ï`âÊÇëùâ¡
 	IpImageMng.GetID("ÉvÉåÉCÉÑÅ[ï‡Ç≠", "image/Player/walk.png", { 32,32 }, { 3,4 });
 	IpImageMng.GetID("ÉvÉåÉCÉÑÅ[éÄÇ ", "image/Player/dead.png", { 50,55 }, { 3,1 });
-	
+
 	IpImageMng.GetID("ÉÇÉìÉXÉ^Å[ï‡Ç≠", "image/Monsters/walk.png", { 48,48 }, { 3,32 });
 
 	IpImageMng.GetID("íe", "image/shot.png", { 43,11 }, { 1,1 });
 	IpImageMng.GetID("éaåÇ", "image/slash.png", { 39,37 }, { 1,1 });
-	
+
 	IpImageMng.GetID("éaåÇ1", "image/slash1.png", { 37,38 }, { 1,1 });
 	IpImageMng.GetID("éaåÇ2", "image/slash2.png", { 37,49 }, { 1,1 });
 
 	IpImageMng.GetID("weapons", "image/weapons.png", { 98,65 }, { 3,4 });
-	
+
 
 
 	IpImageMng.GetID("ÉÅÉjÉÖÅ[", "image/mean.png", { 1280,720 }, { 1,1 });
 	IpImageMng.GetID("ÉÅÉbÉZÅ[ÉW", "image/messagecursor.png", { 50,78 }, { 1,1 });
 	IpImageMng.GetID("ÉXÉeÅ[É^ÉX", "image/status.png", { 1280,720 }, { 1,1 });
-	
-	
+
+
 	IpImageMng.GetID("ëïîı", "image/Equipment.png", { 1280,720 }, { 1,1 });
 	IpImageMng.GetID("â¡å∏", "image/1.png", { 186,50 }, { 1,1 });
 	IpImageMng.GetID("messagecursorD3", "image/messagecursorD3.png", { 56,40 }, { 1,1 });
-	
+
 	IpImageMng.GetID("Bar", "image/bar.png", { 510,66 }, { 1,1 });
 
 	IpImageMng.GetID("HP", "image/gaugeB.png", { 325,22 }, { 1,1 });
@@ -52,23 +50,24 @@ GameScene::GameScene()
 	IpImageMng.GetID("ìGHP", "image/EnemyHp.png", { 60,18 }, { 1,1 });
 	IpImageMng.GetID("ìGHP_BAR", "image/EnemyHpBar.png", { 60,18 }, { 1,1 });
 
-	
-	
+
+
 	IpImageMng.GetID("blast", "image/blast.png", { 40,40 }, { 6,4 });
-	
+
 	IpImageMng.GetID("UP1", "image/levelUp1.png", { 250,150 }, { 1,8 });
 
 	IpImageMng.GetID("ï∂éö", "image/letter.png", { 1280,720 }, { 1,1 });
-	
+
 	IpImageMng.GetID("UIîwåi", "image/UI_back.png", { 480,480 }, { 1,1 });
 
 
+
 	
 
-
 	MapInit();
+	IpSceneMng._chipType.first = CHIP_TYPE::êX1;
 
-	_Init[CHIP_TYPE::êX3]();
+	_Init[IpSceneMng._chipType.first]();
 
 
 
@@ -83,19 +82,18 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-	_Init.clear();
+	//_Init.clear();
 }
 
 unique_Base GameScene::Update(unique_Base own)
 {
 	// ï`âÊ
-	auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)
 		{
-			(*data).Update(*PlObj);
+			(*data).Update();
 		}
 	}
 
@@ -106,12 +104,15 @@ unique_Base GameScene::Update(unique_Base own)
 	}
 
 
-
 	(*_input).Update();
-	_Draw[CHIP_TYPE::êX3]();
+	_Draw[IpSceneMng._chipType.first]();
 
+	//if ()
+	//{
+	//	_objList.clear();
+	//	//LoadScene::LoadScene();
 
-	//IpSceneMng.AddDrawQue({ IMAGE_ID("êX1")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::BG });
+	//}
 
 	// ï`âÊÇè¡Ç∑
 	_objList.erase(std::remove_if(

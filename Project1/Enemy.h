@@ -38,7 +38,7 @@ class Enemy :
 public:
 	Enemy();
 	Enemy(EnemyState& state);										// Enemyオーバーロード
-	void Update(sharedObj plObj) override;							// 更新
+	void Update(void) override;							// 更新
 	~Enemy();
 private:
 	friend Player;

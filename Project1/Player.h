@@ -30,7 +30,7 @@ class Player :
 public:
 	Player();													//コンストラクタ
 	Player(Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate);
-	void Update(sharedObj plObj) override;									// 更新
+	void Update(void) override;									// 更新
 	~Player();													//デストラクタ
 
 private:
