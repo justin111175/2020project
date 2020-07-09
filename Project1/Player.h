@@ -29,12 +29,11 @@ class Player :
 {	
 public:
 	Player();													//コンストラクタ
-	Player(Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate);
+	Player(Vector2Dbl&& pos, Vector2Dbl&& size, Vector2Dbl&& exrate);
 	void Update(void) override;									// 更新
 	~Player();													//デストラクタ
 
 private:
-
 	bool SetAlive(bool alive);
 
 	void PlayerState(void);

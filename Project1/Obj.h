@@ -8,7 +8,6 @@
 #include "Status_ID.h"
 #include "Status_Up_ID.h"
 
-
 #define PI 3.1415926f
 #define DEG (PI/180.0)
 
@@ -33,10 +32,6 @@ enum class UNIT_ID
 	LevelUp						// レベルアップ
 };
 
-
-
-
-
 class Obj;
 class Player;
 class Enemy;
@@ -54,12 +49,12 @@ public:
 	void Draw(int id);
 	virtual ~Obj();
 
-	bool stateDir(const STATE state,const DIR_ID dir);										// ゲット関数-どのアニメションを再生するか指定する
-	bool stateDir(const STATE state);										// ゲット関数-どのアニメションを再生するか指定する
+	bool stateDir(const STATE state,const DIR_ID dir);					// ゲット関数-どのアニメションを再生するか指定する
+	bool stateDir(const STATE state);									// ゲット関数-どのアニメションを再生するか指定する
 
 	UNIT_ID _unitID;													// ユニットID
 	virtual bool SetAlive(bool alive);									// 生きているかどうか設定
-	virtual bool SetRepel(bool repel);						//撃退するかどうか管理
+	virtual bool SetRepel(bool repel);									//撃退するかどうか管理
 
 	bool SetAnim(const STATE state, AnimVector& data);					// アニメの設定
 	bool SetAnim(const STATE state, const DIR_ID _dir, AnimVector& data);					// アニメの設定
@@ -88,7 +83,6 @@ public:
 	
 	Vector2Dbl speed;											//移動速度
 
-	bool _testFlag;
 private:
 
 

@@ -118,14 +118,13 @@ bool FuncCheck::operator()(ActQueT & actQue, void * scene)
 				if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::¶ã))
 				{
 					
-					actQue.second._testFlag = true;
+					//((GameScene*)scene)->Clear();
+					IpSceneMng._chipType.second = IpSceneMng._chipType.first;
+					IpSceneMng._chipType.first = CHIP_TYPE::MAX;
 					return true;
 
 				}
-				else
-				{
-					actQue.second._testFlag = false;
-				}
+
 
 			}
 		}

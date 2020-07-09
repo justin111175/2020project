@@ -9,7 +9,7 @@
 #include "GameScene.h"
 TitleScene::TitleScene()
 {
-	IpImageMng.GetID("タイトル", "image/title.png", { 1280,720 }, { 1,1 });
+	IpImageMng.GetID("タイトル", "image/title.png", { 1280,800 }, { 1,1 });
 	IpImageMng.GetID("選択", "image/textplate.png", { 486,150 }, { 1,1 });
 	
 	FILE* fp = NULL;
@@ -46,7 +46,7 @@ unique_Base TitleScene::Update(unique_Base own)
 
 	//タイトル描画
 	IpSceneMng.AddDrawQue({ IMAGE_ID("タイトル")[0],{0,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::BG });
-	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],{400.0,370 + 76.0 * _select.s_id.Title} ,{0,0},{1.0f,1.0f},false,0,0,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("選択")[0],{400.0,420 + 85.0 * _select.s_id.Title} ,{0,0},{1.0f,1.0f},false,0,0,LAYER::UI });
 
 	//選択
 	_select.Updata(IpSceneMng._input, INPUT_ID::UP, SceneSel::TITLE, 2,-1);
@@ -61,12 +61,12 @@ unique_Base TitleScene::Update(unique_Base own)
 		{
 		case 0:		//新しいゲーム	
 
-			return std::make_unique<GameScene>();
+			return std::make_unique<LoadScene>();
 			break;
 			
 		case 1:		//データ読み込む
 			IpSceneMng._chipType.first = CHIP_TYPE::森1;
-			return std::make_unique<GameScene>();
+			return std::make_unique<LoadScene>();
 			break;
 		case 2:		//ゲーム終了
 			DxLib_End();

@@ -12,11 +12,11 @@ Player::Player()
 	Init();
 }
 
-Player::Player(Vector2Dbl pos, Vector2Dbl size,Vector2Dbl exrate)
+Player::Player(Vector2Dbl&& pos, Vector2Dbl&& size,Vector2Dbl&& exrate)
 {
-	_exrate = exrate;
-	_pos = pos;
-	_size = size;
+	_exrate = std::move(exrate);
+	_pos = std::move(pos);
+	_size = std::move(size);
 	_zorder = 0;
 	Init();
 }
@@ -258,7 +258,6 @@ void Player::PlayerMove(void)
 
 	};
 
-	//if()
 
 	movePos(INPUT_ID::UP, DIR_ID::UP, { 0,-4 });
 			
@@ -325,7 +324,6 @@ bool Player::SetAlive(bool alive)
 // èâä˙âª
 void Player::Init(void)
 {
-	_testFlag = false;
 	_alive = true;
 	_dead = false;
 	_unitID = UNIT_ID::PLAYER;

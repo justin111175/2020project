@@ -14,7 +14,7 @@
 //動的シングルトン
 SceneMng *SceneMng::sInstance = nullptr;
 
-SceneMng::SceneMng() :ScreenSize{ 1280,720 }, GameScreenSize{ ScreenSize / 2 }				// 初期化
+SceneMng::SceneMng() :ScreenSize{ 1280,800 }, GameScreenSize{ ScreenSize / 2 }				// 初期化
 {
 }
 

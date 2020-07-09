@@ -18,7 +18,6 @@ GameScene::GameScene()
 {	
 	funcInit();
 	
-
 	IpImageMng.GetID("ÉvÉåÉCÉÑÅ[ï‡Ç≠", "image/Player/walk.png", { 32,32 }, { 3,4 });
 	IpImageMng.GetID("ÉvÉåÉCÉÑÅ[éÄÇ ", "image/Player/dead.png", { 50,55 }, { 3,1 });
 
@@ -61,13 +60,13 @@ GameScene::GameScene()
 	IpImageMng.GetID("UIîwåi", "image/UI_back.png", { 480,480 }, { 1,1 });
 
 
-
+	
 	
 
-	MapInit();
-	IpSceneMng._chipType.first = CHIP_TYPE::êX1;
+	MapBG();
+	//IpSceneMng._chipType.first = CHIP_TYPE::êX1;
 
-	_Init[IpSceneMng._chipType.first]();
+	//_Init[IpSceneMng._chipType.first]();
 
 
 
@@ -82,13 +81,14 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-	//_Init.clear();
+	
 }
 
 unique_Base GameScene::Update(unique_Base own)
 {
-	// ï`âÊ
 
+
+	// ï`âÊ
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)
@@ -105,14 +105,18 @@ unique_Base GameScene::Update(unique_Base own)
 
 
 	(*_input).Update();
+
 	_Draw[IpSceneMng._chipType.first]();
 
-	//if ()
-	//{
-	//	_objList.clear();
-	//	//LoadScene::LoadScene();
 
-	//}
+	if (IpSceneMng._chipType.first == CHIP_TYPE::MAX)
+	{
+		if (Clear())
+		{
+			return std::make_unique<LoadScene>();
+
+		}
+	}
 
 	// ï`âÊÇè¡Ç∑
 	_objList.erase(std::remove_if(
@@ -124,6 +128,14 @@ unique_Base GameScene::Update(unique_Base own)
 
 	
 	return std::move(own);
+}
+
+bool GameScene::Clear(void)
+{
+	_Init.clear();
+	_objList.clear();
+	return true;
+
 }
 
 // ÉtÉ@ÉìÉNäàìÆÉLÉÖÅ[
@@ -146,245 +158,12 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 
 
 // ÉNÉâÉX1
-void GameScene::MapInit(void)
+void GameScene::MapBG(void)
 {
 
-	_Init.try_emplace(CHIP_TYPE::êX1, [&]() {
-		IpSceneMng.mapSize = { 2880,2880 };
-		// ï`âÊÇì«Ç›çûÇﬁ
-		for (int x = 0; x < 90*90; x++)
-		{
-			IpSceneMng._mapNow.try_emplace(x, NULL);
-		}
-
-		IpImageMng.GetID("block", "image/chip/block.png", { 32,32 }, { 10,2 });
-		IpImageMng.GetID("1_1", "image/chip/1_1.png", { 1600,1920 }, { 1,1 });
-
-		IpImageMng.GetID("êX1", "image/chip/êX1.png", { 2880,2880 }, { 1,1 });
-
-		// csvÉtÉ@ÉCÉãÇì«Ç›çûÇﬁ
-		int type = NULL;
-		int y = 0;
-		int x = 0;
-
-		FILE* fp = NULL;
-		fopen_s(&fp, "csv/êX1.csv", "rb");
-		while (fscanf_s(fp, "%d", &type) != EOF)
-		{
-			IpSceneMng._mapNow[x] = type;
-			x++;
-		}
-
-		FloorState Flrdata;
-
-		MoveState tmpMoveState;
-
-		for (int x = 0; x < 90 * 90; x++)
-		{
-			if (IpSceneMng._mapNow[x] == 0)
-			{
-				Flrdata = { FLOOR_TYPE::ìñÇΩÇËîªíË,{32.0 * (x % 90),32.0 * (x / 90)},{32.0,32.00} };
-				_objList.emplace_back(new Floor(Flrdata));
-			}
-
-			if (IpSceneMng._mapNow[x] == 1)
-			{
-				_objList.emplace_back(new Player({ 32.0 * (x % 90),32.0 * (x / 90) }, { 32,32 }, { 1.0f,1.0f }));
-
-			}
-
-			if (IpSceneMng._mapNow[x] == 10)
-			{
-				Flrdata = { FLOOR_TYPE::ì`ëó,{32.0 * (x % 90),32.0 * (x / 90)},{32.0,32.00} };
-				_objList.emplace_back(new Floor(Flrdata));
-
-			}
-
-		}
-
-
-		//ìGëùâ¡Å|ÉâÉÄÉ_éÆ
-		auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate) {
-			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(DIR_ID::RIGHT, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::DOWN, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::LEFT, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::UP, Vector2Dbl{ 0,0 });
-
-			EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
-			_objList.emplace_back(new Enemy(data));
-		};
-
-		for (int x = 0; x < 1; x++)
-		{
-			for (int y = 0; y < 1; y++)
-			{
-				EnemyAdd(ENEMY_TYPE::ÉRÉEÉÇÉä, _objList, { 400 + x * 30.0,300 + y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
-			}
-		}
-	
-	
-	});
-
-
-	_Init.try_emplace(CHIP_TYPE::êX2, [&]() {
-		IpSceneMng.mapSize = { 3840,2432 };
-		
-		
-
-		// ï`âÊÇì«Ç›çûÇﬁ
-		for (int x = 0; x <120*76; x++)
-		{
-			IpSceneMng._mapNow.try_emplace(x, NULL);
-		}
-
-		IpImageMng.GetID("block", "image/chip/block.png", { 32,32 }, { 10,2 });
-		IpImageMng.GetID("1_1", "image/chip/1_1.png", { 1600,1920 }, { 1,1 });
-
-		IpImageMng.GetID("êX2", "image/chip/êX2.png", { 3840,2432 }, { 1,1 });
-
-		// csvÉtÉ@ÉCÉãÇì«Ç›çûÇﬁ
-		int type = NULL;
-		int y = 0;
-		int x = 0;
-
-		FILE* fp = NULL;
-		fopen_s(&fp, "csv/êX2.csv", "rb");
-		while (fscanf_s(fp, "%d", &type) != EOF)
-		{
-			IpSceneMng._mapNow[x] = type;
-			x++;
-		}
-
-		FloorState Flrdata;
-
-		MoveState tmpMoveState;
-
-		for (int x = 0; x < 120*76; x++)
-		{
-			if (IpSceneMng._mapNow[x] == 0)
-			{
-				Flrdata = { FLOOR_TYPE::ìñÇΩÇËîªíË,{32.0 * (x % 120),32.0 * (x /120)},{32.0,32.00} };
-				_objList.emplace_back(new Floor(Flrdata));
-			}
-
-			if (IpSceneMng._mapNow[x] == 1)
-			{
-				_objList.emplace_back(new Player({ 32.0 * (x % 120),32.0 * (x / 120) }, { 32,32 }, { 1.0f,1.0f }));
-
-			}
-
-			if (IpSceneMng._mapNow[x] == 10)
-			{
-				Flrdata = { FLOOR_TYPE::ì`ëó,{32.0 * (x % 120),32.0 * (x / 120)},{32.0,32.00} };
-				_objList.emplace_back(new Floor(Flrdata));
-
-			}
-
-		}
-
-		//ìGëùâ¡Å|ÉâÉÄÉ_éÆ
-		auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate) {
-			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(DIR_ID::RIGHT, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::DOWN, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::LEFT, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::UP, Vector2Dbl{ 0,0 });
-
-			EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
-			_objList.emplace_back(new Enemy(data));
-		};
-
-		for (int x = 0; x < 1; x++)
-		{
-			for (int y = 0; y < 1; y++)
-			{
-				EnemyAdd(ENEMY_TYPE::ÉRÉEÉÇÉä, _objList, { 400 + x * 30.0,300 + y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
-			}
-		}
-	
-	
-	
-	});
-
-
-	_Init.try_emplace(CHIP_TYPE::êX3, [&]() {
-		IpSceneMng.mapSize = { 1440,1440 };
 
 
 
-		// ï`âÊÇì«Ç›çûÇﬁ
-		for (int x = 0; x < 45*45; x++)
-		{
-			IpSceneMng._mapNow.try_emplace(x, NULL);
-		}
-
-		IpImageMng.GetID("block", "image/chip/block.png", { 32,32 }, { 10,2 });
-		IpImageMng.GetID("1_1", "image/chip/1_1.png", { 1600,1920 }, { 1,1 });
-
-		IpImageMng.GetID("êX3", "image/chip/êX3.png", { 1440,1440 }, { 1,1 });
-
-		// csvÉtÉ@ÉCÉãÇì«Ç›çûÇﬁ
-		int type = NULL;
-		int y = 0;
-		int x = 0;
-
-		FILE* fp = NULL;
-		fopen_s(&fp, "csv/êX3.csv", "rb");
-		while (fscanf_s(fp, "%d", &type) != EOF)
-		{
-			IpSceneMng._mapNow[x] = type;
-			x++;
-		}
-
-		FloorState Flrdata;
-
-		MoveState tmpMoveState;
-
-		for (int x = 0; x < 45*45; x++)
-		{
-			if (IpSceneMng._mapNow[x] == 0)
-			{
-				Flrdata = { FLOOR_TYPE::ìñÇΩÇËîªíË,{32.0 * (x % 45),32.0 * (x / 45)},{32.0,32.00} };
-				_objList.emplace_back(new Floor(Flrdata));
-			}
-
-			if (IpSceneMng._mapNow[x] == 1)
-			{
-				_objList.emplace_back(new Player({ 32.0 * (x % 45),32.0 * (x / 45) }, { 32,32 }, { 1.0f,1.0f }));
-
-			}
-
-			if (IpSceneMng._mapNow[x] == 10)
-			{
-				Flrdata = { FLOOR_TYPE::ì`ëó,{32.0 * (x % 45),32.0 * (x / 45)},{32.0,32.00} };
-				_objList.emplace_back(new Floor(Flrdata));
-
-			}
-
-		}
-
-		//ìGëùâ¡Å|ÉâÉÄÉ_éÆ
-		auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate) {
-			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(DIR_ID::RIGHT, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::DOWN, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::LEFT, Vector2Dbl{ 0,0 });
-			tmpMoveState.emplace_back(DIR_ID::UP, Vector2Dbl{ 0,0 });
-
-			EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
-			_objList.emplace_back(new Enemy(data));
-		};
-
-		for (int x = 0; x < 1; x++)
-		{
-			for (int y = 0; y < 1; y++)
-			{
-				EnemyAdd(ENEMY_TYPE::ÉRÉEÉÇÉä, _objList, { 400 + x * 30.0,300 + y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
-			}
-		}
-
-	});
 	_Draw.try_emplace(CHIP_TYPE::êX1, [&]() {
 		IpSceneMng.AddDrawQue({ IMAGE_ID("êX1")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::BG });
 
@@ -396,6 +175,10 @@ void GameScene::MapInit(void)
 	});
 	_Draw.try_emplace(CHIP_TYPE::êX3, [&]() {
 		IpSceneMng.AddDrawQue({ IMAGE_ID("êX3")[0], {0 ,0},{0,0},{1.0f,1.0f},false,0,0,LAYER::BG });
+
+	});
+	_Draw.try_emplace(CHIP_TYPE::MAX, []() {
+		//âΩÇ‡Ç»Ç¢
 
 	});
 }

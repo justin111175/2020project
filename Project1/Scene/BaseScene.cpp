@@ -25,7 +25,7 @@ void BaseScene::FadeInit(std::string fadeType)
 {
 
 	GetDrawScreenGraph(0, 0, IpSceneMng.ScreenSize.x, IpSceneMng.ScreenSize.y, _fadeScrID);
-	IpSceneMng._blendCnt = 250;
+	IpSceneMng._blendCnt = 200;
 	_fadeType = fadeType;
 
 }
@@ -41,4 +41,7 @@ bool BaseScene::FadeUpdate(void)
 
 	return IpSceneMng._blendCnt;
 }
+
+
+
 
