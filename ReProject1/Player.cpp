@@ -8,6 +8,7 @@ Player::Player(Vector2&& pos)
 	_pos = std::move(pos);
 	//_size = { 48,48 };
 	Init();
+	_runFlag = false;
 }
 
 Player::~Player()
@@ -22,11 +23,11 @@ int Player::GetScreenId(void)
 void Player::Draw(void)
 {
 
-	SetDrawScreen(screenID);
+	//SetDrawScreen(screenID);
 
-	ClsDrawScreen();
+	//ClsDrawScreen();
 
-	DrawCircle(_pos.x, _pos.y + 24, 24, 0xFFFFFF, true);
+	DrawCircle(_pos.x+24, _pos.y + 24, 24, 0xFFFFFF, true);
 
 }
 
@@ -41,38 +42,102 @@ void Player::Run(void)
 	}
 
 
+	if (_runFlag)
+	{
+		switch (_dir)
+		{
+		case Dir::Up:
+			_pos.y -= 4;
+
+			break;
+		case Dir::Down:
+			_pos.y += 4;
+
+			break;
+		case Dir::Right:
+			_pos.x += 4;
+
+			break;
+		case Dir::Left:
+			_pos.x -= 4;
+
+			break;
+		default:
+			break;
+		}
+
+		if ((_pos.x % 32) == 0 &&
+			(_pos.y % 32) == 0)
+		{
+			_runFlag = false;
+		}
+	}
 
 	(*controller)();
 
 }
 
 void Player::Move(InputID id)
-{
-
-	switch (id)
+{	
+	if (!_runFlag)
 	{
-	case InputID::Up:
-		GameScene::GetInstance().mapPos.y-=10;
-		_pos.y -= 10;
-		break;
-	case InputID::Down:
-		//GameScene::GetInstance().mapPos.y-=10;
-		_pos.y += 10;
+		switch (id)
+		{
+		case InputID::Up:
+			_dir = Dir::Up;
+			_runFlag = true;
+			break;
+		case InputID::Down:
+			_dir = Dir::Down;
+			_runFlag = true;
 
-		break;
-	case InputID::Left:
-		//GameScene::GetInstance().mapPos.x-=10;
-		_pos.x -= 10;
-		break;
-	case InputID::Right:
-		//GameScene::GetInstance().mapPos.x+=10;
-		_pos.x += 10;
+			break;
+		case InputID::Left:
+			_dir = Dir::Left;
+			_runFlag = true;
 
-		break;
+			break;
+		case InputID::Right:
+			_dir = Dir::Right;
+			_runFlag = true;
+			break;
 
-	default:
-		break;
+		default:
+			break;
+		}
 	}
+
+
+	
+
+	//if ((_pos.x % 32) != 0 &&
+	//	(_pos.y % 32) != 0)
+	//{
+
+	//}
+
+		//switch (id)
+		//{
+		//case InputID::Up:
+		//	_pos.y -= 4;
+		//	break;
+		//case InputID::Down:
+		//	_pos.y += 4;
+
+		//	break;
+		//case InputID::Left:
+		//	_pos.x -= 4;
+		//	break;
+		//case InputID::Right:
+		//	_pos.x += 4;
+
+		//	break;
+
+		//default:
+		//	break;
+		//}
+	//}
+
 
 }
 

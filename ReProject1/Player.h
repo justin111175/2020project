@@ -3,6 +3,17 @@
 #include "common/Input/InputID.h"
 #include"common/Input/Controller.h"
 #include <memory>
+
+
+
+enum class Dir
+{
+	Up,
+	Down,
+	Right,
+	Left,
+	stay
+};
 class Player
 {
 public:
@@ -15,7 +26,9 @@ public:
 	void Run(void);
 	void Move(InputID id);
 	Vector2 _pos;
+	Dir _dir;
 
+	bool _runFlag;
 private:
 	int screenID;
 
