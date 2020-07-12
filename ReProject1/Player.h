@@ -3,38 +3,27 @@
 #include "common/Input/InputID.h"
 #include"common/Input/Controller.h"
 #include <memory>
+#include "Obj.h"
 
 
 
-enum class Dir
-{
-	Up,
-	Down,
-	Right,
-	Left,
-	stay
-};
-class Player
+class Player:
+	public Obj
 {
 public:
-	Player(Vector2&& pos);
+	Player();
+	Player(Vector2Dbl&& pos, Vector2Dbl&& size, Vector2Dbl&& exrate);
 	~Player();
-	
-	int GetScreenId(void);
+	void Update(void) override;									// çXêV
 
-	void Draw(void);
-	void Run(void);
-	void Move(InputID id);
-	Vector2 _pos;
-	Dir _dir;
 
+	void SetDir(InputID id);
+	void Move(void);
 	bool _runFlag;
 private:
-	int screenID;
 
 	void Init(void);
-	Vector2 _size;
 	std::unique_ptr<Controller> controller;
-
+	void Camera(void);
 };
 

@@ -1,5 +1,4 @@
 #include "TimeCount.h"
-#include "..\SceneMng.h"
 
 void TimeCount::Run(void)
 {

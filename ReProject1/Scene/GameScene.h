@@ -1,7 +1,16 @@
 #pragma once
 #include "BaseScene.h"
 #include <vector>
-#include "MapState.h"
+#include "..\Obj.h"
+#include <functional>
+
+enum class CHIP_TYPE
+{
+	森1,
+	MAX
+};
+
+
 class GameScene :
     public BaseScene
 {
@@ -16,13 +25,14 @@ public:
 	GameScene();
 	~GameScene();
 	unique_Base Update(unique_Base own) override;					// 更新
-	Vector2 mapPos;
-	int chip[75][75];
 private:
-	void Draw(void);
-	void CameraUpdata(void);
-	std::unique_ptr<MapState> _mapState;
-	std::unique_ptr<Player> _player;
+
+	void MapInit(void);
+
+	std::vector<sharedObj> _objList;								// シェアポインタ-Obj
+
+	
+	std::map<CHIP_TYPE, std::function<void(void)>> _Init;
 
 };
 
