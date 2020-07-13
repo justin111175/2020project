@@ -67,6 +67,7 @@ public:
 
 	bool AddDrawQue(DrawQueT dQue);								// 描画を増加する
 	bool AddDrawQue(TextQueT tQue);								// 描画を増加する
+	bool AddActQue(ActQueT aQue);								// 活動を増加する
 
 	Vector2Dbl mapPos;
 	Vector2 mapSize;
@@ -82,6 +83,7 @@ private:
 	std::vector<DrawQueT> _drawList;							// 描画リスト
 
 	std::vector<TextQueT> _textList;							// 文字リスト
+	std::vector<ActQueT> _actList;								// 活動リスト
 
 
 	std::map<LAYER, int> _screenID;

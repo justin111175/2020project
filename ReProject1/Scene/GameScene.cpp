@@ -9,6 +9,9 @@
 
 GameScene::GameScene()
 {
+
+	FuncInit();
+
 	IpImageMng.GetID("1", "image/1.png", { 2400,2400 }, { 1,1 });
 	IpImageMng.GetID("ÉvÉåÉCÉÑÅ[ï‡Ç≠", "image/Player/walk.png", { 32,32 }, { 3,4 });
 	IpImageMng.GetID("block", "image/block.png", { 32,32 }, { 10,2 });
@@ -17,7 +20,6 @@ GameScene::GameScene()
 
 	MapInit();
 
-	_objList.emplace_back(new Player({0,0 }, { 32,32 }, { 1.0f,1.0f }));
 	
 
 
@@ -63,6 +65,37 @@ unique_Base GameScene::Update(unique_Base own)
 	return std::move(own);
 }
 
+void GameScene::FuncInit(void)
+{
+
+	//funcQue[ACT_QUE::SHOT] = FuncBullet();
+
+	//funcQue[ACT_QUE::SLASH] = FuncSlash();
+	//funcQue[ACT_QUE::LEVELUP] = FuncLevelUp();
+	//funcQue[ACT_QUE::CHECK] = FuncCheck();
+
+	funcQue[ACT_QUE::MOVE] = FuncMove();
+
+}
+
+void GameScene::RunActQue(std::vector<ActQueT> actList)
+{
+	for (auto actQue : actList)
+	{
+		try
+		{
+			funcQue.at(actQue.first)(actQue, this);
+		}
+		catch (...)
+		{
+			//AST();
+		}
+
+	}
+
+
+}
+
 void GameScene::MapInit(void)
 {
 	_Init.try_emplace(CHIP_TYPE::êX1, [&]() {
@@ -103,7 +136,11 @@ void GameScene::MapInit(void)
 				Flrdata = { FLOOR_TYPE::ìñÇΩÇËîªíË,{32.0 * (x % 75),32.0 * (x / 75)},{32.0,32.00} };
 				_objList.emplace_back(new Floor(Flrdata));
 			}
+			if (IpSceneMng._mapNow[x] == 10)
+			{
+				_objList.emplace_back(new Player({ 32.0 * (x % 75),32.0 * (x / 75) }, { 32,32 }, { 1.0f,1.0f }));
 
+			}
 
 		}
 

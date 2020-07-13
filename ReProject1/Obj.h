@@ -61,19 +61,18 @@ public:
 	bool isAlive(void) { return _alive; }								// 生きている管理
 	bool isDead(void) { return _dead; }									// 死んでいる管理
 	bool isAnimEnd(void);												// アニメがおわったかどうか
-	const Vector2Dbl funcPos(Vector2Dbl pos);
-	const DIR_ID funcDir(DIR_ID dir);
 
 	//ゲット関数
 	Vector2Dbl posGet(void);											//今の座標
 	Vector2Dbl posOldGet(void);											//昔の座標
 	Vector2Dbl sizeGet(void);											//大きさ
-
+	DIR_ID dirGet(void);
 
 
 	std::map<int, int> _experience;
 
 	std::map < DIR_ID, bool> _dirFlag;									// true:移動、false：停止
+	
 	int _level;															//レベル
 
 	Vector2Dbl speed;											//移動速度

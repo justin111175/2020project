@@ -18,10 +18,12 @@ bool SceneMng::Run(void)
 	_activeScene = std::make_unique<GameScene>();
 
 	while (ProcessMessage() == 0 /*&& CheckHitKey(KEY_INPUT_ESCAPE) == 0*/)
-	{
+	{		
+
 		// clear：全ての要素を削除する
 		_drawList.clear();
 
+		(*_activeScene).RunActQue(std::move(_actList));
 
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		// moveはコピーしません、所有権を渡すだけ
@@ -61,6 +63,13 @@ bool SceneMng::AddDrawQue(DrawQueT dQue)
 bool SceneMng::AddDrawQue(TextQueT tQue)
 {
 	return false;
+}
+
+bool SceneMng::AddActQue(ActQueT aQue)
+{
+	_actList.emplace_back(aQue);
+	return true;
+
 }
 
 const int SceneMng::frames(void) const

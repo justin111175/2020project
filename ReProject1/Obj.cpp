@@ -158,6 +158,11 @@ Vector2Dbl Obj::sizeGet(void)
 	return _size;
 }
 
+DIR_ID Obj::dirGet(void)
+{
+	return _dir;
+}
+
 
 // 爆発アニメが終わったかどうか確認、終わったら、消滅する
 bool Obj::DestroyPrpc(void)

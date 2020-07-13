@@ -8,6 +8,12 @@ BaseScene::~BaseScene()
 {
 }
 
+void BaseScene::RunActQue(std::vector<ActQueT> actList)
+{
+	actList.clear();
+
+}
+
 void BaseScene::FadeInit(std::string fadeType)
 {
 }

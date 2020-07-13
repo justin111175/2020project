@@ -33,10 +33,8 @@ void Player::Update(void)
 
 	}
 
-	
+
 	Move();
-
-
 	(*controller)();
 	
 	Camera();
@@ -46,75 +44,70 @@ void Player::Update(void)
 
 void Player::SetDir(InputID id)
 {	
+
+	auto dir = [&](DIR_ID dir,InputID _id) {
+		if(_id==id)
+		{
+
+			if (_dirFlag[_dir])
+			{
+				stateDir(STATE::NORMAL, dir);
+				_runFlag = true;
+			}
+				IpSceneMng.AddActQue({ ACT_QUE::MOVE , *this });
+
+		}
+	};
 	if (!_runFlag)
 	{
-		switch (id)
-		{
-		case InputID::Up:
-			_dir = DIR_ID::UP;
-			stateDir(STATE::NORMAL, DIR_ID::UP);
 
-			_runFlag = true;
-			break;
-		case InputID::Down:
-			_dir = DIR_ID::DOWN;
-			stateDir(STATE::NORMAL, DIR_ID::DOWN);
+		dir(DIR_ID::UP, InputID::Up);
+		dir(DIR_ID::DOWN, InputID::Down);
+		dir(DIR_ID::RIGHT, InputID::Right);
+		dir(DIR_ID::LEFT, InputID::Left);
 
-			_runFlag = true;
-
-			break;
-		case InputID::Left:
-			_dir = DIR_ID::LEFT;
-			stateDir(STATE::NORMAL, DIR_ID::LEFT);
-
-			_runFlag = true;
-
-			break;
-		case InputID::Right:
-			_dir = DIR_ID::RIGHT;
-			stateDir(STATE::NORMAL, DIR_ID::RIGHT);
-
-			_runFlag = true;
-			break;
-
-		default:
-			break;
-		}
 	}
 	
 }
 
 void Player::Move(void)
 {
-	if (_runFlag)
-	{
-		switch (_dir)
+
+	auto move = [&](DIR_ID dir, Vector2Dbl speed) {
+		if (_dir == dir)
 		{
-		case DIR_ID::UP:
-			_pos.y -= 4;
+			if (_dirFlag[dir])
+			{
+				_posOld = _pos;
+				_pos += speed;
+			}
+			else
+			{
+				_pos=_posOld;
 
-			break;
-		case DIR_ID::DOWN:
-			_pos.y += 4;
-
-			break;
-		case DIR_ID::RIGHT:
-			_pos.x += 4;
-
-			break;
-		case DIR_ID::LEFT:
-			_pos.x -= 4;
-
-			break;
-		default:
-			break;
+			}
+			
 		}
 
+
+	};
+
+	if (_runFlag)
+	{
+
+		move(DIR_ID::UP, { 0,-4 });
+		move(DIR_ID::DOWN, { 0,4 });
+		move(DIR_ID::RIGHT, { 4,0 });
+		move(DIR_ID::LEFT, { -4,0 });
+
+		
 		if ((static_cast<int>(_pos.x) % 32) == 0 &&
 			(static_cast<int>(_pos.y) % 32) == 0)
 		{
 			_runFlag = false;
 		}
+
+
 	}
 	else
 	{
@@ -140,7 +133,11 @@ void Player::Move(void)
 		default:
 			break;
 		}
+
 	}
+
+
+
 }
 
 
@@ -150,7 +147,11 @@ void Player::Init(void)
 
 	controller = std::make_unique<KeyInput>();
 	controller->SetUp();
+	for (auto dir : DIR_ID())
+	{
+		_dirFlag[dir] = true;
 
+	}
 	_alive = true;
 	_dead = false;
 	_runFlag = false;
