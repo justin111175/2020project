@@ -3,8 +3,7 @@
 
 enum class FLOOR_TYPE		//°‚Ì•`‰æ‚Ìƒ^ƒCƒv
 {
-	“–‚½‚è”»’è,
-	“`‘—
+	“–‚½‚è”»’è
 };
 
 enum class FLOOR_STATE

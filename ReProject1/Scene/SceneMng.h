@@ -4,6 +4,8 @@
 #include "..\common\Vector2.h"
 #include <map>
 #include <vector>
+#include "GameScene.h"
+
 enum class DRAW_QUE
 {
 	IMAGE,										// イメージ
@@ -69,6 +71,8 @@ public:
 	bool AddDrawQue(TextQueT tQue);								// 描画を増加する
 	bool AddActQue(ActQueT aQue);								// 活動を増加する
 
+	std::pair<CHIP_TYPE,bool> _chipNo;
+
 	Vector2Dbl mapPos;
 	Vector2 mapSize;
 	std::map<int, int> _mapNow;
@@ -90,7 +94,8 @@ private:
 
 
 	void Draw(void);											// 描画
-															// スマートポインタ
+
+	// スマートポインタ
 	unique_Base _activeScene;									// 今Sceneの位置
 	int _frames;												// フレーム数
 

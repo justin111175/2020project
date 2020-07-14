@@ -4,25 +4,25 @@
 #include "SceneMng.h"
 #include "..\Player.h"
 #include "..\Floor.h"
+#include "..\Remove.h"
 
 
 
 GameScene::GameScene()
 {
+	IpImageMng.GetID("プレイヤー歩く", "image/Player/walk.png", { 32,32 }, { 3,4 });
+	IpImageMng.GetID("block", "image/block.png", { 32,32 }, { 10,2 });
+	IpImageMng.GetID("遺跡1", "image/遺跡1.png", { 1280,1280 }, { 1,1 });
+	
+	MapInit();
 
 	FuncInit();
 
-	IpImageMng.GetID("1", "image/1.png", { 2400,2400 }, { 1,1 });
-	IpImageMng.GetID("プレイヤー歩く", "image/Player/walk.png", { 32,32 }, { 3,4 });
-	IpImageMng.GetID("block", "image/block.png", { 32,32 }, { 10,2 });
 
+	IpSceneMng._chipNo.second = false;
 
-
-	MapInit();
 
 	
-
-
 
 
 	_Init[CHIP_TYPE::森1]();
@@ -35,6 +35,17 @@ GameScene::~GameScene()
 
 unique_Base GameScene::Update(unique_Base own)
 {
+	if (IpSceneMng._chipNo.second)
+	{
+		_objList.clear();
+		_Draw.clear();
+		_Init.clear();
+		IpSceneMng._chipNo.first = CHIP_TYPE::test;
+
+		return std::make_unique<GameScene>();
+
+	}
+
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)
@@ -49,11 +60,11 @@ unique_Base GameScene::Update(unique_Base own)
 		(*data).Draw();
 	}
 
-	IpSceneMng.AddDrawQue({ IMAGE_ID("1")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG});
 	//IpSceneMng.AddDrawQue({ IMAGE_ID("block")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG});
+	_Draw[IpSceneMng._chipNo.first]();
 	
 
-	
+
 
 	// 描画を消す
 	_objList.erase(std::remove_if(
@@ -72,7 +83,7 @@ void GameScene::FuncInit(void)
 
 	//funcQue[ACT_QUE::SLASH] = FuncSlash();
 	//funcQue[ACT_QUE::LEVELUP] = FuncLevelUp();
-	//funcQue[ACT_QUE::CHECK] = FuncCheck();
+	funcQue[ACT_QUE::CHECK] = FuncCheck();
 
 	funcQue[ACT_QUE::MOVE] = FuncMove();
 
@@ -107,7 +118,7 @@ void GameScene::MapInit(void)
 			IpSceneMng._mapNow.try_emplace(x, NULL);
 		}
 
-		//IpImageMng.GetID("block", "image/chip/block.png", { 32,32 }, { 10,2 });
+		IpImageMng.GetID("1", "image/1.png", { 2400,2400 }, { 1,1 });
 
 
 		// csvファイルを読み込む
@@ -127,7 +138,7 @@ void GameScene::MapInit(void)
 
 
 		FloorState Flrdata;
-
+		RemoveState RemovaData;
 
 		for (int x = 0; x < 75 * 75; x++)
 		{
@@ -135,6 +146,11 @@ void GameScene::MapInit(void)
 			{
 				Flrdata = { FLOOR_TYPE::当たり判定,{32.0 * (x % 75),32.0 * (x / 75)},{32.0,32.00} };
 				_objList.emplace_back(new Floor(Flrdata));
+			}
+			if (IpSceneMng._mapNow[x] == 1)
+			{
+				RemovaData = { Remove_ID::test1,{32.0 * (x % 75),32.0 * (x / 75)},{32.0,32.00} };
+				_objList.emplace_back(new Remove(RemovaData));
 			}
 			if (IpSceneMng._mapNow[x] == 10)
 			{
@@ -170,6 +186,19 @@ void GameScene::MapInit(void)
 
 	});
 
+
+
+	_Draw.try_emplace(CHIP_TYPE::森1, []() {
+		IpSceneMng.AddDrawQue({ IMAGE_ID("1")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG });
+
+	
+	});
+
+	_Draw.try_emplace(CHIP_TYPE::test, []() {
+		IpSceneMng.AddDrawQue({ IMAGE_ID("遺跡1")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG });
+
+
+	});
 
 }
 

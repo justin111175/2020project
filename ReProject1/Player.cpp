@@ -33,7 +33,7 @@ void Player::Update(void)
 
 	}
 
-
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 	Move();
 	(*controller)();
 	

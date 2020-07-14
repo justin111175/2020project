@@ -144,8 +144,10 @@
     <ClCompile Include="common\HitCheck.cpp" />
     <ClCompile Include="DIR_ID.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="FuncCheck.cpp" />
     <ClCompile Include="FuncMove.cpp" />
     <ClCompile Include="Layer_id.cpp" />
+    <ClCompile Include="Remove.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="common\Input\KeyInput.cpp" />
@@ -161,8 +163,10 @@
     <ClInclude Include="common\HitCheck.h" />
     <ClInclude Include="DIR_ID.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="FuncCheck.h" />
     <ClInclude Include="FuncMove.h" />
     <ClInclude Include="Layer_id.h" />
+    <ClInclude Include="Remove.h" />
     <ClInclude Include="Scene\BaseScene.h" />
     <ClInclude Include="common\detail\Vector2.h" />
     <ClInclude Include="common\ImageMng.h" />

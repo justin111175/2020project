@@ -4,13 +4,14 @@
 #include "..\Obj.h"
 #include <functional>
 #include "..\FuncMove.h"
-
+#include "..\FuncCheck.h"
 using funcAct = std::function<bool(ActQueT&, void*)>;
 
 
 enum class CHIP_TYPE
 {
 	森1,
+	test,
 	MAX
 };
 
@@ -31,6 +32,7 @@ public:
 	unique_Base Update(unique_Base own) override;					// 更新
 private:
 	friend FuncMove;
+	friend FuncCheck;
 
 	void FuncInit(void);											// ファンク初期化
 
@@ -44,6 +46,7 @@ private:
 
 
 	std::map<CHIP_TYPE, std::function<void(void)>> _Init;
+	std::map<CHIP_TYPE, std::function<void(void)>> _Draw;
 
 };
 

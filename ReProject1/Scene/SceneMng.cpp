@@ -1,6 +1,5 @@
 #include "SceneMng.h"
 #include <Dxlib.h>
-#include "GameScene.h"
 #include <algorithm>
 #include <tuple>										//要素が三つ以上を管理する時を使う
 
@@ -101,8 +100,8 @@ bool SceneMng::SysInit(void)
 	}
 
 
-
-
+	_chipNo.first = CHIP_TYPE::森1;
+	_chipNo.second = false;
 
 	// レイヤーの設定
 	_screenID.try_emplace(LAYER::BG, MakeScreen(ScreenSize.x, ScreenSize.y, true));
