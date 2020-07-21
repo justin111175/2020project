@@ -3,13 +3,12 @@
 #include "common/Input/KeyInput.h"
 #include "common/ImageMng.h"
 #include "Scene/SceneMng.h"
-
 Player::Player()
 {
 	Init();
 }
 
-Player::Player(Vector2Dbl&& pos, Vector2Dbl&& size, Vector2Dbl&& exrate)
+Player::Player(Vector2&& pos, Vector2Dbl&& size, Vector2Dbl&& exrate)
 {
 	_pos = std::move(pos);
 	_size = std::move(size);
@@ -24,90 +23,119 @@ Player::~Player()
 
 void Player::Update(void)
 {
+	_pData._bit = { 1,1,1,1 };
+	//_runFlag = false;
+
+	if (static_cast<int>(_pos.x % 32) == 0)
+	{
+		if (static_cast<int>(_pos.y % 32) == 0)
+		{
+			_runFlag = false;
+
+		}
+	}
+
 	for (auto data : controller->GetCntData())
 	{
 		if (data.second[static_cast<int>(Trg::Now)])
 		{
-			SetDir(data.first);
-		}
+			Vector2	Pos = { static_cast<int>((_pos.x + _size.x-4) / 32),static_cast<int>(_pos.y / 32) };
 
+			if (IpSceneMng._data[Pos.y][Pos.x - 1] == 0)
+			{
+				_pData._bit.LEFT = 0;
+			}
+
+			Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y-4) / 32) };
+			if (IpSceneMng._data[Pos.y - 1][Pos.x] == 0)
+			{
+				_pData._bit.UP = 0;
+
+			}
+
+			Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+			if (IpSceneMng._data[Pos.y][Pos.x + 1] == 0)
+			{
+				_pData._bit.RIGHT = 0;
+
+			}
+			if (IpSceneMng._data[Pos.y + 1][Pos.x] == 0)
+			{
+				_pData._bit.DOWN = 0;
+			}
+
+
+			if (static_cast<int>(_pos.x % 32) == 0)
+			{
+				if (static_cast<int>(_pos.y % 32) == 0)
+				{
+					SetDir(data.first);
+
+				}
+			}
+
+		}
 	}
 
-	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
-	Move();
-	(*controller)();
-	
-	Camera();
+	//Vector2	Pos = { static_cast<int>((_pos.x + _size.x) / 32),static_cast<int>(_pos.y / 32) };
 
-}
+	//if (IpSceneMng._data[Pos.y][Pos.x - 1] == 0)
+	//{
+	//	_pData._bit.LEFT = 0;
+	//}
 
+	//Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y) / 32) };
+	//if (IpSceneMng._data[Pos.y - 1][Pos.x] == 0)
+	//{
+	//	_pData._bit.UP = 0;
 
-void Player::SetDir(InputID id)
-{	
+	//}
 
-	auto dir = [&](DIR_ID dir,InputID _id) {
-		if(_id==id)
-		{
+	//Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+	//if (IpSceneMng._data[Pos.y][Pos.x + 1] == 0)
+	//{
+	//	_pData._bit.RIGHT = 0;
 
-			if (_dirFlag[_dir])
-			{
-				stateDir(STATE::NORMAL, dir);
-				_runFlag = true;
-			}
-				IpSceneMng.AddActQue({ ACT_QUE::MOVE , *this });
-
-		}
-	};
-	if (!_runFlag)
-	{
-
-		dir(DIR_ID::UP, InputID::Up);
-		dir(DIR_ID::DOWN, InputID::Down);
-		dir(DIR_ID::RIGHT, InputID::Right);
-		dir(DIR_ID::LEFT, InputID::Left);
-
-	}
-	
-}
-
-void Player::Move(void)
-{
-
-	auto move = [&](DIR_ID dir, Vector2Dbl speed) {
-		if (_dir == dir)
-		{
-			if (_dirFlag[dir])
-			{
-				_posOld = _pos;
-				_pos += speed;
-			}
-			else
-			{
-				_pos=_posOld;
-
-			}
-			
-		}
+	//}
+	//if (IpSceneMng._data[Pos.y + 1][Pos.x] == 0)
+	//{
+	//	_pData._bit.DOWN = 0;
+	//}
 
 
-	};
 
 	if (_runFlag)
 	{
-
-		move(DIR_ID::UP, { 0,-4 });
-		move(DIR_ID::DOWN, { 0,4 });
-		move(DIR_ID::RIGHT, { 4,0 });
-		move(DIR_ID::LEFT, { -4,0 });
-
-		
-		if ((static_cast<int>(_pos.x) % 32) == 0 &&
-			(static_cast<int>(_pos.y) % 32) == 0)
+		switch (_dir)
 		{
-			_runFlag = false;
+		case DIR_ID::DOWN:
+			if (_pData._bit.DOWN)
+			{
+				_pos.y += 4;
+			}
+			break;
+		case DIR_ID::LEFT:
+			if (_pData._bit.LEFT)
+			{
+				_pos.x -= 4;
+			}
+			break;
+		case DIR_ID::RIGHT:
+			if (_pData._bit.RIGHT)
+			{
+				_pos.x += 4;
+			}
+			break;
+		case DIR_ID::UP:
+			if (_pData._bit.UP)
+			{
+				_pos.y -=4;
+			}
+			break;
+
+		default:
+			break;
 		}
-
-
 	}
 	else
 	{
@@ -135,6 +163,149 @@ void Player::Move(void)
 		}
 
 	}
+
+
+
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+
+	(*controller)();
+	
+	Camera();
+
+}
+
+
+void Player::SetDir(InputID id)
+{	
+	//_runFlag = true;
+	switch (id)
+	{
+	case InputID::Up:
+		stateDir(STATE::NORMAL, DIR_ID::UP);
+
+		if (_pData._bit.UP)
+		{
+			_runFlag = true;
+
+		}
+		break;
+	case InputID::Down:
+		stateDir(STATE::NORMAL, DIR_ID::DOWN);
+
+		if (_pData._bit.DOWN)
+		{
+			_runFlag = true;
+
+		}
+
+		break;
+	case InputID::Left:
+			stateDir(STATE::NORMAL, DIR_ID::LEFT);
+
+		if (_pData._bit.LEFT)
+		{
+			_runFlag = true;
+
+		}
+		break;
+	case InputID::Right:
+					stateDir(STATE::NORMAL, DIR_ID::RIGHT);
+
+		if (_pData._bit.RIGHT)
+		{
+			_runFlag = true;
+
+		}
+		break;
+
+	default:
+		break;
+	}
+
+	
+}
+
+void Player::Move(void)
+{
+	//for (auto dir : DIR_ID())
+	//{
+	//	_dirFlag[dir] = true;
+
+	//}
+
+
+
+
+
+	//auto move = [&](DIR_ID dir, Vector2Dbl speed,Vector2 pos) {
+	//	_speed = speed;
+	//	if (_dir == dir)
+	//	{
+	//		if (_dirFlag[dir])
+	//		{
+	//			//if (IpSceneMng._data[pos.y][pos.x]==0)
+	//			//{
+	//			//	_dirFlag[dir] = false;
+
+	//			//}
+	//			//else
+	//			//{
+	//				//_pos += _speed;
+
+	//			//}
+	//		}
+	//	}
+	//};
+
+	//if (_runFlag)
+	//{
+	//	Vector2 Pos = { static_cast<int>(_pos.x / 32),static_cast<int>(_pos.y / 32) };
+
+	//	move(DIR_ID::UP, { 0,-4 }, { Pos.x,Pos.y-1});
+	//	move(DIR_ID::DOWN, { 0,4 }, { Pos.x,Pos.y +1 });
+	//	move(DIR_ID::RIGHT, { 4,0 }, { Pos.x+1,Pos.y  });
+	//	move(DIR_ID::LEFT, { -4,0 }, { Pos.x-1,Pos.y  });
+	//	
+
+
+
+
+	//	
+	//	if ((static_cast<int>(_pos.x) % 32) == 0 &&
+	//		(static_cast<int>(_pos.y) % 32) == 0)
+	//	{
+	//		//_posOld = _pos;
+	//		//_pos = { Pos.x * 32.0f,Pos.y * 32.0f };
+	//		_runFlag = false;
+	//	}
+
+	//}
+	//else
+	//{
+	//	switch (_dir)
+	//	{
+	//	case DIR_ID::UP:
+	//		stateDir(STATE::STAY, DIR_ID::UP);
+
+
+	//		break;
+	//	case DIR_ID::DOWN:
+	//		stateDir(STATE::STAY, DIR_ID::DOWN);
+
+	//		break;
+	//	case DIR_ID::RIGHT:
+	//		stateDir(STATE::STAY, DIR_ID::RIGHT);
+
+	//		break;
+	//	case DIR_ID::LEFT:
+	//		stateDir(STATE::STAY, DIR_ID::LEFT);
+
+	//		break;
+	//	default:
+	//		break;
+	//	}
+
+	//}
 
 
 
@@ -228,6 +399,7 @@ void Player::Camera(void)
 			IpSceneMng.mapPos.y = 75 * 32 - 800;
 		}
 	}
+
 	if (_pos.y - tmp.y < 800 / 2)
 	{
 		if (tmp.y > 0)

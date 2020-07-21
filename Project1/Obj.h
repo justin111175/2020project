@@ -36,6 +36,7 @@ class Obj;
 class Player;
 class Enemy;
 class Floor;
+
 using AnimVector = std::vector<std::pair<int, unsigned int>>;
 //shared_ptr：		指定されたリソースへの所有権(ownership)を共有(share)するスマートポインタである。
 using sharedObj = std::shared_ptr<Obj>;									// shared_ptr 側だけコビーできます

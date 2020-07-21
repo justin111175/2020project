@@ -1,6 +1,5 @@
 #pragma once
 #include "Obj.h"
-#include <functional>
 
 enum class FLOOR_TYPE		//°‚Ì•`‰æ‚Ìƒ^ƒCƒv
 {
@@ -34,6 +33,5 @@ private:
 	void Init(void);												// ‰Šú‰»
 	FLOOR_TYPE _type;												// í—Ş
 
-	std::map<std::string, int> _id;
 };
 

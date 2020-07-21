@@ -63,8 +63,8 @@ public:
 	bool isAnimEnd(void);												// アニメがおわったかどうか
 
 	//ゲット関数
-	Vector2Dbl posGet(void);											//今の座標
-	Vector2Dbl posOldGet(void);											//昔の座標
+	Vector2 posGet(void);											//今の座標
+	Vector2 posOldGet(void);											//昔の座標
 	Vector2Dbl sizeGet(void);											//大きさ
 	DIR_ID dirGet(void);
 
@@ -75,7 +75,7 @@ public:
 	
 	int _level;															//レベル
 
-	Vector2Dbl speed;											//移動速度
+	Vector2Dbl _speed;											//移動速度
 
 private:
 
@@ -94,9 +94,9 @@ protected:
 	bool _dead;															// 死亡－＞死んでいるかグラフ
 	double _rad;														// 角度
 	int _zorder;														// 描画優先度用
-	Vector2Dbl _pos;													// 今の座標
+	Vector2 _pos;													// 今の座標
 
-	Vector2Dbl _posOld;													// 昔の座標
+	Vector2 _posOld;													// 昔の座標
 	Vector2Dbl _size;													// サイズ
 	Vector2Dbl _exrate;													// XとYの拡大縮小率
 	DIR_ID _dir;														// 向き

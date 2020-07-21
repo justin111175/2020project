@@ -3,7 +3,6 @@
 #include <vector>
 #include "..\Obj.h"
 #include <functional>
-#include "..\FuncMove.h"
 #include "..\FuncCheck.h"
 using funcAct = std::function<bool(ActQueT&, void*)>;
 
@@ -31,7 +30,6 @@ public:
 	~GameScene();
 	unique_Base Update(unique_Base own) override;					// 更新
 private:
-	friend FuncMove;
 	friend FuncCheck;
 
 	void FuncInit(void);											// ファンク初期化

@@ -15,7 +15,7 @@ enum class FLOOR_STATE
 	MAX
 };
 
-using FloorState = std::tuple < FLOOR_TYPE, Vector2Dbl, Vector2Dbl> ;
+using FloorState = std::tuple < FLOOR_TYPE, Vector2, Vector2Dbl> ;
 
 class Floor;
 

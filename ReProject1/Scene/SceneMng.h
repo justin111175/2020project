@@ -31,9 +31,9 @@ enum class TEXT_QUE
 
 class Obj;
 
-using DrawQueT = std::tuple<int, Vector2Dbl, Vector2Dbl, Vector2Dbl, double, bool, int, LAYER>;
+using DrawQueT = std::tuple<int, Vector2, Vector2Dbl, Vector2Dbl, double, bool, int, LAYER>;
 
-using TextQueT = std::tuple<const char*, Vector2Dbl, Vector2Dbl, int, LAYER>;
+using TextQueT = std::tuple<const char*, Vector2, Vector2Dbl, int, LAYER>;
 
 #define IpSceneMng SceneMng::GetInstance()
 
@@ -76,6 +76,11 @@ public:
 	Vector2Dbl mapPos;
 	Vector2 mapSize;
 	std::map<int, int> _mapNow;
+
+
+	std::vector<int> _dataBase;
+	std::vector<int*> _data;
+
 
 	int _blendCnt;												// ブレンド用カント
 	const int frames(void)const;								// フレーム数のゲット関数

@@ -142,12 +142,12 @@ bool Obj::isAnimEnd(void)
 
 
 
-Vector2Dbl Obj::posGet(void)
+Vector2 Obj::posGet(void)
 {
 	return _pos;
 }
 
-Vector2Dbl Obj::posOldGet(void)
+Vector2 Obj::posOldGet(void)
 {
 
 	return _posOld;
