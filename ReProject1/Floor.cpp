@@ -42,7 +42,7 @@ void Floor::Init(void)
 	AnimVector data;
 	_zorder = -1;
 	_unitID = UNIT_ID::“–‚½‚è”»’è;
-	data.emplace_back(IMAGE_ID("block")[0], 30);
+	data.emplace_back(IMAGE_ID("block")[1], 30);
 	SetAnim(STATE::NORMAL, data);
 
 

@@ -9,8 +9,9 @@ using funcAct = std::function<bool(ActQueT&, void*)>;
 
 enum class CHIP_TYPE
 {
-	êX1,
-	test,
+	ínê}1,
+	ínê}2,
+	ínê}3,
 	MAX
 };
 

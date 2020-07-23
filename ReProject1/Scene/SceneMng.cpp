@@ -79,7 +79,7 @@ const int SceneMng::frames(void) const
 
 
 SceneMng::SceneMng():
-    ScreenSize{ 1280,800 }
+    ScreenSize{ 800,600 }
 {
     _blendCnt = 0;
     _frames = 0;
@@ -100,7 +100,7 @@ bool SceneMng::SysInit(void)
 	}
 
 
-	_chipNo.first = CHIP_TYPE::êX1;
+	_chipNo.first = CHIP_TYPE::ínê}1;
 	_chipNo.second = false;
 
 	// ÉåÉCÉÑÅ[ÇÃê›íË

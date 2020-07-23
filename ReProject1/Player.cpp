@@ -41,25 +41,25 @@ void Player::Update(void)
 		{
 			Vector2	Pos = { static_cast<int>((_pos.x + _size.x-4) / 32),static_cast<int>(_pos.y / 32) };
 
-			if (IpSceneMng._data[Pos.y][Pos.x - 1] == 0)
+			if (IpSceneMng._data[Pos.y][Pos.x - 1] ==1)
 			{
 				_pData._bit.LEFT = 0;
 			}
 
 			Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y-4) / 32) };
-			if (IpSceneMng._data[Pos.y - 1][Pos.x] == 0)
+			if (IpSceneMng._data[Pos.y - 1][Pos.x] == 1)
 			{
 				_pData._bit.UP = 0;
 
 			}
 
 			Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
-			if (IpSceneMng._data[Pos.y][Pos.x + 1] == 0)
+			if (IpSceneMng._data[Pos.y][Pos.x + 1] ==1)
 			{
 				_pData._bit.RIGHT = 0;
 
 			}
-			if (IpSceneMng._data[Pos.y + 1][Pos.x] == 0)
+			if (IpSceneMng._data[Pos.y + 1][Pos.x] == 1)
 			{
 				_pData._bit.DOWN = 0;
 			}
@@ -77,30 +77,6 @@ void Player::Update(void)
 		}
 	}
 
-	//Vector2	Pos = { static_cast<int>((_pos.x + _size.x) / 32),static_cast<int>(_pos.y / 32) };
-
-	//if (IpSceneMng._data[Pos.y][Pos.x - 1] == 0)
-	//{
-	//	_pData._bit.LEFT = 0;
-	//}
-
-	//Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y) / 32) };
-	//if (IpSceneMng._data[Pos.y - 1][Pos.x] == 0)
-	//{
-	//	_pData._bit.UP = 0;
-
-	//}
-
-	//Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
-	//if (IpSceneMng._data[Pos.y][Pos.x + 1] == 0)
-	//{
-	//	_pData._bit.RIGHT = 0;
-
-	//}
-	//if (IpSceneMng._data[Pos.y + 1][Pos.x] == 0)
-	//{
-	//	_pData._bit.DOWN = 0;
-	//}
 
 
 
@@ -363,19 +339,19 @@ void Player::Camera(void)
 {
 	Vector2Dbl tmp = IpSceneMng.mapPos;
 
-	if (_pos.x - tmp.x > 1280 / 2)
+	if (_pos.x - tmp.x > IpSceneMng.ScreenSize.x / 2)
 	{
-		if (tmp.x < 2400 - 1280)
+		if (tmp.x < IpSceneMng.mapSize.x - IpSceneMng.ScreenSize.x)
 		{
 			IpSceneMng.mapPos.x += 4;
 		}
 		else
 		{
 
-			IpSceneMng.mapPos.x = 75 * 32 - 1280;
+			IpSceneMng.mapPos.x = IpSceneMng.mapSize.x - IpSceneMng.ScreenSize.x;
 		}
 	}
-	if (_pos.x - tmp.x < 1280 / 2)
+	if (_pos.x - tmp.x < IpSceneMng.ScreenSize.x / 2)
 	{
 		if (tmp.x > 0)
 		{
@@ -387,20 +363,20 @@ void Player::Camera(void)
 		}
 	}
 
-	if (_pos.y - IpSceneMng.mapPos.y > 800 / 2)
+	if (_pos.y - IpSceneMng.mapPos.y > IpSceneMng.ScreenSize.y / 2)
 	{
-		if (tmp.y < 2400 - 800)
+		if (tmp.y < IpSceneMng.mapSize.y - IpSceneMng.ScreenSize.y)
 		{
 			IpSceneMng.mapPos.y += 4;
 		}
 		else
 		{
 
-			IpSceneMng.mapPos.y = 75 * 32 - 800;
+			IpSceneMng.mapPos.y = IpSceneMng.mapSize.y - IpSceneMng.ScreenSize.y;
 		}
 	}
 
-	if (_pos.y - tmp.y < 800 / 2)
+	if (_pos.y - tmp.y < IpSceneMng.ScreenSize.y / 2)
 	{
 		if (tmp.y > 0)
 		{
