@@ -2,7 +2,8 @@
 #include <Dxlib.h>
 #include <algorithm>
 #include <tuple>										//要素が三つ以上を管理する時を使う
-
+#include "..\common\_debug\_DebugDispOut.h"
+#include "..\common\_debug\_DeBugConOut.h"
 SceneMng* SceneMng::sInstance = nullptr;
 
 
@@ -21,6 +22,7 @@ bool SceneMng::Run(void)
 
 		// clear：全ての要素を削除する
 		_drawList.clear();
+		_dbgStartDraw();
 
 		(*_activeScene).RunActQue(std::move(_actList));
 
@@ -101,7 +103,10 @@ bool SceneMng::SysInit(void)
 
 
 	_chipNo.first = CHIP_TYPE::地図1;
-	_chipNo.second = false;
+	_chipNo.second = _chipNo.first;
+	_changeFlag = false;
+	
+	_dbgSetup(215);														// debug用色の透明度
 
 	// レイヤーの設定
 	_screenID.try_emplace(LAYER::BG, MakeScreen(ScreenSize.x, ScreenSize.y, true));
@@ -120,6 +125,7 @@ bool SceneMng::SysInit(void)
 void SceneMng::Draw(void)
 {
 
+	_dbgAddDraw();
 
 
 	std::sort(_drawList.begin(), _drawList.end(), [](DrawQueT dQueA, DrawQueT dQueB) {
@@ -260,9 +266,11 @@ void SceneMng::Draw(void)
 			//	, "%02X", x + y * 32);
 		}
 	}
+	_dbgDrawFPS();
 
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
 	SetFontThickness(3);
+	SetFontSize(20);
 
 
 

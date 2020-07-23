@@ -3,6 +3,8 @@
 #include "common/Input/KeyInput.h"
 #include "common/ImageMng.h"
 #include "Scene/SceneMng.h"
+#include "common/_debug/_DebugDispOut.h"
+
 Player::Player()
 {
 	Init();
@@ -34,6 +36,9 @@ void Player::Update(void)
 
 		}
 	}
+	
+	_dbgDrawFormatString(0, 50, 0xFFFFFF, "プレイヤーの座標 X:%d,Y:%d", _pos.x, _pos.y);
+	_dbgDrawFormatString(0, 100, 0xFFFFFF, "Mapの座標 X:%f,Y:%f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 
 	for (auto data : controller->GetCntData())
 	{

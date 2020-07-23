@@ -71,7 +71,8 @@ public:
 	bool AddDrawQue(TextQueT tQue);								// •`‰æ‚ğ‘‰Á‚·‚é
 	bool AddActQue(ActQueT aQue);								// Šˆ“®‚ğ‘‰Á‚·‚é
 
-	std::pair<CHIP_TYPE,bool> _chipNo;
+	std::pair<CHIP_TYPE, CHIP_TYPE> _chipNo;
+	bool _changeFlag;
 
 	Vector2Dbl mapPos;
 	Vector2 mapSize;

@@ -22,7 +22,7 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 
 				if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
 				{
-					IpSceneMng._chipNo.second = true;
+					IpSceneMng._changeFlag = true;
 					return true;
 
 				}

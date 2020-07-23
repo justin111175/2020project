@@ -12,6 +12,7 @@ enum class CHIP_TYPE
 	地図1,
 	地図2,
 	地図3,
+	地図4,
 	MAX
 };
 
@@ -43,9 +44,11 @@ private:
 
 	std::vector<sharedObj> _objList;								// シェアポインタ-Obj
 
-
+	void Clear(void);
+	void ChangeInit(void);
 	std::map<CHIP_TYPE, std::function<void(void)>> _Init;
 	std::map<CHIP_TYPE, std::function<void(void)>> _Draw;
+	std::map<CHIP_TYPE, std::function<void(void)>> _Change;
 
 };
 
