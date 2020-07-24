@@ -11,6 +11,11 @@
 GameScene::GameScene()
 {
 	IpImageMng.GetID("プレイヤー歩く", "image/Player/walk.png", { 32,32 }, { 3,4 });
+
+
+	IpImageMng.GetID("セレクト", "image/select.png", { 15,18 }, { 1,1 });
+	IpImageMng.GetID("test", "image/test.png", { 300,300 }, { 1,1 });
+
 	IpImageMng.GetID("block", "image/block.png", { 32,32 }, { 10,2 });
 	IpImageMng.GetID("遺跡1", "image/遺跡1.png", { 1280,1280 }, { 1,1 });
 	
@@ -169,10 +174,16 @@ void GameScene::MapInit(void)
 				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
 				_objList.emplace_back(new Floor(Flrdata));
 			}
+
 			if (IpSceneMng._dataBase[x] == 2)
 			{
 				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
 				_objList.emplace_back(new Remove(RemovaData));
+			}
+			if (IpSceneMng._dataBase[x] == 3)
+			{
+				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				_objList.emplace_back(new Floor(Flrdata));
 			}
 
 
@@ -265,7 +276,11 @@ void GameScene::MapInit(void)
 				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
 				_objList.emplace_back(new Remove(RemovaData));
 			}
-
+			if (IpSceneMng._dataBase[x] == 3)
+			{
+				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				_objList.emplace_back(new Floor(Flrdata));
+			}
 
 		}
 
@@ -446,6 +461,11 @@ void GameScene::MapInit(void)
 			{
 				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
 				_objList.emplace_back(new Remove(RemovaData));
+			}
+			if (IpSceneMng._dataBase[x] == 3)
+			{
+				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				_objList.emplace_back(new Floor(Flrdata));
 			}
 
 

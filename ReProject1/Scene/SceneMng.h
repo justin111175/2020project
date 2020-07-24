@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseScene.h"
-#include "..\Layer_id.h"
+#include "..\id\Layer_id.h"
 #include "..\common\Vector2.h"
 #include <map>
 #include <vector>
@@ -93,6 +93,7 @@ private:
 	std::vector<DrawQueT> _drawList;							// 描画リスト
 
 	std::vector<TextQueT> _textList;							// 文字リスト
+
 	std::vector<ActQueT> _actList;								// 活動リスト
 
 

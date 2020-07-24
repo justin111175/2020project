@@ -3,7 +3,8 @@
 
 enum class FLOOR_TYPE		//床の描画のタイプ
 {
-	当たり判定
+	当たり判定,
+	メニュー
 };
 
 enum class FLOOR_STATE

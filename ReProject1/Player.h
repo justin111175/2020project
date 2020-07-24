@@ -4,8 +4,8 @@
 #include"common/Input/Controller.h"
 #include <memory>
 #include "Obj.h"
-
-
+#include "id/MeanID.h"
+#include "common/Number.h"
 struct DirBit
 {
 	unsigned int UP : 1;
@@ -21,8 +21,13 @@ union Permit_Data
 	unsigned int _flag;
 };
 
+enum class MeanState
+{
+	’†,
+	ŠO
+};
 
-
+#define mean_size_Y 40
 
 class Player:
 	public Obj
@@ -35,14 +40,26 @@ public:
 
 
 	void SetDir(InputID id);
-	void Move(void);
+	void MeanCtl(InputID id);
+
 	bool _runFlag;
+	bool _meanFlag;
 private:
 
 	Permit_Data _pData;
 
+	void Move(void);
 	void Init(void);
 	std::unique_ptr<Controller> controller;
 	void Camera(void);
+
+	std::vector<std::string> meanType;									// x•¥‚¢è–@
+	MeanID meanID_;
+	Status_ID status_;
+	MeanState meanState_;
+
+	Number number;												//”š—p
+
+	void StateInit(void);
 };
 

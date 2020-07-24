@@ -22,6 +22,8 @@ bool SceneMng::Run(void)
 
 		// clear：全ての要素を削除する
 		_drawList.clear();
+		_textList.clear();
+
 		_dbgStartDraw();
 
 		(*_activeScene).RunActQue(std::move(_actList));
@@ -63,7 +65,14 @@ bool SceneMng::AddDrawQue(DrawQueT dQue)
 
 bool SceneMng::AddDrawQue(TextQueT tQue)
 {
-	return false;
+	if (std::get<static_cast<int>(TEXT_QUE::STRING)>(tQue) <= 0)
+	{
+		//画像IDが不正なので、追加しない
+		return false;
+	}
+
+	_textList.emplace_back(tQue);
+	return true;
 }
 
 bool SceneMng::AddActQue(ActQueT aQue)
@@ -195,47 +204,48 @@ void SceneMng::Draw(void)
 		}
 	}
 
-	//std::sort(_textList.begin(), _textList.end(), [](TextQueT tQueA, TextQueT tQueB) {
 
-	//	return	std::tie(std::get<static_cast<int>(TEXT_QUE::LAYER)>(tQueA), std::get<static_cast<int>(TEXT_QUE::ZODER)>(tQueA))
-	//		<
-	//		std::tie(std::get<static_cast<int>(TEXT_QUE::LAYER)>(tQueB), std::get<static_cast<int>(TEXT_QUE::ZODER)>(tQueB));
-	//});
+	std::sort(_textList.begin(), _textList.end(), [](TextQueT tQueA, TextQueT tQueB) {
 
-	//for (auto tQue : _textList)
-	//{
-	//	const char* key;
-	//	Vector2Dbl pos;
-	//	Vector2Dbl ExRate;
+		return	std::tie(std::get<static_cast<int>(TEXT_QUE::LAYER)>(tQueA), std::get<static_cast<int>(TEXT_QUE::ZODER)>(tQueA))
+			<
+			std::tie(std::get<static_cast<int>(TEXT_QUE::LAYER)>(tQueB), std::get<static_cast<int>(TEXT_QUE::ZODER)>(tQueB));
+	});
 
-	//	LAYER layer_id;
+	for (auto tQue : _textList)
+	{
+		const char* key;
+		Vector2 pos;
+		Vector2Dbl ExRate;
 
-	//	// いらないことを飛ばす
-	//	// tie:同期する出力ストリームオブジェクトを取得・設定する
-	//	std::tie(key, pos, ExRate, std::ignore, layer_id) = tQue;
+		LAYER layer_id;
 
-	//	if (_screenID[layer_id] != GetDrawScreen())
-	//	{
-	//		SetDrawScreen(_screenID[layer_id]);
-	//	}
+		// いらないことを飛ばす
+		// tie:同期する出力ストリームオブジェクトを取得・設定する
+		std::tie(key, pos, ExRate, std::ignore, layer_id) = tQue;
 
-
-	//	//DrawString(pos.x, pos.y, key, 0xFFFFFF);
-	//	SetFontSize(40);
-
-	//	switch (layer_id)
-	//	{
-
-	//	case LAYER::UI:
-
-	//		DrawExtendString(pos.x, pos.y, ExRate.x, ExRate.y, key, 0xFFFFFF);
-	//		break;
-	//	default:
-	//		break;
-	//	}
+		if (_screenID[layer_id] != GetDrawScreen())
+		{
+			SetDrawScreen(_screenID[layer_id]);
+		}
 
 
-	//}
+		//DrawString(pos.x, pos.y, key, 0xFFFFFF);
+		SetFontSize(40);
+
+		switch (layer_id)
+		{
+
+		case LAYER::UI:
+
+			DrawExtendString(pos.x, pos.y, ExRate.x, ExRate.y, key, 0xFFFFFF);
+			break;
+		default:
+			break;
+		}
+
+
+	}
 
 
 
@@ -266,12 +276,12 @@ void SceneMng::Draw(void)
 			//	, "%02X", x + y * 32);
 		}
 	}
-	_dbgDrawFPS();
+	
 
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
-	SetFontThickness(3);
 	SetFontSize(20);
 
+	_dbgDrawFPS();
 
 
 	ScreenFlip();

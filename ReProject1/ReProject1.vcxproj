@@ -147,7 +147,9 @@
     <ClCompile Include="DIR_ID.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FuncCheck.cpp" />
-    <ClCompile Include="Layer_id.cpp" />
+    <ClCompile Include="id\Layer_id.cpp" />
+    <ClCompile Include="id\MeanID.cpp" />
+    <ClCompile Include="id\Status_ID.cpp" />
     <ClCompile Include="Remove.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
@@ -167,7 +169,9 @@
     <ClInclude Include="DIR_ID.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FuncCheck.h" />
-    <ClInclude Include="Layer_id.h" />
+    <ClInclude Include="id\Layer_id.h" />
+    <ClInclude Include="id\MeanID.h" />
+    <ClInclude Include="id\Status_ID.h" />
     <ClInclude Include="Remove.h" />
     <ClInclude Include="Scene\BaseScene.h" />
     <ClInclude Include="common\detail\Vector2.h" />
