@@ -3,7 +3,7 @@
 
 Status_ID begin(Status_ID)
 {
-    return Status_ID::HP;
+    return Status_ID::ƒŒƒxƒ‹;
 }
 
 Status_ID end(Status_ID)

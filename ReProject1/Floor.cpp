@@ -30,6 +30,7 @@ Floor::Floor(FloorState & state)
 
 void Floor::Update(void)
 {
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 }
 

@@ -11,7 +11,7 @@ void Number::Init(void)
 }
 
 // •`‰æ
-void Number::Draw(Vector2Dbl pos,Vector2Dbl exrate, int score,int no)
+void Number::Draw(Vector2 pos,Vector2Dbl exrate, int score,int no)
 {
 	// ‰Šú’l1Œ…–Ú
 	numLen = 1;

@@ -4,7 +4,7 @@
 #include "common/Vector2.h"
 #include <map>
 #include <memory>
-#include "DIR_ID.h"
+#include "..\ReProject1\id\DIR_ID.h"
 #include "id/Status_ID.h"
 #define PI 3.1415926f
 #define DEG (PI/180.0)
@@ -29,6 +29,22 @@ enum class UNIT_ID
 	伝送,
 	LevelUp,						// レベルアップ
 	メニュー
+};
+
+
+struct DirBit
+{
+	unsigned int UP : 1;
+	unsigned int RIGHT : 1;
+	unsigned int DOWN : 1;
+	unsigned int LEFT : 1;
+
+};
+
+union Permit_Data
+{
+	DirBit _bit;
+	unsigned int _flag;
 };
 
 class Obj;
@@ -72,7 +88,8 @@ public:
 
 	std::map<int, int> _experience;
 	std::map<Status_ID, int> _status;									//ステータス用
-	int _level;															//レベル
+	std::map<Status_ID, int> _statusOld;									//ステータス用
+
 
 
 	std::map < DIR_ID, bool> _dirFlag;									// true:移動、false：停止
@@ -103,6 +120,10 @@ protected:
 	Vector2Dbl _size;													// サイズ
 	Vector2Dbl _exrate;													// XとYの拡大縮小率
 	DIR_ID _dir;														// 向き
+
+	Permit_Data _pData;
+	bool _runFlag;
+
 	bool _turnFlag;
 	
 	bool _repelFlag;//撃退用

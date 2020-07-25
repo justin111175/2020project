@@ -6,20 +6,7 @@
 #include "Obj.h"
 #include "id/MeanID.h"
 #include "common/Number.h"
-struct DirBit
-{
-	unsigned int UP : 1;
-	unsigned int RIGHT : 1;
-	unsigned int DOWN : 1;
-	unsigned int LEFT : 1;
 
-};
-
-union Permit_Data
-{
-	DirBit _bit;
-	unsigned int _flag;
-};
 
 enum class MeanState
 {
@@ -42,11 +29,9 @@ public:
 	void SetDir(InputID id);
 	void MeanCtl(InputID id);
 
-	bool _runFlag;
 	bool _meanFlag;
 private:
 
-	Permit_Data _pData;
 
 	void Move(void);
 	void Init(void);

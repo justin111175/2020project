@@ -144,7 +144,9 @@
     <ClCompile Include="common\HitCheck.cpp" />
     <ClCompile Include="common\_debug\_DeBugConOut.cpp" />
     <ClCompile Include="common\_debug\_DebugDispOut.cpp" />
-    <ClCompile Include="DIR_ID.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyMove.cpp" />
+    <ClCompile Include="id\DIR_ID.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FuncCheck.cpp" />
     <ClCompile Include="id\Layer_id.cpp" />
@@ -166,7 +168,9 @@
     <ClInclude Include="common\HitCheck.h" />
     <ClInclude Include="common\_debug\_DeBugConOut.h" />
     <ClInclude Include="common\_debug\_DebugDispOut.h" />
-    <ClInclude Include="DIR_ID.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="id\DIR_ID.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FuncCheck.h" />
     <ClInclude Include="id\Layer_id.h" />

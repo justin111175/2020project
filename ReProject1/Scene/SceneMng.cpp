@@ -4,6 +4,8 @@
 #include <tuple>										//—v‘f‚ªO‚ÂˆÈã‚ğŠÇ—‚·‚é‚ğg‚¤
 #include "..\common\_debug\_DebugDispOut.h"
 #include "..\common\_debug\_DeBugConOut.h"
+#include "..\common\TimeCount.h"
+
 SceneMng* SceneMng::sInstance = nullptr;
 
 
@@ -35,7 +37,7 @@ bool SceneMng::Run(void)
 		Draw();
 
 
-
+		_timeCount.Run();
 		_frames++;
 	}
 

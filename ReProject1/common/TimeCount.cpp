@@ -17,7 +17,7 @@ void TimeCount::Run(void)
 		}
 	};
 	
-	type("—Ž‚¿‚é");
+	type("test");
 
 }
 
@@ -42,7 +42,7 @@ TimeCount::TimeCount()
 
 	};
 	
-	add("—Ž‚¿‚é");
+	add("test");
 }
 
 TimeCount::~TimeCount()

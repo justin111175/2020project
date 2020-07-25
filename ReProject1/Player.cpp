@@ -25,8 +25,14 @@ Player::~Player()
 
 void Player::Update(void)
 {	
-	//_dbgDrawFormatString(0, 50, 0xFFFFFF, "プレイヤーの座標 X:%d,Y:%d", _pos.x, _pos.y);
+	_dbgDrawFormatString(0, 50, 0xFFFFFF, "プレイヤーの座標 X:%d,Y:%d", _pos.x, _pos.y);
 	//_dbgDrawFormatString(0, 100, 0xFFFFFF, "Mapの座標 X:%f,Y:%f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
+	_status[Status_ID::HP] = 100 + _status[Status_ID::体力] * 1.7+ _status[Status_ID::筋力]*0.7;
+	_status[Status_ID::スタミナ] = 100 + _status[Status_ID::持久力] * 1.7;
+	_status[Status_ID::攻撃力] = 10 + _status[Status_ID::筋力] * 1.7 + _status[Status_ID::敏捷] * 0.7;
+	_status[Status_ID::防御力] = 10 + _status[Status_ID::持久力] * 1.7 + _status[Status_ID::筋力] * 0.7;
+
+
 
 	if (!_meanFlag)
 	{
@@ -67,6 +73,14 @@ void Player::Update(void)
 				return Vector2(200 + pos.x, 140 + 30 * pos.y);
 			};
 
+			auto color = [&](Vector2 pos,Status_ID id) {
+				int tmp = 0;
+				_status[id] == _statusOld[id]?tmp=0:tmp=1;
+
+				number.Draw(pos, { 0.2f,0.2f }, _status[id], tmp);
+
+			};
+
 			switch (meanID_)
 			{
 			case MeanID::ステータス:
@@ -92,21 +106,39 @@ void Player::Update(void)
 				IpSceneMng.AddDrawQue({ "攻撃力        ->",{490,215},{0.5,0.5 },0,LAYER::UI });
 				IpSceneMng.AddDrawQue({ "防御力        ->",{490,245},{0.5,0.5 },0,LAYER::UI });
 				
+				IpSceneMng.AddDrawQue({ "決定",{270,450},{0.5,0.5 },0,LAYER::UI });
 				
-				number.Draw({ 330, 155 }, { 0.2f,0.2f }, _level,0);
-				number.Draw({ 430, 155 }, { 0.2f,0.2f }, _level, 0);
-				number.Draw({ 330, 185 }, { 0.2f,0.2f }, _experience[0], 0);
-				number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 0);
-				number.Draw({ 430, 215 }, { 0.2f,0.2f }, _experience[_level], 0);
 				
-				number.Draw({ 430, 265 }, { 0.2f,0.2f }, _status[Status_ID::体力], 0);
-				number.Draw({ 430, 295 }, { 0.2f,0.2f }, _status[Status_ID::持久力], 0);
-				number.Draw({ 430, 325 }, { 0.2f,0.2f }, _status[Status_ID::筋力], 0);
-				number.Draw({ 430, 355 }, { 0.2f,0.2f }, _status[Status_ID::敏捷], 0);
-				number.Draw({ 430, 385 }, { 0.2f,0.2f }, _status[Status_ID::回復], 1);
+				number.Draw({ 330, 155 }, { 0.2f,0.2f }, _statusOld[Status_ID::レベル],0);
+				
+				number.Draw({ 620,155 }, { 0.2f,0.2f }, _statusOld[Status_ID::HP], 0);
+				number.Draw({ 620,185 }, { 0.2f,0.2f }, _statusOld[Status_ID::スタミナ], 0);
+				number.Draw({ 620,215 }, { 0.2f,0.2f }, _statusOld[Status_ID::攻撃力], 0);
+				number.Draw({ 620,245 }, { 0.2f,0.2f }, _statusOld[Status_ID::防御力], 0);
+
+				color({ 730,155 }, Status_ID::HP);
+				color({ 730,185 }, Status_ID::スタミナ);
+				color({ 730,215 }, Status_ID::攻撃力);
+				color({ 730,245 }, Status_ID::防御力);
+
+				number.Draw({ 330, 185 }, { 0.2f,0.2f }, _experience[-1], 0);
+				_experience[-1] == _experience[0] ? number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 0) : number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 1);
+				//number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 0);
+				number.Draw({ 430, 215 }, { 0.2f,0.2f }, _experience[_status[Status_ID::レベル]], 0);
+				
 
 
-				IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {200,265+30* (static_cast<int>(status_)-4) }, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI });
+				color({ 430, 155 }, Status_ID::レベル);
+				color({ 430, 265 }, Status_ID::体力);
+				color({ 430, 295 }, Status_ID::持久力);
+				color({ 430, 325 }, Status_ID::筋力);
+				color({ 430, 355 }, Status_ID::敏捷);
+				color({ 430, 385 }, Status_ID::回復);
+
+				status_ != Status_ID::MAX ? IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {200,265 + 30 * (static_cast<int>(status_) - (static_cast<int>(Status_ID::体力) )) }, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI }) :
+					IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {250,450}, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI });
+
+				
 
 
 				break;
@@ -138,7 +170,6 @@ void Player::Update(void)
 	
 
 
-	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 	(*controller)();
 	
@@ -234,6 +265,9 @@ void Player::MeanCtl(InputID id)
 			if (meanState_ == MeanState::外)
 			{
 				meanState_ = MeanState::中;
+				_statusOld = _status;
+				_experience[-1] = _experience[0];
+				status_ = Status_ID::体力;
 			}
 			break;
 		case InputID::Esc:
@@ -259,12 +293,12 @@ void Player::MeanCtl(InputID id)
 			}
 			else
 			{
-				status_ = Status_ID::回復;
+				status_ = Status_ID::MAX;
 			}
 
 			break;
 		case InputID::Down:
-			if (status_ < Status_ID::回復)
+			if (status_ < Status_ID::MAX)
 			{
 				status_ = (Status_ID)(static_cast<int>(status_) + 1);
 
@@ -276,18 +310,43 @@ void Player::MeanCtl(InputID id)
 
 			break;
 		case InputID::Left:
-			_status[status_] -= 1;
+			if (status_!=Status_ID::MAX)
+			{
+				if (_status[status_]> _statusOld[status_])
+				{
+					_status[status_] -= 1;
+					_status[Status_ID::レベル] -= 1;
+					_experience[0] += _experience[_status[Status_ID::レベル]+1];
+
+				}
+			}
+
 			break;
 		case InputID::Right:
-			_status[status_] += 1;
+			if (status_ != Status_ID::MAX)
+			{
+				if (_experience[0] > _experience[_status[Status_ID::レベル]])
+				{
+					_status[status_] += 1;
+					_status[Status_ID::レベル] += 1;
+					_experience[0] -= _experience[_status[Status_ID::レベル]];
+				}
+			}
+
 
 			break;
 		case InputID::Z:
+			if (status_ == Status_ID::MAX)
+			{
+				meanState_ = MeanState::外;
+			}
 
 			break;
 		case InputID::Esc:
 			if (meanState_ == MeanState::中)
 			{
+				_status = _statusOld;
+				_experience[0] = _experience[-1];
 				meanState_ = MeanState::外;
 			}
 
@@ -314,47 +373,66 @@ void Player::Move(void)
 		}
 	}
 
-	auto CheckMove = [&](int no) {
-		Vector2	Pos = { static_cast<int>((_pos.x + _size.x - 4) / 32),static_cast<int>(_pos.y / 32) };
-
-		if (IpSceneMng._data[Pos.y][Pos.x - 1] == no)
-		{
-			_pData._bit.LEFT = 0;
-			return true;
-		}
-
-		Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y - 4) / 32) };
+	auto CheckUP = [&](int no) {
+		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y - 4) / 32) };
 		if (IpSceneMng._data[Pos.y - 1][Pos.x] == no)
 		{
 			_pData._bit.UP = 0;
 			return true;
 
 		}
+		return false;
 
-		Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+	};
+	auto CheckRight = [&](int no) {
+
+		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
 		if (IpSceneMng._data[Pos.y][Pos.x + 1] == no)
 		{
 			_pData._bit.RIGHT = 0;
 			return true;
 
 		}
+		return false;
+
+	};
+	auto CheckLeft = [&](int no) {
+
+		Vector2	Pos = { static_cast<int>((_pos.x + _size.x - 4) / 32),static_cast<int>(_pos.y / 32) };
+
+		if (IpSceneMng._data[Pos.y][Pos.x - 1] == no)
+		{
+			_pData._bit.LEFT = 0;
+			return true;
+
+		}
+		return false;
+
+	};
+	auto CheckDown = [&](int no) {
+		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+
 		if (IpSceneMng._data[Pos.y + 1][Pos.x] == no)
 		{
 			_pData._bit.DOWN = 0;
 			return true;
+
 		}
 		return false;
 
 	};
 
-
 	for (auto data : controller->GetCntData())
 	{
 		if (data.second[static_cast<int>(Trg::Now)])
 		{
-			CheckMove(1);
+			CheckUP(1);
+			CheckRight(1);
+			CheckLeft(1);
+			CheckDown(1);
 			
-			if (CheckMove(3))
+			
+			if(CheckUP(3)||CheckRight(3)||CheckLeft(3)||CheckDown(3))
 			{
 				if (data.first==InputID::Z)
 				{
@@ -572,11 +650,21 @@ void Player::StateInit(void)
 {
 	if (_status.size()==0)
 	{
-		_status.try_emplace(Status_ID::HP, 0);
-		_status.try_emplace(Status_ID::最大HP, 0);
-		_status.try_emplace(Status_ID::MP, 0);
-		_status.try_emplace(Status_ID::最大MP, 0);
+		/*_status.try_emplace(Status_ID::HP, 0);
+		_status.try_emplace(Status_ID::最大HP, 0);*/
+		//_status.try_emplace(Status_ID::MP, 0);
+		//_status.try_emplace(Status_ID::最大MP, 0);
 		
+		_status.try_emplace(Status_ID::レベル, 1);
+		
+		_status.try_emplace(Status_ID::HP, 1);
+		_status.try_emplace(Status_ID::スタミナ, 1);
+		_status.try_emplace(Status_ID::攻撃力, 1);
+		_status.try_emplace(Status_ID::防御力, 1);
+
+
+
+
 		_status.try_emplace(Status_ID::体力, 1);
 		_status.try_emplace(Status_ID::持久力,2);
 		_status.try_emplace(Status_ID::筋力, 3);
@@ -584,16 +672,32 @@ void Player::StateInit(void)
 		_status.try_emplace(Status_ID::回復, 5);
 
 
+		_statusOld.try_emplace(Status_ID::レベル, 1);
+
+		_statusOld.try_emplace(Status_ID::HP, 1);
+		_statusOld.try_emplace(Status_ID::スタミナ, 1);
+		_statusOld.try_emplace(Status_ID::攻撃力, 1);
+		_statusOld.try_emplace(Status_ID::防御力, 1);
+
+
+		_statusOld.try_emplace(Status_ID::体力, 1);
+		_statusOld.try_emplace(Status_ID::持久力, 2);
+		_statusOld.try_emplace(Status_ID::筋力, 3);
+		_statusOld.try_emplace(Status_ID::敏捷, 4);
+		_statusOld.try_emplace(Status_ID::回復, 5);
+
 
 	}
 	
 
-	for (int x = 0; x < 99; x++)
+
+	for (int x = -1; x < 99; x++)
 	{
 		_experience.try_emplace(x, 100 * x);
 
 	}
+	_experience[0] = 9999;
+	_experience[-1] = 0;
 	
-	_level = 1;
 
 }
