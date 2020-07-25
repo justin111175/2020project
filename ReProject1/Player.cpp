@@ -25,6 +25,7 @@ Player::~Player()
 
 void Player::Update(void)
 {	
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 	_dbgDrawFormatString(0, 50, 0xFFFFFF, "プレイヤーの座標 X:%d,Y:%d", _pos.x, _pos.y);
 	//_dbgDrawFormatString(0, 100, 0xFFFFFF, "Mapの座標 X:%f,Y:%f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 	_status[Status_ID::HP] = 100 + _status[Status_ID::体力] * 1.7+ _status[Status_ID::筋力]*0.7;
