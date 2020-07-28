@@ -80,11 +80,13 @@ void EnemyMove::SetMovePrg(void)
 	{
 	case MOVE_TYPE::Normal:
 		_posOld = _pos;
-		_move = &EnemyMove::MoveNormal;
+		_move = &EnemyMove::Normal;
 
 		break;
 
-
+	case MOVE_TYPE::Stay:
+		_move = &EnemyMove::Saty;
+		break;
 	default:
 		//AST();
 		break;
@@ -92,7 +94,7 @@ void EnemyMove::SetMovePrg(void)
 
 }
 
-void EnemyMove::MoveNormal(void)
+void EnemyMove::Normal(void)
 {
 	_pData._bit = { 1,1,1,1 };
 
@@ -230,6 +232,10 @@ void EnemyMove::MoveNormal(void)
 	}
 
 
+}
+
+void EnemyMove::Saty(void)
+{
 }
 
 

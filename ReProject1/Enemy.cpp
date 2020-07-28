@@ -145,6 +145,9 @@ void Enemy::Init(void)
 	case ENEMY_TYPE::スライム:
 		break;
 	case ENEMY_TYPE::オーク:
+		_status.try_emplace(Status_ID::HP, 100);
+		//_status.try_emplace(Status_ID::最大HP, 100);
+		_experience.try_emplace(0, 30);
 		break;
 	case ENEMY_TYPE::ミノタウロス:
 		break;

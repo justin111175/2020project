@@ -289,6 +289,21 @@ void GameScene::MapInit(void)
 				_objList.emplace_back(new Floor(Flrdata));
 			}
 
+			//敵増加－ラムダ式
+			auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2Dbl size, Vector2Dbl exrate) {
+				MoveState tmpMoveState;
+				tmpMoveState.emplace_back(MOVE_TYPE::Stay, Vector2{ 0,0 });
+
+				EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
+				_objList.emplace_back(new Enemy(data));
+			};
+
+			if (IpSceneMng._dataBase[x] == 8)
+			{
+				EnemyAdd(ENEMY_TYPE::オーク, _objList, { blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x) }, { 32.0,32.0 }, { 1.0f,1.0f });
+			}
+
+
 		}
 
 

@@ -34,6 +34,7 @@ void Player::Update(void)
 	_status[Status_ID::防御力] = 10 + _status[Status_ID::持久力] * 1.7 + _status[Status_ID::筋力] * 0.7;
 
 
+	
 
 	if (!_meanFlag)
 	{
@@ -49,9 +50,9 @@ void Player::Update(void)
 			return Vector2(50, 120 + mean_size_Y * static_cast<int>(id));
 		};
 
-		IpSceneMng.AddDrawQue({ "ステータス",Pos(MeanID::ステータス), { 0.5f,0.5f },0,LAYER::UI });
-		IpSceneMng.AddDrawQue({ "保存",Pos(MeanID::保存), { 0.5f,0.5f },0,LAYER::UI });
-		IpSceneMng.AddDrawQue({ "終了",Pos(MeanID::終了),{ 0.5f,0.5f },0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ "ステータス",Pos(MeanID::ステータス), {1.0f,1.0f },20,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ "保存",Pos(MeanID::保存), {1.0f,1.0f },20,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ "終了",Pos(MeanID::終了),{ 1.0f,1.0f },20,0,LAYER::UI });
 
 
 	
@@ -88,26 +89,24 @@ void Player::Update(void)
 				IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {170,100}, { 0,0 }, {1.0f,1.4f}, false, 0, 0, LAYER::UI });
 				IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {470,100}, { 0,0 }, {1.0f,0.8f}, false, 0, 0, LAYER::UI });
 				
-				IpSceneMng.AddDrawQue({ "レベル　 　   -> ",{200,155},{0.5,0.5},0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "経験値　 　   -> ",{200,185},{0.5,0.5},0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "必要量",{200,215},{0.5,0.5},0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "レベル　 　   -> ",{200,155},{1.0f,1.0f},20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "経験値　 　   -> ",{200,185},{1.0f,1.0f},20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "必要量",{200,215},{1.0f,1.0f},20,0,LAYER::UI });
 
-				//IpSceneMng.AddDrawQue({ "HP:     / ",{200,180},{0.5,0.5 },0,LAYER::UI });
-				//IpSceneMng.AddDrawQue({ "MP:     / ",{200,200},{0.5,0.5 },0,LAYER::UI });
+		
 				
+				IpSceneMng.AddDrawQue({ "体力",{220,265},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "持久力",{220,295},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "筋力",{220,325},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "敏捷",{220,355},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "回復",{220,385},{1.0f,1.0f },20,0,LAYER::UI });
 				
-				IpSceneMng.AddDrawQue({ "体力",{220,265},{0.5,0.5 },0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "持久力",{220,295},{0.5,0.5 },0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "筋力",{220,325},{0.5,0.5 },0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "敏捷",{220,355},{0.5,0.5 },0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "回復",{220,385},{0.5,0.5 },0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "HP           ->",{490,155},{1.0f,1.0f},20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "スタミナ      ->",{490,185},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "攻撃力        ->",{490,215},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "防御力        ->",{490,245},{1.0f,1.0f },20,0,LAYER::UI });
 				
-				IpSceneMng.AddDrawQue({ "HP           ->",{490,155},{0.5,0.5 },0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "スタミナ      ->",{490,185},{0.5,0.5 },0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "攻撃力        ->",{490,215},{0.5,0.5 },0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "防御力        ->",{490,245},{0.5,0.5 },0,LAYER::UI });
-				
-				IpSceneMng.AddDrawQue({ "決定",{270,450},{0.5,0.5 },0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "決定",{270,450},{1.0f,1.0f },20,0,LAYER::UI });
 				
 				
 				number.Draw({ 330, 155 }, { 0.2f,0.2f }, _statusOld[Status_ID::レベル],0);

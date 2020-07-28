@@ -23,6 +23,7 @@ enum class TEXT_QUE
 	STRING,										// イメージ
 	POS,										// 座標
 	EXRATE,										// 拡大縮小率
+	SIZE,
 	ZODER,										// Zオーダー（レイヤーの前後順番-数値の低い方が奥）
 	LAYER										// レイヤーID（数値の低い方が奥）
 
@@ -33,7 +34,7 @@ class Obj;
 
 using DrawQueT = std::tuple<int, Vector2, Vector2Dbl, Vector2Dbl, double, bool, int, LAYER>;
 
-using TextQueT = std::tuple<const char*, Vector2, Vector2Dbl, int, LAYER>;
+using TextQueT = std::tuple<const char*, Vector2, Vector2Dbl,int, int, LAYER>;
 
 #define IpSceneMng SceneMng::GetInstance()
 

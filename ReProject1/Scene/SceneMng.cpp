@@ -137,6 +137,7 @@ void SceneMng::Draw(void)
 {
 
 	_dbgAddDraw();
+	//ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
 
 
 	std::sort(_drawList.begin(), _drawList.end(), [](DrawQueT dQueA, DrawQueT dQueB) {
@@ -221,10 +222,10 @@ void SceneMng::Draw(void)
 		Vector2Dbl ExRate;
 
 		LAYER layer_id;
-
+		int size;
 		// いらないことを飛ばす
 		// tie:同期する出力ストリームオブジェクトを取得・設定する
-		std::tie(key, pos, ExRate, std::ignore, layer_id) = tQue;
+		std::tie(key, pos, ExRate,size, std::ignore, layer_id) = tQue;
 
 		if (_screenID[layer_id] != GetDrawScreen())
 		{
@@ -232,8 +233,7 @@ void SceneMng::Draw(void)
 		}
 
 
-		//DrawString(pos.x, pos.y, key, 0xFFFFFF);
-		SetFontSize(40);
+		SetFontSize(size);
 
 		switch (layer_id)
 		{

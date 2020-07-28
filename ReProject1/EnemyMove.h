@@ -6,6 +6,7 @@
 enum class MOVE_TYPE
 {
 	Normal,
+	Stay,
 	MAX
 };
 
@@ -26,7 +27,8 @@ private:
 	void (EnemyMove::*_move)(void);						// ムーブ用関数ポインタ
 
 	// 移動用関数
-	void MoveNormal(void);								
+	void Normal(void);								
+	void Saty(void);								
 
 
 
