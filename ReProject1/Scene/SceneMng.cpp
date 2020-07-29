@@ -113,7 +113,7 @@ bool SceneMng::SysInit(void)
 	}
 
 
-	_chipNo.first = CHIP_TYPE::地図1;
+	_chipNo.first = CHIP_TYPE::地図3;
 	_chipNo.second = _chipNo.first;
 	_changeFlag = false;
 	
@@ -270,6 +270,7 @@ void SceneMng::Draw(void)
 				, -IpSceneMng.mapPos.x + (x + 1) * 32, -IpSceneMng.mapPos.y + (y + 1) * 32  //右下
 				, GetColor(128, 128, 128)   //線の色
 				, false);   //塗りつぶす？
+
 
 			////画面にマスの番号を描画する
 			//DrawFormatString(-IpSceneMng.mapPos.x + x * 32 + 1

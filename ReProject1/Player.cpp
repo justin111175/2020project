@@ -33,141 +33,82 @@ void Player::Update(void)
 	_status[Status_ID::攻撃力] = 10 + _status[Status_ID::筋力] * 1.7 + _status[Status_ID::敏捷] * 0.7;
 	_status[Status_ID::防御力] = 10 + _status[Status_ID::持久力] * 1.7 + _status[Status_ID::筋力] * 0.7;
 
+	//auto test = [&](int no) {
+	//	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
+	//	{
+	//		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
 
-	
+	//			if (IpSceneMng._data[Pos.y][Pos.x] == no)
+	//			{
+	//				return true;
+	//			}
+	//			else
+	//			{
+	//				return false;
+	//			}
+	//		
+	//	}
+	//
+	//
+	//};
+	//if (test(5) || test(6) || test(7) || test(8))
+	//{
+	//	_runFlag = false;
+	//	modeState_ = ModeState::強制移動;
+	//}
+	//else
+	//{
+	//	modeState_ = ModeState::普通;
 
-	if (!_meanFlag)
+	//}
+	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
 	{
-		Move();
-
-	}
-	else
-	{
-		auto size = { 0.5f,0.5f };
-		
-		auto Pos = [&](MeanID id) {
-
-			return Vector2(50, 120 + mean_size_Y * static_cast<int>(id));
-		};
-
-		IpSceneMng.AddDrawQue({ "ステータス",Pos(MeanID::ステータス), {1.0f,1.0f },20,0,LAYER::UI });
-		IpSceneMng.AddDrawQue({ "保存",Pos(MeanID::保存), {1.0f,1.0f },20,0,LAYER::UI });
-		IpSceneMng.AddDrawQue({ "終了",Pos(MeanID::終了),{ 1.0f,1.0f },20,0,LAYER::UI });
-
-
-	
-
-		IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {20,100}, { 0,0 }, {0.5f,0.5f }, false, 0, 0, LAYER::UI });
-		
-		
-		if (meanState_ == MeanState::外)
-		{		
-
-
-			IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {30,120 + 40*static_cast<int>(meanID_)}, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI });
-
-		}
-		
-		if (meanState_ == MeanState::中)
+		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+		if (!_runFlag)
 		{
-			auto Pos = [&](Vector2 pos) {
-
-				return Vector2(200 + pos.x, 140 + 30 * pos.y);
-			};
-
-			auto color = [&](Vector2 pos,Status_ID id) {
-				int tmp = 0;
-				_status[id] == _statusOld[id]?tmp=0:tmp=1;
-
-				number.Draw(pos, { 0.2f,0.2f }, _status[id], tmp);
-
-			};
-
-			switch (meanID_)
+			if (IpSceneMng._data[Pos.y][Pos.x] == 5)
 			{
-			case MeanID::ステータス:
-				IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {170,100}, { 0,0 }, {1.0f,1.4f}, false, 0, 0, LAYER::UI });
-				IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {470,100}, { 0,0 }, {1.0f,0.8f}, false, 0, 0, LAYER::UI });
-				
-				IpSceneMng.AddDrawQue({ "レベル　 　   -> ",{200,155},{1.0f,1.0f},20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "経験値　 　   -> ",{200,185},{1.0f,1.0f},20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "必要量",{200,215},{1.0f,1.0f},20,0,LAYER::UI });
 
-		
-				
-				IpSceneMng.AddDrawQue({ "体力",{220,265},{1.0f,1.0f },20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "持久力",{220,295},{1.0f,1.0f },20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "筋力",{220,325},{1.0f,1.0f },20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "敏捷",{220,355},{1.0f,1.0f },20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "回復",{220,385},{1.0f,1.0f },20,0,LAYER::UI });
-				
-				IpSceneMng.AddDrawQue({ "HP           ->",{490,155},{1.0f,1.0f},20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "スタミナ      ->",{490,185},{1.0f,1.0f },20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "攻撃力        ->",{490,215},{1.0f,1.0f },20,0,LAYER::UI });
-				IpSceneMng.AddDrawQue({ "防御力        ->",{490,245},{1.0f,1.0f },20,0,LAYER::UI });
-				
-				IpSceneMng.AddDrawQue({ "決定",{270,450},{1.0f,1.0f },20,0,LAYER::UI });
-				
-				
-				number.Draw({ 330, 155 }, { 0.2f,0.2f }, _statusOld[Status_ID::レベル],0);
-				
-				number.Draw({ 620,155 }, { 0.2f,0.2f }, _statusOld[Status_ID::HP], 0);
-				number.Draw({ 620,185 }, { 0.2f,0.2f }, _statusOld[Status_ID::スタミナ], 0);
-				number.Draw({ 620,215 }, { 0.2f,0.2f }, _statusOld[Status_ID::攻撃力], 0);
-				number.Draw({ 620,245 }, { 0.2f,0.2f }, _statusOld[Status_ID::防御力], 0);
+				stateDir(STATE::STAY, DIR_ID::UP);
+				_pos.y -= 4;
+				_runFlag = true;
 
-				color({ 730,155 }, Status_ID::HP);
-				color({ 730,185 }, Status_ID::スタミナ);
-				color({ 730,215 }, Status_ID::攻撃力);
-				color({ 730,245 }, Status_ID::防御力);
-
-				number.Draw({ 330, 185 }, { 0.2f,0.2f }, _experience[-1], 0);
-				_experience[-1] == _experience[0] ? number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 0) : number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 1);
-				//number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 0);
-				number.Draw({ 430, 215 }, { 0.2f,0.2f }, _experience[_status[Status_ID::レベル]], 0);
-				
-
-
-				color({ 430, 155 }, Status_ID::レベル);
-				color({ 430, 265 }, Status_ID::体力);
-				color({ 430, 295 }, Status_ID::持久力);
-				color({ 430, 325 }, Status_ID::筋力);
-				color({ 430, 355 }, Status_ID::敏捷);
-				color({ 430, 385 }, Status_ID::回復);
-
-				status_ != Status_ID::MAX ? IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {200,265 + 30 * (static_cast<int>(status_) - (static_cast<int>(Status_ID::体力) )) }, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI }) :
-					IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {250,450}, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI });
-
-				
-
-
-				break;
-			case MeanID::保存:
-				break;
-			case MeanID::終了:
-				DxLib_End();
-				break;
-
-			default:
-				break;
 			}
 
-		}
 
-		for (auto data : controller->GetCntData())
-		{
-			if (data.second[static_cast<int>(Trg::Now)]&&!data.second[static_cast<int>(Trg::Old)])
+
+			if (IpSceneMng._data[Pos.y][Pos.x] == 7)
 			{
+				stateDir(STATE::STAY, DIR_ID::LEFT);
+				_pos.x -= 4;
 
-				MeanCtl(data.first);
+				_runFlag = true;
+
+			}
+
+			if (IpSceneMng._data[Pos.y][Pos.x] == 6)
+			{
+				stateDir(STATE::STAY, DIR_ID::DOWN);
+				_pos.y += 4;
+
+				_runFlag = true;
+
+			}
+			if (IpSceneMng._data[Pos.y][Pos.x] == 8)
+			{
+				stateDir(STATE::STAY, DIR_ID::RIGHT);
+				_pos.x += 4;
+
+				_runFlag = true;
+
 			}
 		}
 
+
 	}
-	
 
 
-	
+	ModeInit_[modeState_]();
 
 
 
@@ -274,7 +215,7 @@ void Player::MeanCtl(InputID id)
 
 			if (meanState_ == MeanState::外)
 			{
-				_meanFlag = false;
+				modeState_ = ModeState::普通;
 			}
 			break;
 		default:
@@ -358,6 +299,8 @@ void Player::MeanCtl(InputID id)
 
 }
 
+
+
 void Player::Move(void)
 {
 	
@@ -439,7 +382,7 @@ void Player::Move(void)
 					if (data.second[static_cast<int>(Trg::Now)] && !data.second[static_cast<int>(Trg::Old)])
 					{
 
-						_meanFlag = true;
+						modeState_ = ModeState::メニュー;
 					}
 				}
 
@@ -551,7 +494,7 @@ void Player::Init(void)
 	number.Init();
 
 	_unitID = UNIT_ID::PLAYER;
-
+	modeState_ = ModeState::普通;
 
 
 	AnimVector data;
@@ -580,7 +523,7 @@ void Player::Init(void)
 
 	//}
 	StateInit();
-
+	ModeInit();
 	//data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[0], 10);
 	//data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[1], 20);
 	//data.emplace_back(IMAGE_ID("プレイヤー死ぬ")[2], 30);
@@ -699,5 +642,190 @@ void Player::StateInit(void)
 	_experience[0] = 9999;
 	_experience[-1] = 0;
 	
+
+}
+void Player::ModeInit(void)
+{
+	ModeInit_.try_emplace(ModeState::普通, [&]() {
+		Move();
+	
+	
+	});
+	ModeInit_.try_emplace(ModeState::強制移動, [&]() {
+		if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
+		{
+			Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+			if (!_runFlag)
+			{
+				if (IpSceneMng._data[Pos.y][Pos.x] == 5)
+				{
+
+					stateDir(STATE::STAY, DIR_ID::UP);
+					_pos.y -= 4;
+					_runFlag = true;
+
+				}
+
+
+
+				if (IpSceneMng._data[Pos.y][Pos.x] == 7)
+				{
+					stateDir(STATE::STAY, DIR_ID::LEFT);
+					_pos.x -= 4;
+
+					_runFlag = true;
+
+				}
+
+				if (IpSceneMng._data[Pos.y][Pos.x] == 6)
+				{
+					stateDir(STATE::STAY, DIR_ID::DOWN);
+					_pos.y += 4;
+
+					_runFlag = true;
+
+				}
+				if (IpSceneMng._data[Pos.y][Pos.x] == 8)
+				{
+					stateDir(STATE::STAY, DIR_ID::RIGHT);
+					_pos.x += 4;
+
+					_runFlag = true;
+
+				}
+			}
+
+
+		}
+
+
+
+	});
+
+
+	ModeInit_.try_emplace(ModeState::メニュー, [&]() {
+
+		auto size = { 0.5f,0.5f };
+
+		auto Pos = [&](MeanID id) {
+
+			return Vector2(50, 120 + mean_size_Y * static_cast<int>(id));
+		};
+
+		IpSceneMng.AddDrawQue({ "ステータス",Pos(MeanID::ステータス), {1.0f,1.0f },20,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ "保存",Pos(MeanID::保存), {1.0f,1.0f },20,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ "終了",Pos(MeanID::終了),{ 1.0f,1.0f },20,0,LAYER::UI });
+
+
+
+
+		IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {20,100}, { 0,0 }, {0.5f,0.5f }, false, 0, 0, LAYER::UI });
+
+
+		if (meanState_ == MeanState::外)
+		{
+
+
+			IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {30,120 + 40 * static_cast<int>(meanID_)}, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI });
+
+		}
+
+		if (meanState_ == MeanState::中)
+		{
+			auto Pos = [&](Vector2 pos) {
+
+				return Vector2(200 + pos.x, 140 + 30 * pos.y);
+			};
+
+			auto color = [&](Vector2 pos, Status_ID id) {
+				int tmp = 0;
+				_status[id] == _statusOld[id] ? tmp = 0 : tmp = 1;
+
+				number.Draw(pos, { 0.2f,0.2f }, _status[id], tmp);
+
+			};
+
+			switch (meanID_)
+			{
+			case MeanID::ステータス:
+				IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {170,100}, { 0,0 }, {1.0f,1.4f}, false, 0, 0, LAYER::UI });
+				IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {470,100}, { 0,0 }, {1.0f,0.8f}, false, 0, 0, LAYER::UI });
+
+				IpSceneMng.AddDrawQue({ "レベル　 　   -> ",{200,155},{1.0f,1.0f},20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "経験値　 　   -> ",{200,185},{1.0f,1.0f},20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "必要量",{200,215},{1.0f,1.0f},20,0,LAYER::UI });
+
+
+
+				IpSceneMng.AddDrawQue({ "体力",{220,265},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "持久力",{220,295},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "筋力",{220,325},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "敏捷",{220,355},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "回復",{220,385},{1.0f,1.0f },20,0,LAYER::UI });
+
+				IpSceneMng.AddDrawQue({ "HP           ->",{490,155},{1.0f,1.0f},20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "スタミナ      ->",{490,185},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "攻撃力        ->",{490,215},{1.0f,1.0f },20,0,LAYER::UI });
+				IpSceneMng.AddDrawQue({ "防御力        ->",{490,245},{1.0f,1.0f },20,0,LAYER::UI });
+
+				IpSceneMng.AddDrawQue({ "決定",{270,450},{1.0f,1.0f },20,0,LAYER::UI });
+
+
+				number.Draw({ 330, 155 }, { 0.2f,0.2f }, _statusOld[Status_ID::レベル], 0);
+
+				number.Draw({ 620,155 }, { 0.2f,0.2f }, _statusOld[Status_ID::HP], 0);
+				number.Draw({ 620,185 }, { 0.2f,0.2f }, _statusOld[Status_ID::スタミナ], 0);
+				number.Draw({ 620,215 }, { 0.2f,0.2f }, _statusOld[Status_ID::攻撃力], 0);
+				number.Draw({ 620,245 }, { 0.2f,0.2f }, _statusOld[Status_ID::防御力], 0);
+
+				color({ 730,155 }, Status_ID::HP);
+				color({ 730,185 }, Status_ID::スタミナ);
+				color({ 730,215 }, Status_ID::攻撃力);
+				color({ 730,245 }, Status_ID::防御力);
+
+				number.Draw({ 330, 185 }, { 0.2f,0.2f }, _experience[-1], 0);
+				_experience[-1] == _experience[0] ? number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 0) : number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 1);
+				//number.Draw({ 430, 185 }, { 0.2f,0.2f }, _experience[0], 0);
+				number.Draw({ 430, 215 }, { 0.2f,0.2f }, _experience[_status[Status_ID::レベル]], 0);
+
+
+
+				color({ 430, 155 }, Status_ID::レベル);
+				color({ 430, 265 }, Status_ID::体力);
+				color({ 430, 295 }, Status_ID::持久力);
+				color({ 430, 325 }, Status_ID::筋力);
+				color({ 430, 355 }, Status_ID::敏捷);
+				color({ 430, 385 }, Status_ID::回復);
+
+				status_ != Status_ID::MAX ? IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {200,265 + 30 * (static_cast<int>(status_) - (static_cast<int>(Status_ID::体力))) }, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI }) :
+					IpSceneMng.AddDrawQue({ IMAGE_ID("セレクト")[0], {250,450}, { 0,0 }, { 1.0f,1.0f }, false, 0, 1, LAYER::UI });
+
+
+
+
+				break;
+			case MeanID::保存:
+				break;
+			case MeanID::終了:
+				DxLib_End();
+				break;
+
+			default:
+				break;
+			}
+
+		}
+
+		for (auto data : controller->GetCntData())
+		{
+			if (data.second[static_cast<int>(Trg::Now)] && !data.second[static_cast<int>(Trg::Old)])
+			{
+
+				MeanCtl(data.first);
+			}
+		}
+
+	});
+
 
 }

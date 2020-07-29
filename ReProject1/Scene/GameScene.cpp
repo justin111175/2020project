@@ -6,6 +6,7 @@
 #include "..\Floor.h"
 #include "..\Remove.h"
 #include "..\Enemy.h"
+#include "..\common\_debug\_DebugDispOut.h"
 
 
 GameScene::GameScene()
@@ -530,6 +531,17 @@ void GameScene::MapInit(void)
 
 	});
 	_Draw.try_emplace(CHIP_TYPE::ínê}3, []() {
+		for (int x = 0; x < (832 / 32); x++)
+		{
+			for (int y = 0; y < (800 / 32); y++)
+			{
+				_dbgDrawFormatString(-IpSceneMng.mapPos.x+x*32, -IpSceneMng.mapPos.y+ y*32, 0xFFFFFF, "%d", IpSceneMng._data[y][x]);
+
+			}
+
+		}
+
+
 		IpSceneMng.AddDrawQue({ IMAGE_ID("Map003")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG });
 
 
@@ -584,6 +596,7 @@ void GameScene::ChangeInit(void)
 	});
 	
 	_Change.try_emplace(CHIP_TYPE::ínê}3, [&]() {
+
 
 		auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 

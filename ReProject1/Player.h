@@ -6,12 +6,20 @@
 #include "Obj.h"
 #include "id/MeanID.h"
 #include "common/Number.h"
+#include <functional>
 
 
 enum class MeanState
 {
 	中,
 	外
+};
+enum class ModeState
+{
+	普通,
+	強制移動,
+	メニュー,
+	MAX
 };
 
 #define mean_size_Y 40
@@ -32,18 +40,21 @@ public:
 	bool _meanFlag;
 private:
 
-
+	void ModeInit(void);
+	ModeState modeState_;
+	
 	void Move(void);
 	void Init(void);
 	std::unique_ptr<Controller> controller;
 	void Camera(void);
 
-	std::vector<std::string> meanType;									// 支払い手法
 	MeanID meanID_;
 	Status_ID status_;
+	
 	MeanState meanState_;
 
 	Number number;												//数字用
+	std::map<ModeState, std::function<void(void)>> ModeInit_;
 
 	void StateInit(void);
 };
