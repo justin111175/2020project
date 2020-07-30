@@ -27,7 +27,9 @@ enum class UNIT_ID
 	PLaB,						// プレイヤーの弾
 	当たり判定,					// 床
 	伝送,
-	LevelUp,						// レベルアップ
+	石,
+	スウィッチ,
+	//LevelUp,						// レベルアップ
 	メニュー
 };
 
@@ -79,10 +81,14 @@ public:
 	bool isAnimEnd(void);												// アニメがおわったかどうか
 
 	//ゲット関数
-	Vector2 posGet(void);											//今の座標
+	Vector2 Pos(void);											//今の座標
+	bool Pos(Vector2 pos);
+
 	Vector2 posOldGet(void);											//昔の座標
 	Vector2Dbl sizeGet(void);											//大きさ
-	DIR_ID dirGet(void);
+	DIR_ID DIR(void);
+	bool DIR(DIR_ID dir);
+	bool RunFlag(bool flag);
 
 	UNIT_ID _unitID;													// ユニットID
 

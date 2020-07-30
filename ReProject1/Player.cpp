@@ -311,6 +311,7 @@ void Player::Move(void)
 	{
 		if (static_cast<int>(_pos.y % 32) == 0)
 		{
+			_posOld = _pos;
 			_runFlag = false;
 
 		}

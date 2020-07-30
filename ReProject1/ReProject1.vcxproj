@@ -152,6 +152,7 @@
     <ClCompile Include="id\Layer_id.cpp" />
     <ClCompile Include="id\MeanID.cpp" />
     <ClCompile Include="id\Status_ID.cpp" />
+    <ClCompile Include="Iteam.cpp" />
     <ClCompile Include="Remove.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="id\Layer_id.h" />
     <ClInclude Include="id\MeanID.h" />
     <ClInclude Include="id\Status_ID.h" />
+    <ClInclude Include="Iteam.h" />
     <ClInclude Include="Remove.h" />
     <ClInclude Include="Scene\BaseScene.h" />
     <ClInclude Include="common\detail\Vector2.h" />

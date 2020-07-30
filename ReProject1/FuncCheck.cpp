@@ -20,7 +20,7 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 			if ((obj->_unitID == unitID) && (*obj).isAlive())
 			{
 
-				if (CheckBox(actQue.second.posGet(), actQue.second.sizeGet(), (*obj).posGet(), (*obj).sizeGet(), TYPE::ç∂è„))
+				if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::ç∂è„))
 				{
 					IpSceneMng._changeFlag = true;
 					return true;
@@ -32,6 +32,27 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 		}
 		return false;
 
+	case UNIT_ID::êŒ:
+		unitID = UNIT_ID::PLAYER;
+		for (auto obj : ((GameScene*)scene)->_objList)
+		{
+			if ((obj->_unitID == unitID) && (*obj).isAlive())
+			{
+
+				if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::ç∂è„))
+				{
+
+					actQue.second.DIR((*obj).DIR());
+					actQue.second.RunFlag(true);
+					(*obj).Pos((*obj).posOldGet());
+					return true;
+
+				}
+
+
+			}
+		}
+		return false;
 	default:
 		break;
 	}

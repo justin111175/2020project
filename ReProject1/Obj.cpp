@@ -142,9 +142,15 @@ bool Obj::isAnimEnd(void)
 
 
 
-Vector2 Obj::posGet(void)
+Vector2 Obj::Pos(void)
 {
 	return _pos;
+}
+
+bool Obj::Pos(Vector2 pos)
+{
+	_pos = pos;
+	return true;
 }
 
 Vector2 Obj::posOldGet(void)
@@ -158,9 +164,21 @@ Vector2Dbl Obj::sizeGet(void)
 	return _size;
 }
 
-DIR_ID Obj::dirGet(void)
+DIR_ID Obj::DIR(void)
 {
 	return _dir;
+}
+
+bool Obj::DIR(DIR_ID dir)
+{
+	_dir = dir;
+	return true;
+}
+
+bool Obj::RunFlag(bool flag)
+{
+	_runFlag = flag;
+	return true;
 }
 
 

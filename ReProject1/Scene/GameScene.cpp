@@ -6,6 +6,7 @@
 #include "..\Floor.h"
 #include "..\Remove.h"
 #include "..\Enemy.h"
+#include "..\Iteam.h"
 #include "..\common\_debug\_DebugDispOut.h"
 
 
@@ -21,6 +22,9 @@ GameScene::GameScene()
 
 	IpImageMng.GetID("block", "image/block.png", { 32,32 }, { 10,2 });
 	IpImageMng.GetID("à‚ê’1", "image/à‚ê’1.png", { 1280,1280 }, { 1,1 });
+	
+	IpImageMng.GetID("other", "image/other.png", { 32,32 }, { 12,8 });
+	IpImageMng.GetID("switch", "image/switch.png", { 32,32 }, { 12,8 });
 	
 	MapInit();
 	ChangeInit();
@@ -270,6 +274,7 @@ void GameScene::MapInit(void)
 
 
 		FloorState Flrdata;
+		IteamState Itmdata;
 		RemoveState RemovaData;
 
 		for (int x = 0; x < ChipMax.x * ChipMax.y; x++)
@@ -288,7 +293,14 @@ void GameScene::MapInit(void)
 			{
 				Flrdata = { FLOOR_TYPE::ÉÅÉjÉÖÅ[,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
 				_objList.emplace_back(new Floor(Flrdata));
+				
+				Itmdata = { ITEAM_TYPE::ÉÅÉjÉÖÅ[,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				_objList.emplace_back(new Iteam(Itmdata));
+
+
 			}
+
+
 
 			//ìGëùâ¡Å|ÉâÉÄÉ_éÆ
 			auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2Dbl size, Vector2Dbl exrate) {
@@ -471,6 +483,8 @@ void GameScene::MapInit(void)
 		//}
 
 		FloorState Flrdata;
+		IteamState Itmdata;
+
 		RemoveState RemovaData;
 
 		for (int x = 0; x < ChipMax.x * ChipMax.y; x++)
@@ -490,8 +504,19 @@ void GameScene::MapInit(void)
 				Flrdata = { FLOOR_TYPE::ÉÅÉjÉÖÅ[,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
 				_objList.emplace_back(new Floor(Flrdata));
 			}
+			if (IpSceneMng._dataBase[x] == 6)
+			{
+				Itmdata = { ITEAM_TYPE::ÉXÉEÉBÉbÉ`,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				_objList.emplace_back(new Iteam(Itmdata));
+			}
+			if (IpSceneMng._dataBase[x] == 8)
+			{
+
+				Itmdata = { ITEAM_TYPE::êŒ,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				_objList.emplace_back(new Iteam(Itmdata));
 
 
+			}
 		}
 
 
@@ -573,7 +598,7 @@ void GameScene::ChangeInit(void)
 
 		auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
-		if ((*PlObj)->posGet() == Vector2(448, 188) )
+		if ((*PlObj)->Pos() == Vector2(448, 188) )
 		{
 			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}2;
 		}
@@ -585,11 +610,11 @@ void GameScene::ChangeInit(void)
 		auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
 
-		if ((*PlObj)->posGet().y >IpSceneMng.mapSize.y/2)
+		if ((*PlObj)->Pos().y >IpSceneMng.mapSize.y/2)
 		{
 			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}1;
 		}
-		if ((*PlObj)->posGet().y < IpSceneMng.mapSize.y / 2)
+		if ((*PlObj)->Pos().y < IpSceneMng.mapSize.y / 2)
 		{
 			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}3;
 		}
@@ -600,11 +625,11 @@ void GameScene::ChangeInit(void)
 
 		auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
-		if ((*PlObj)->posGet().y > IpSceneMng.mapSize.y / 2)
+		if ((*PlObj)->Pos().y > IpSceneMng.mapSize.y / 2)
 		{
 			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}2;
 		}
-		if ((*PlObj)->posGet().y < IpSceneMng.mapSize.y / 2)
+		if ((*PlObj)->Pos().y < IpSceneMng.mapSize.y / 2)
 		{
 			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}4;
 		}
@@ -614,11 +639,11 @@ void GameScene::ChangeInit(void)
 
 		auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
 
-		if ((*PlObj)->posGet().y > IpSceneMng.mapSize.y / 2)
+		if ((*PlObj)->Pos().y > IpSceneMng.mapSize.y / 2)
 		{
 			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}3;
 		}
-		//if ((*PlObj)->posGet() == Vector2(704, 60))
+		//if ((*PlObj)->Pos() == Vector2(704, 60))
 		//{
 		//	IpSceneMng._chipNo.first = CHIP_TYPE::ínê}4;
 		//}
