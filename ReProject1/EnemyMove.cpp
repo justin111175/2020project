@@ -97,12 +97,18 @@ void EnemyMove::SetMovePrg(void)
 void EnemyMove::Normal(void)
 {
 	_pData._bit = { 1,1,1,1 };
+	Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
 
 
 	if (static_cast<int>(_pos.x % 32) == 0)
 	{
 		if (static_cast<int>(_pos.y % 32) == 0)
 		{
+
+			if (IpSceneMng._data[Pos.y][Pos.x] == -1)
+			{
+				IpSceneMng._data[Pos.y][Pos.x] = 8;
+			}
 			_runFlag = false;
 
 		}
@@ -139,28 +145,46 @@ void EnemyMove::Normal(void)
 		switch (static_cast<DIR_ID>(rand() % 4) )
 		{
 		case DIR_ID::DOWN:
-
-			_dir = DIR_ID::DOWN;
-			_runFlag = true;
-
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 8)
+			{
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
+			}
+			if (_pData._bit.DOWN)
+			{
+				_pos.y += 4;
+			}
 			break;
 		case DIR_ID::LEFT:
-			_dir = DIR_ID::LEFT;
-			_runFlag = true;
-
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 8)
+			{
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
+			}
+			if (_pData._bit.LEFT)
+			{
+				_pos.x -= 4;
+			}
 			break;
 		case DIR_ID::RIGHT:
-			_dir = DIR_ID::RIGHT;
-			_runFlag = true;
-
-
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 8)
+			{
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
+			}
+			if (_pData._bit.RIGHT)
+			{
+				_pos.x += 4;
+			}
 			break;
 		case DIR_ID::UP:
-			_dir = DIR_ID::UP;
-			_runFlag = true;
-
-
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 8)
+			{
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
+			}
+			if (_pData._bit.UP)
+			{
+				_pos.y -= 4;
+			}
 			break;
+
 		default:
 			break;
 		}

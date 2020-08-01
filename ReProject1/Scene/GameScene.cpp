@@ -546,13 +546,30 @@ void GameScene::MapInit(void)
 	});
 	_Draw.try_emplace(CHIP_TYPE::ínê}1, []() {
 		IpSceneMng.AddDrawQue({ IMAGE_ID("Map001")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG });
+		
+		for (int x = 0; x < (960 / 32); x++)
+		{
+			for (int y = 0; y < (960 / 32); y++)
+			{
+				_dbgDrawFormatString(-IpSceneMng.mapPos.x + x * 32, -IpSceneMng.mapPos.y + y * 32, 0xFFFFFF, "%d", IpSceneMng._data[y][x]);
 
+			}
+
+		}
 	
 	});
 
 	_Draw.try_emplace(CHIP_TYPE::ínê}2, []() {
 		IpSceneMng.AddDrawQue({ IMAGE_ID("Map002")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG });
+		for (int x = 0; x < (960 / 32); x++)
+		{
+			for (int y = 0; y < (1248 / 32); y++)
+			{
+				_dbgDrawFormatString(-IpSceneMng.mapPos.x + x * 32, -IpSceneMng.mapPos.y + y * 32, 0xFFFFFF, "%d", IpSceneMng._data[y][x]);
 
+			}
+
+		}
 
 	});
 	_Draw.try_emplace(CHIP_TYPE::ínê}3, []() {

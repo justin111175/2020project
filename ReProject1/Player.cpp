@@ -306,12 +306,18 @@ void Player::Move(void)
 	
 	_pData._bit = { 1,1,1,1 };
 	//_runFlag = false;
+	Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+
 
 	if (static_cast<int>(_pos.x % 32) == 0)
 	{
 		if (static_cast<int>(_pos.y % 32) == 0)
 		{
-			_posOld = _pos;
+
+			if (IpSceneMng._data[Pos.y][Pos.x] == -1)
+			{
+				IpSceneMng._data[Pos.y][Pos.x] = 10;
+			}
 			_runFlag = false;
 
 		}
@@ -322,6 +328,8 @@ void Player::Move(void)
 		if (IpSceneMng._data[Pos.y - 1][Pos.x] == no)
 		{
 			_pData._bit.UP = 0;
+
+
 			return true;
 
 		}
@@ -334,6 +342,7 @@ void Player::Move(void)
 		if (IpSceneMng._data[Pos.y][Pos.x + 1] == no)
 		{
 			_pData._bit.RIGHT = 0;
+
 			return true;
 
 		}
@@ -347,6 +356,7 @@ void Player::Move(void)
 		if (IpSceneMng._data[Pos.y][Pos.x - 1] == no)
 		{
 			_pData._bit.LEFT = 0;
+
 			return true;
 
 		}
@@ -359,6 +369,7 @@ void Player::Move(void)
 		if (IpSceneMng._data[Pos.y + 1][Pos.x] == no)
 		{
 			_pData._bit.DOWN = 0;
+
 			return true;
 
 		}
@@ -371,10 +382,13 @@ void Player::Move(void)
 		if (data.second[static_cast<int>(Trg::Now)])
 		{
 			CheckUP(1);
-			CheckRight(1);
-			CheckLeft(1);
+			CheckRight(1 );
+			CheckLeft(1 );
 			CheckDown(1);
-			
+			CheckUP(8);
+			CheckRight(8);
+			CheckLeft(8);
+			CheckDown(8);
 			
 			if(CheckUP(3)||CheckRight(3)||CheckLeft(3)||CheckDown(3))
 			{
@@ -408,27 +422,45 @@ void Player::Move(void)
 
 	if (_runFlag)
 	{
+		_posOld = _pos;
+
 		switch (_dir)
 		{
 		case DIR_ID::DOWN:
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 10)
+			{
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
+			}
 			if (_pData._bit.DOWN)
 			{
 				_pos.y += 4;
 			}
 			break;
 		case DIR_ID::LEFT:
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 10)
+			{
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
+			}
 			if (_pData._bit.LEFT)
 			{
 				_pos.x -= 4;
 			}
 			break;
 		case DIR_ID::RIGHT:
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 10)
+			{
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
+			}
 			if (_pData._bit.RIGHT)
 			{
 				_pos.x += 4;
 			}
 			break;
 		case DIR_ID::UP:
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 10)
+			{
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
+			}
 			if (_pData._bit.UP)
 			{
 				_pos.y -= 4;
