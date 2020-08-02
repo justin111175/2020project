@@ -113,7 +113,7 @@ bool SceneMng::SysInit(void)
 	}
 
 
-	_chipNo.first = CHIP_TYPE::ínê}3;
+	_chipNo.first = CHIP_TYPE::ínê}2;
 	_chipNo.second = _chipNo.first;
 	_changeFlag = false;
 	

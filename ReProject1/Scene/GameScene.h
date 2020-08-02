@@ -3,7 +3,8 @@
 #include <vector>
 #include "..\Obj.h"
 #include <functional>
-#include "..\FuncCheck.h"
+#include "..\Scene\Func\FuncCheck.h"
+#include "..\Scene\Func\FuncBullet.h"
 using funcAct = std::function<bool(ActQueT&, void*)>;
 
 
@@ -33,6 +34,7 @@ public:
 	unique_Base Update(unique_Base own) override;					// 更新
 private:
 	friend FuncCheck;
+	friend FuncBullet;
 
 	void FuncInit(void);											// ファンク初期化
 

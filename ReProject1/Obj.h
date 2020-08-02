@@ -25,6 +25,7 @@ enum class UNIT_ID
 	ENEMY,						// 敵
 	PLaS,						// プレイヤー近距離攻撃
 	PLaB,						// プレイヤーの弾
+	EyB,
 	当たり判定,					// 床
 	伝送,
 	石,
@@ -49,6 +50,13 @@ union Permit_Data
 	unsigned int _flag;
 };
 
+enum class EnemyMode
+{
+	止まる,
+	プレイヤー発見,
+	自由移動,
+	MAX
+};
 class Obj;
 class Player;
 class Floor;
@@ -101,7 +109,10 @@ public:
 	std::map < DIR_ID, bool> _dirFlag;									// true:移動、false：停止
 	
 
-	Vector2Dbl _speed;											//移動速度
+	Vector2 _speed;											//移動速度
+
+	EnemyMode enemyMode_;
+	Vector2 _funcPos;
 
 private:
 
@@ -134,7 +145,6 @@ protected:
 	
 	bool _repelFlag;//撃退用
 
-	Vector2Dbl _funcPos;
 	DIR_ID _funcDir;
 };
 

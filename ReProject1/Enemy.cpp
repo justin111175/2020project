@@ -43,6 +43,7 @@ void Enemy::Update(void)
 		return;
 	}
 	//IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
 
 
@@ -54,8 +55,16 @@ void Enemy::Update(void)
 	//	IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP_BAR")[0], {HpPos.x,HpPos.y},{0,0},{1.0f,0.5f},false,0,1,LAYER::CHAR });
 	//	IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP")[0], {HpPos.x,HpPos.y},{0,0},{HpRatio,0.5f},false,0,2,LAYER::CHAR });
 	//}
+	if (_type == ENEMY_TYPE::オーク)
+	{
+		if (rand() % 10==0)
+		{
+			IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 
-	
+		}
+
+	}
+
 	_moveCtl.Update();
 	
 	switch (_dir)
@@ -77,12 +86,6 @@ void Enemy::Update(void)
 		break;
 	}
 
-
-	
-
-
-
-	
 
 
 }
@@ -132,6 +135,7 @@ void Enemy::Init(void)
 		SetAnim(STATE::DETH, dir, data);
 
 	}
+	enemyMode_ = EnemyMode::自由移動;
 
 
 

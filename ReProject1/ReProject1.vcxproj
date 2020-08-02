@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common\HitCheck.cpp" />
     <ClCompile Include="common\_debug\_DeBugConOut.cpp" />
     <ClCompile Include="common\_debug\_DebugDispOut.cpp" />
@@ -148,7 +149,8 @@
     <ClCompile Include="EnemyMove.cpp" />
     <ClCompile Include="id\DIR_ID.cpp" />
     <ClCompile Include="Floor.cpp" />
-    <ClCompile Include="FuncCheck.cpp" />
+    <ClCompile Include="Scene\Func\FuncBullet.cpp" />
+    <ClCompile Include="Scene\Func\FuncCheck.cpp" />
     <ClCompile Include="id\Layer_id.cpp" />
     <ClCompile Include="id\MeanID.cpp" />
     <ClCompile Include="id\Status_ID.cpp" />
@@ -166,6 +168,7 @@
     <ClCompile Include="Scene\SceneMng.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="common\HitCheck.h" />
     <ClInclude Include="common\_debug\_DeBugConOut.h" />
     <ClInclude Include="common\_debug\_DebugDispOut.h" />
@@ -173,7 +176,8 @@
     <ClInclude Include="EnemyMove.h" />
     <ClInclude Include="id\DIR_ID.h" />
     <ClInclude Include="Floor.h" />
-    <ClInclude Include="FuncCheck.h" />
+    <ClInclude Include="Scene\Func\FuncBullet.h" />
+    <ClInclude Include="Scene\Func\FuncCheck.h" />
     <ClInclude Include="id\Layer_id.h" />
     <ClInclude Include="id\MeanID.h" />
     <ClInclude Include="id\Status_ID.h" />

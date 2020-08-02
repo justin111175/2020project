@@ -46,14 +46,14 @@ void Floor::Init(void)
 	{
 	case FLOOR_TYPE::当たり判定:
 		_unitID = UNIT_ID::当たり判定;
-		data.emplace_back(IMAGE_ID("block")[1], 30);
-		SetAnim(STATE::NORMAL, data);
+		//data.emplace_back(IMAGE_ID("block")[1], 30);
+		//SetAnim(STATE::NORMAL, data);
 
 		break;
 	case FLOOR_TYPE::メニュー:
 		_unitID = UNIT_ID::メニュー;
-		data.emplace_back(IMAGE_ID("block")[3], 30);
-		SetAnim(STATE::NORMAL, data);
+		//data.emplace_back(IMAGE_ID("block")[3], 30);
+		//SetAnim(STATE::NORMAL, data);
 
 		break;
 	default:

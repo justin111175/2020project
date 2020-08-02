@@ -17,7 +17,7 @@ class EnemyMove :
 	public Obj
 {
 public:
-	EnemyMove(Vector2& pos, double& rad, Vector2Dbl& size, DIR_ID& dir);
+	EnemyMove(Vector2& pos, double& rad, Vector2Dbl& size, DIR_ID& dir, bool& runFlag);
 	~EnemyMove();
 
 	bool SetMoveState(MoveState& state, bool newFlag);	// 移動種類設定：新しい移動があれば古い移動を消す
@@ -42,7 +42,9 @@ private:
 	Vector2& _pos;									// ゴール地点
 	Vector2Dbl& _size;									// サイズ
 	DIR_ID& _dir;								//移動のタイプ
-
+	//EnemyMode& enemyMode_;
+	
+	bool& _runFlag;
 
 	double & _rad;										// 角度
 	int cnt;											// 頻度用計算

@@ -15,6 +15,7 @@ Player::Player(Vector2&& pos, Vector2Dbl&& size, Vector2Dbl&& exrate)
 	_pos = std::move(pos);
 	_size = std::move(size);
 	_exrate = std::move(exrate);
+	_zorder = 1;
 
 	Init();
 }
@@ -51,61 +52,28 @@ void Player::Update(void)
 	//
 	//
 	//};
-	//if (test(5) || test(6) || test(7) || test(8))
-	//{
-	//	_runFlag = false;
-	//	modeState_ = ModeState::強制移動;
-	//}
-	//else
-	//{
-	//	modeState_ = ModeState::普通;
-
-	//}
+	//
 	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
 	{
 		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
-		if (!_runFlag)
+		if (IpSceneMng._data[Pos.y][Pos.x] == 5 || IpSceneMng._data[Pos.y][Pos.x] == 6 || IpSceneMng._data[Pos.y][Pos.x] == 7 || IpSceneMng._data[Pos.y][Pos.x] == 8)
 		{
-			if (IpSceneMng._data[Pos.y][Pos.x] == 5)
-			{
-
-				stateDir(STATE::STAY, DIR_ID::UP);
-				_pos.y -= 4;
-				_runFlag = true;
-
-			}
-
-
-
-			if (IpSceneMng._data[Pos.y][Pos.x] == 7)
-			{
-				stateDir(STATE::STAY, DIR_ID::LEFT);
-				_pos.x -= 4;
-
-				_runFlag = true;
-
-			}
-
-			if (IpSceneMng._data[Pos.y][Pos.x] == 6)
-			{
-				stateDir(STATE::STAY, DIR_ID::DOWN);
-				_pos.y += 4;
-
-				_runFlag = true;
-
-			}
-			if (IpSceneMng._data[Pos.y][Pos.x] == 8)
-			{
-				stateDir(STATE::STAY, DIR_ID::RIGHT);
-				_pos.x += 4;
-
-				_runFlag = true;
-
-			}
+			//_runFlag = false;
+			modeState_ = ModeState::強制移動;
 		}
+		else
+		{
+			modeState_ = ModeState::普通;
 
+		}
+	}
+
+	if (CheckHitKey(KEY_INPUT_Z))
+	{
+		IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 
 	}
+
 
 
 	ModeInit_[modeState_]();
@@ -129,6 +97,9 @@ void Player::SetDir(InputID id)
 
 		if (_pData._bit.UP)
 		{
+			_speed = { 0,-4 };
+			_posOld = _pos;
+
 			_runFlag = true;
 
 		}
@@ -138,6 +109,9 @@ void Player::SetDir(InputID id)
 
 		if (_pData._bit.DOWN)
 		{
+			_posOld = _pos;
+			_speed = { 0,4 };
+
 			_runFlag = true;
 
 		}
@@ -148,6 +122,9 @@ void Player::SetDir(InputID id)
 
 		if (_pData._bit.LEFT)
 		{
+			_posOld = _pos;
+			_speed = { -4,0 };
+
 			_runFlag = true;
 
 		}
@@ -157,6 +134,9 @@ void Player::SetDir(InputID id)
 
 		if (_pData._bit.RIGHT)
 		{
+			_posOld = _pos;
+			_speed = { 4,0 };
+
 			_runFlag = true;
 
 		}
@@ -306,7 +286,6 @@ void Player::Move(void)
 	
 	_pData._bit = { 1,1,1,1 };
 	//_runFlag = false;
-	Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
 
 
 	if (static_cast<int>(_pos.x % 32) == 0)
@@ -314,9 +293,9 @@ void Player::Move(void)
 		if (static_cast<int>(_pos.y % 32) == 0)
 		{
 
-			if (IpSceneMng._data[Pos.y][Pos.x] == -1)
+			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 0)
 			{
-				IpSceneMng._data[Pos.y][Pos.x] = 10;
+				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
 			}
 			_runFlag = false;
 
@@ -381,14 +360,14 @@ void Player::Move(void)
 	{
 		if (data.second[static_cast<int>(Trg::Now)])
 		{
-			CheckUP(1);
-			CheckRight(1 );
-			CheckLeft(1 );
-			CheckDown(1);
-			CheckUP(8);
-			CheckRight(8);
-			CheckLeft(8);
-			CheckDown(8);
+			int list[] = { 1,3,4 };
+			for (int i = 0; i < 3; i++)
+			{
+				CheckUP(list[i]);
+				CheckRight(list[i]);
+				CheckLeft(list[i]);
+				CheckDown(list[i]);
+			}
 			
 			if(CheckUP(3)||CheckRight(3)||CheckLeft(3)||CheckDown(3))
 			{
@@ -422,48 +401,52 @@ void Player::Move(void)
 
 	if (_runFlag)
 	{
-		_posOld = _pos;
 
 		switch (_dir)
 		{
 		case DIR_ID::DOWN:
-			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 10)
-			{
-				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
-			}
+
 			if (_pData._bit.DOWN)
-			{
-				_pos.y += 4;
+			{			
+
+				_pos += _speed;
+				if (IpSceneMng._data[_pos.y / 32][_pos.x / 32] == -1)
+				{
+					IpSceneMng._data[_pos.y / 32][_pos.x / 32] = 0;
+				}
 			}
 			break;
 		case DIR_ID::LEFT:
-			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 10)
-			{
-				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
-			}
+
 			if (_pData._bit.LEFT)
 			{
-				_pos.x -= 4;
+				_pos += _speed;
+				if (IpSceneMng._data[_pos.y / 32][_pos.x / 32] == -1)
+				{
+					IpSceneMng._data[_pos.y / 32][_pos.x / 32] = 0;
+				}
 			}
 			break;
 		case DIR_ID::RIGHT:
-			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 10)
-			{
-				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
-			}
+
 			if (_pData._bit.RIGHT)
 			{
-				_pos.x += 4;
+				_pos += _speed;
+				if (IpSceneMng._data[_pos.y / 32][_pos.x / 32] == -1)
+				{
+					IpSceneMng._data[_pos.y / 32][_pos.x / 32] = 0;
+				}
 			}
 			break;
 		case DIR_ID::UP:
-			if (IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] == 10)
-			{
-				IpSceneMng._data[_posOld.y / 32][_posOld.x / 32] = -1;
-			}
+
 			if (_pData._bit.UP)
 			{
-				_pos.y -= 4;
+				_pos += _speed;
+				if (IpSceneMng._data[_pos.y / 32][_pos.x / 32] == -1)
+				{
+					IpSceneMng._data[_pos.y / 32][_pos.x / 32] = 0;
+				}
 			}
 			break;
 
@@ -508,7 +491,6 @@ void Player::Move(void)
 
 void Player::Init(void)
 {
-
 	controller = std::make_unique<KeyInput>();
 	controller->SetUp();
 	for (auto dir : DIR_ID())
@@ -685,51 +667,123 @@ void Player::ModeInit(void)
 	
 	});
 	ModeInit_.try_emplace(ModeState::強制移動, [&]() {
-		if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
+
+		if (static_cast<int>(_pos.x % 32) == 0)
 		{
+			if (static_cast<int>(_pos.y % 32) == 0)
+			{
+
+
+				_runFlag = false;
+
+			}
+		}
 			Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
 			if (!_runFlag)
-			{
+			{					
+				Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y -8) / 32) };
+
 				if (IpSceneMng._data[Pos.y][Pos.x] == 5)
 				{
 
 					stateDir(STATE::STAY, DIR_ID::UP);
-					_pos.y -= 4;
+					_speed = { 0,-8 };
 					_runFlag = true;
 
 				}
 
-
+				Pos = { static_cast<int>((_pos.x + _size.x -8) / 32),static_cast<int>(_pos.y / 32) };
 
 				if (IpSceneMng._data[Pos.y][Pos.x] == 7)
 				{
 					stateDir(STATE::STAY, DIR_ID::LEFT);
-					_pos.x -= 4;
+					//_pos.x -= 4;
+					_speed = { -8,0 };
 
 					_runFlag = true;
 
 				}
 
-				if (IpSceneMng._data[Pos.y][Pos.x] == 6)
-				{
-					stateDir(STATE::STAY, DIR_ID::DOWN);
-					_pos.y += 4;
 
-					_runFlag = true;
+				
+				Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
 
-				}
 				if (IpSceneMng._data[Pos.y][Pos.x] == 8)
 				{
 					stateDir(STATE::STAY, DIR_ID::RIGHT);
-					_pos.x += 4;
+					//_pos.x += 4;
+					_speed = { 8,0 };
+
+					_runFlag = true;
+
+				}
+				if (IpSceneMng._data[Pos.y][Pos.x] == 6)
+				{
+					stateDir(STATE::STAY, DIR_ID::DOWN);
+					//_pos.y += 4;
+					_speed = { 0,8 };
 
 					_runFlag = true;
 
 				}
 			}
+			
+			if (_runFlag)
+			{
 
+				switch (_dir)
+				{
+				case DIR_ID::DOWN:
 
-		}
+					//if (_pData._bit.DOWN)
+					{
+
+						_pos += _speed;
+						if (IpSceneMng._data[_pos.y / 32][_pos.x / 32] == -1)
+						{
+							IpSceneMng._data[_pos.y / 32][_pos.x / 32] = 10;
+						}
+					}
+					break;
+				case DIR_ID::LEFT:
+
+					//if (_pData._bit.LEFT)
+					{
+						_pos += _speed;
+						if (IpSceneMng._data[_pos.y / 32][_pos.x / 32] == -1)
+						{
+							IpSceneMng._data[_pos.y / 32][_pos.x / 32] = 10;
+						}
+					}
+					break;
+				case DIR_ID::RIGHT:
+
+					//if (_pData._bit.RIGHT)
+					{
+						_pos += _speed;
+						if (IpSceneMng._data[_pos.y / 32][_pos.x / 32] == -1)
+						{
+							IpSceneMng._data[_pos.y / 32][_pos.x / 32] = 10;
+						}
+					}
+					break;
+				case DIR_ID::UP:
+
+					//if (_pData._bit.UP)
+					{
+						_pos += _speed;
+						if (IpSceneMng._data[_pos.y / 32][_pos.x / 32] == -1)
+						{
+							IpSceneMng._data[_pos.y / 32][_pos.x / 32] = 10;
+						}
+					}
+					break;
+
+				default:
+					break;
+				}
+			}
+
 
 
 
