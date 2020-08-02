@@ -37,7 +37,6 @@ Bullet::Bullet(UNIT_ID unitID, Vector2 pos, DIR_ID movetype, Vector2Dbl size)
 		_pos.y = pos.y;
 		break;
 	case DIR_ID::LEFT:
-
 		_rad = 180 * DEG;
 		_pos.x = pos.x + size.x / 2 ;
 		_pos.y = pos.y + size.y / 2 + _size.y / 2;
@@ -68,11 +67,11 @@ void Bullet::Update(void)
 {
 	
 	//’eˆÚ“®
-	_pos.x += cos(_rad)*BulletSpeed;
-	_pos.y += sin(_rad)*BulletSpeed;
+	_pos.x += static_cast<int>(cos(_rad)*BulletSpeed);
+	_pos.y += static_cast<int>(sin(_rad)*BulletSpeed);
 
 	//’e‚Ì“–‚½‚è”»’è
-	//IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 	
 	//ƒvƒŒƒCƒ„[‚©‚ç‚Ì‹——£200ˆÈŒãÁŽ¸
 	if ((((_posOld.y-_pos.y)* (_posOld.y - _pos.y))+ ((_posOld.x - _pos.x) * (_posOld.x - _pos.x)))>200.0*200.0)

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "..\GameScene.h"
 
-std::map<UNIT_ID, int>FuncBullet::_MaxCount{ {UNIT_ID::EyB,30},{UNIT_ID::PLaB,20}, };
+std::map<UNIT_ID, int>FuncBullet::_MaxCount{ {UNIT_ID::EyB,30},{UNIT_ID::PLaB,20} };
 
 //actQue‚Æ_objListˆø”‚Æ‚µ‚ÄƒRƒs[‚µ‚©‚È‚¢
 bool FuncBullet::operator()(ActQueT &actQue, void* scene)

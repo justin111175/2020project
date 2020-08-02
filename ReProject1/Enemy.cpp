@@ -36,9 +36,11 @@ void Enemy::Update(void)
 
 		}
 	}	
-	
+	Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+
 	if (DestroyPrpc())
 	{	
+		IpSceneMng._data[Pos.y][Pos.x] = -1;
 
 		return;
 	}

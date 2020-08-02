@@ -53,9 +53,15 @@ void Player::Update(void)
 	//
 	//};
 	//
+		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+
+	if (DestroyPrpc())
+	{
+		IpSceneMng._data[Pos.y][Pos.x] = -1;
+		return;
+	}
 	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
 	{
-		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
 		if (IpSceneMng._data[Pos.y][Pos.x] == 5 || IpSceneMng._data[Pos.y][Pos.x] == 6 || IpSceneMng._data[Pos.y][Pos.x] == 7 || IpSceneMng._data[Pos.y][Pos.x] == 8)
 		{
 			//_runFlag = false;
@@ -68,11 +74,11 @@ void Player::Update(void)
 		}
 	}
 
-	if (CheckHitKey(KEY_INPUT_Z))
-	{
-		IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+	//if (CheckHitKey(KEY_INPUT_Z))
+	//{
+	//	IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 
-	}
+	//}
 
 
 
@@ -130,7 +136,7 @@ void Player::SetDir(InputID id)
 		}
 		break;
 	case InputID::Right:
-					stateDir(STATE::NORMAL, DIR_ID::RIGHT);
+		stateDir(STATE::NORMAL, DIR_ID::RIGHT);
 
 		if (_pData._bit.RIGHT)
 		{
@@ -381,6 +387,17 @@ void Player::Move(void)
 				}
 
 			}
+			else
+			{
+				if (data.first == InputID::Z)
+				{
+					if (data.second[static_cast<int>(Trg::Now)] && !data.second[static_cast<int>(Trg::Old)])
+					{
+
+						IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+					}
+				}
+			}
 
 
 
@@ -525,7 +542,14 @@ void Player::Init(void)
 
 		data.emplace_back(IMAGE_ID("プレイヤー歩く")[(__int64)dirCnt + 0], 10);
 		SetAnim(STATE::STAY, dir, data);
+		
 
+		for (int i = 0; i < 24; i++)
+		{
+			data.emplace_back(IMAGE_ID("blast")[i], i);
+		}
+		data.emplace_back(-1, 25);
+		SetAnim(STATE::DETH, dir, data);
 		//_dirFlag.try_emplace(dir, true);
 
 	}
