@@ -1,7 +1,7 @@
 #include "HitCheck.h"
 
 
-bool CheckBox(Vector2 pos1, Vector2Dbl size1, Vector2 pos2, Vector2Dbl size2, TYPE type)
+bool CheckBox(Vector2 pos1, Vector2 size1, Vector2 pos2, Vector2 size2, TYPE type)
 {
 	switch (type)
 	{
@@ -42,9 +42,9 @@ bool CheckBox(Vector2 pos1, Vector2Dbl size1, Vector2 pos2, Vector2Dbl size2, TY
 //	return false;
 //}
 
-bool CheckCircle(Vector2Dbl pos1, double rang1, Vector2Dbl pos2, double rang2)
+bool CheckCircle(Vector2 pos1, double rang1, Vector2 pos2, double rang2)
 {
-	Vector2Dbl Long = { pos1.x - pos2.x	,pos1.y - pos2.y };
+	Vector2 Long = { pos1.x - pos2.x	,pos1.y - pos2.y };
 	double rangLong = rang1 + rang2;
 	if (((Long.x * Long.x)+ (Long.y * Long.y)) < (rangLong * rangLong))
 	{

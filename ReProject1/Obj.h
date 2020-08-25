@@ -93,7 +93,7 @@ public:
 	bool Pos(Vector2 pos);
 
 	Vector2 posOldGet(void);											//昔の座標
-	Vector2Dbl sizeGet(void);											//大きさ
+	Vector2 sizeGet(void);											//大きさ
 	DIR_ID DIR(void);
 	bool DIR(DIR_ID dir);
 	bool RunFlag(bool flag);
@@ -131,10 +131,10 @@ protected:
 	bool _dead;															// 死亡－＞死んでいるかグラフ
 	double _rad;														// 角度
 	int _zorder;														// 描画優先度用
-	Vector2 _pos;													// 今の座標
+	Vector2 _pos;														// 今の座標
 
 	Vector2 _posOld;													// 昔の座標
-	Vector2Dbl _size;													// サイズ
+	Vector2 _size;													// サイズ
 	Vector2Dbl _exrate;													// XとYの拡大縮小率
 	DIR_ID _dir;														// 向き
 
@@ -145,6 +145,5 @@ protected:
 	
 	bool _repelFlag;//撃退用
 
-	DIR_ID _funcDir;
 };
 

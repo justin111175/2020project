@@ -159,7 +159,7 @@ Vector2 Obj::posOldGet(void)
 	return _posOld;
 }
 
-Vector2Dbl Obj::sizeGet(void)
+Vector2 Obj::sizeGet(void)
 {
 	return _size;
 }

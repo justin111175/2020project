@@ -30,7 +30,7 @@ enum class ENEMY_STATE
 
 
 // 種類、座標、サイズ、拡大縮小率、移動方法
-using EnemyState = std::tuple<ENEMY_TYPE, Vector2, Vector2Dbl,Vector2Dbl, MoveState&>;
+using EnemyState = std::tuple<ENEMY_TYPE, Vector2, Vector2,Vector2Dbl, MoveState&>;
 
 class Enemy :
 	public Obj

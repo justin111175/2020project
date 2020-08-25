@@ -18,7 +18,7 @@ enum class ITEAM_STATE
 	MAX
 };
 
-using IteamState = std::tuple < ITEAM_TYPE, Vector2, Vector2Dbl>;
+using IteamState = std::tuple < ITEAM_TYPE, Vector2, Vector2>;
 
 
 class Iteam :

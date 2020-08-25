@@ -7,7 +7,11 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 {
 	UNIT_ID unitID;
 
-
+	auto ChangePos = [](Vector2 pos,Vector2 size) {
+	
+		return Vector2{ pos.x + size.x / 2,pos.y + size.y / 2 };
+	
+	};
 	switch (actQue.second._unitID)
 	{
 	case UNIT_ID::ENEMY:
@@ -16,12 +20,12 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 		{
 			if ((obj->_unitID == unitID) && (*obj).isAlive())
 			{
-				if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::ç∂è„))
-				{
-					//actQue.second.RunFlag(false);
-					return true;
+				//if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::ç∂è„))
+				//{
+				//	//actQue.second.RunFlag(false);
+				//	return true;
 
-				}
+				//}
 				//actQue.second.RunFlag(true);
 
 				//Vector2 Long = { actQue.second.Pos().x - (*obj).Pos().x,  actQue.second.Pos().y - (*obj).Pos().y };
@@ -55,12 +59,24 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 			if ((obj->_unitID == unitID) && (*obj).isAlive())
 			{	
 				//IpSceneMng.mapPos
-				_dbgDrawBox(-IpSceneMng.mapPos.x+actQue.second.Pos().x, -IpSceneMng.mapPos.y + actQue.second.Pos().y,
-					-IpSceneMng.mapPos.x + actQue.second.Pos().x + actQue.second.sizeGet().x,
-					-IpSceneMng.mapPos.y + actQue.second.Pos().y + actQue.second.sizeGet().y,
-					0xFFFFFF, true);
+				//_dbgDrawBox(-IpSceneMng.mapPos.x+actQue.second.Pos().x, -IpSceneMng.mapPos.y + actQue.second.Pos().y,
+				//	-IpSceneMng.mapPos.x + actQue.second.Pos().x + actQue.second.sizeGet().x,
+				//	-IpSceneMng.mapPos.y + actQue.second.Pos().y + actQue.second.sizeGet().y,
+				//	0xFFFFFF, true);
+				_dbgDrawCircle(-IpSceneMng.mapPos.x + actQue.second.Pos().x, -IpSceneMng.mapPos.y + actQue.second.Pos().y, 5, 0xFFFFFF, true);
+				_dbgDrawCircle(-IpSceneMng.mapPos.x+ChangePos((*obj).Pos(), (*obj).sizeGet()).x, -IpSceneMng.mapPos.y+ChangePos((*obj).Pos(), (*obj).sizeGet()).y, (*obj).sizeGet().x / 2, 0xFFFFFF, true);
+				//actQue.second.
 
-				if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::ç∂è„))
+
+/*				if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::ç∂è„))
+				{
+					actQue.second.SetAlive(false);
+					(*obj).SetAlive(false);
+					return true;
+
+				}	*/			
+
+				if (CheckCircle(actQue.second.Pos(), 5, ChangePos((*obj).Pos(), (*obj).sizeGet()), (*obj).sizeGet().x / 2))
 				{
 					actQue.second.SetAlive(false);
 					(*obj).SetAlive(false);
@@ -78,8 +94,10 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 			if ((obj->_unitID == unitID) && (*obj).isAlive())
 			{
 
+				_dbgDrawCircle(-IpSceneMng.mapPos.x + actQue.second.Pos().x, -IpSceneMng.mapPos.y + actQue.second.Pos().y, 5, 0xFFFFFF, true);
+				_dbgDrawCircle(-IpSceneMng.mapPos.x + ChangePos((*obj).Pos(), (*obj).sizeGet()).x, -IpSceneMng.mapPos.y + ChangePos((*obj).Pos(), (*obj).sizeGet()).y, (*obj).sizeGet().x / 2, 0xFFFFFF, true);
 
-				if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::ç∂è„))
+				if (CheckCircle(actQue.second.Pos(), 5, ChangePos((*obj).Pos(), (*obj).sizeGet()), (*obj).sizeGet().x / 2))
 				{
 					actQue.second.SetAlive(false);
 					(*obj).SetAlive(false);

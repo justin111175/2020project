@@ -5,7 +5,7 @@
 #include <Dxlib.h>
 #include "common/TimeCount.h"
 
-EnemyMove::EnemyMove(Vector2& pos, double& rad, Vector2Dbl& size, DIR_ID& dir, bool& runFlag):
+EnemyMove::EnemyMove(Vector2& pos, double& rad, Vector2& size, DIR_ID& dir, bool& runFlag):
 	_pos(pos),
 	_rad(rad), 
 	_size(size), 

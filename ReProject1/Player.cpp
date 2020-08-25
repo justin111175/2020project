@@ -10,7 +10,7 @@ Player::Player()
 	Init();
 }
 
-Player::Player(Vector2&& pos, Vector2Dbl&& size, Vector2Dbl&& exrate)
+Player::Player(Vector2&& pos, Vector2&& size, Vector2Dbl&& exrate)
 {
 	_pos = std::move(pos);
 	_size = std::move(size);

@@ -29,7 +29,7 @@ class Player:
 {
 public:
 	Player();
-	Player(Vector2&& pos, Vector2Dbl&& size, Vector2Dbl&& exrate);
+	Player(Vector2&& pos, Vector2&& size, Vector2Dbl&& exrate);
 	~Player();
 	void Update(void) override;									// çXêV
 

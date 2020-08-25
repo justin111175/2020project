@@ -25,7 +25,7 @@ GameScene::GameScene()
 	
 	IpImageMng.GetID("other", "image/other.png", { 32,32 }, { 12,8 });
 	IpImageMng.GetID("switch", "image/switch.png", { 32,32 }, { 12,8 });
-	IpImageMng.GetID("弾", "image/shot.png", { 43,11 }, { 1,1 });
+	IpImageMng.GetID("弾", "image/shot.png", { 20,10 }, { 1,1 });
 
 	MapInit();
 	ChangeInit();
@@ -84,7 +84,7 @@ unique_Base GameScene::Update(unique_Base own)
 		if (IpSceneMng.frames() % 1800 == 0)
 		{
 			//敵増加－ラムダ式
-			auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2Dbl size, Vector2Dbl exrate) {
+			auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2 size, Vector2Dbl exrate) {
 				MoveState tmpMoveState;
 				tmpMoveState.emplace_back(MOVE_TYPE::Normal, Vector2{ 0,0 });
 
@@ -97,7 +97,7 @@ unique_Base GameScene::Update(unique_Base own)
 				{
 					for (int y = 0; y < 1; y++)
 					{
-						EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 32 ,672 }, { 32.0,32.0 }, { 1.0f,1.0f });
+						EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 32 ,672 }, { 32,32}, { 1.0f,1.0f });
 					}
 				}
 			}
@@ -204,18 +204,18 @@ void GameScene::MapInit(void)
 		{
 			if (IpSceneMng._dataBase[x] == 1)
 			{
-				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Floor(Flrdata));
 			}
 
 			if (IpSceneMng._dataBase[x] == 2)
 			{
-				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Remove(RemovaData));
 			}
 			if (IpSceneMng._dataBase[x] == 3)
 			{
-				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Floor(Flrdata));
 			}
 
@@ -286,20 +286,20 @@ void GameScene::MapInit(void)
 		{
 			if (IpSceneMng._dataBase[x] == 1)
 			{
-				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Floor(Flrdata));
 			}
 			if (IpSceneMng._dataBase[x] == 2)
 			{
-				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Remove(RemovaData));
 			}
 			if (IpSceneMng._dataBase[x] == 3)
 			{
-				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Floor(Flrdata));
 				
-				Itmdata = { ITEAM_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Itmdata = { ITEAM_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Iteam(Itmdata));
 
 
@@ -308,7 +308,7 @@ void GameScene::MapInit(void)
 
 
 			//敵増加－ラムダ式
-			auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2Dbl size, Vector2Dbl exrate) {
+			auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2 size, Vector2Dbl exrate) {
 				MoveState tmpMoveState;
 				tmpMoveState.emplace_back(MOVE_TYPE::Stay, Vector2{ 0,0 });
 
@@ -318,7 +318,7 @@ void GameScene::MapInit(void)
 
 			if (IpSceneMng._dataBase[x] == 4)
 			{
-				EnemyAdd(ENEMY_TYPE::オーク, _objList, { blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x) }, { 32.0,32.0 }, { 1.0f,1.0f });
+				EnemyAdd(ENEMY_TYPE::オーク, _objList, { blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x) }, { 32,32}, { 1.0f,1.0f });
 			}
 
 
@@ -403,12 +403,12 @@ void GameScene::MapInit(void)
 		{
 			if (IpSceneMng._dataBase[x] == 1)
 			{
-				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Floor(Flrdata));
 			}
 			if (IpSceneMng._dataBase[x] == 2)
 			{
-				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Remove(RemovaData));
 			}
 
@@ -496,33 +496,33 @@ void GameScene::MapInit(void)
 		{
 			if (IpSceneMng._dataBase[x] == 1)
 			{
-				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Flrdata = { FLOOR_TYPE::当たり判定,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Floor(Flrdata));
 			}
 			if (IpSceneMng._dataBase[x] == 2)
 			{
-				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Remove(RemovaData));
 			}
 			if (IpSceneMng._dataBase[x] == 3)
 			{
-				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Flrdata = { FLOOR_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Floor(Flrdata));
 
-				Itmdata = { ITEAM_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Itmdata = { ITEAM_TYPE::メニュー,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Iteam(Itmdata));
 
 
 			}
 			if (IpSceneMng._dataBase[x] == 6)
 			{
-				Itmdata = { ITEAM_TYPE::スウィッチ,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Itmdata = { ITEAM_TYPE::スウィッチ,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Iteam(Itmdata));
 			}
 			if (IpSceneMng._dataBase[x] == 8)
 			{
 
-				Itmdata = { ITEAM_TYPE::石,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32.0,32.0} };
+				Itmdata = { ITEAM_TYPE::石,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
 				_objList.emplace_back(new Iteam(Itmdata));
 
 

@@ -32,7 +32,7 @@ enum class TEXT_QUE
 
 class Obj;
 
-using DrawQueT = std::tuple<int, Vector2, Vector2Dbl, Vector2Dbl, double, bool, int, LAYER>;
+using DrawQueT = std::tuple<int, Vector2, Vector2, Vector2Dbl, double, bool, int, LAYER>;
 
 using TextQueT = std::tuple<const char*, Vector2, Vector2Dbl,int, int, LAYER>;
 
@@ -88,6 +88,7 @@ public:
 	const int frames(void)const;								// フレーム数のゲット関数
 	const Vector2 ScreenSize;									// 全画面サイズ
 
+	std::map<LAYER, int> _screenID;
 private:
 	static SceneMng* sInstance;									// インスタンス
 	
@@ -98,7 +99,6 @@ private:
 	std::vector<ActQueT> _actList;								// 活動リスト
 
 
-	std::map<LAYER, int> _screenID;
 
 
 	void Draw(void);											// 描画

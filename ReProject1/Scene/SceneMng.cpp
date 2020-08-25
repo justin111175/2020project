@@ -5,7 +5,7 @@
 #include "..\common\_debug\_DebugDispOut.h"
 #include "..\common\_debug\_DeBugConOut.h"
 #include "..\common\TimeCount.h"
-
+#include "TitleScene.h"
 SceneMng* SceneMng::sInstance = nullptr;
 
 
@@ -17,7 +17,7 @@ bool SceneMng::Run(void)
 		return false;
 	}
 
-	_activeScene = std::make_unique<GameScene>();
+	_activeScene = std::make_unique<TitleScene>();
 
 	while (ProcessMessage() == 0 /*&& CheckHitKey(KEY_INPUT_ESCAPE) == 0*/)
 	{		
@@ -113,7 +113,7 @@ bool SceneMng::SysInit(void)
 	}
 
 
-	_chipNo.first = CHIP_TYPE::ínê}2;
+	_chipNo.first = CHIP_TYPE::ínê}1;
 	_chipNo.second = _chipNo.first;
 	_changeFlag = false;
 	
@@ -162,7 +162,7 @@ void SceneMng::Draw(void)
 		double rad;
 		int id;
 		Vector2 pos;
-		Vector2Dbl size;
+		Vector2 size;
 		Vector2Dbl ExRate;
 		LAYER layer_id;
 		bool turnFlag;

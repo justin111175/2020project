@@ -18,7 +18,7 @@ enum class Remove_State
 };
 
 
-using RemoveState = std::tuple < Remove_ID, Vector2, Vector2Dbl>;
+using RemoveState = std::tuple < Remove_ID, Vector2, Vector2>;
 
 class Remove:
 	public Obj
