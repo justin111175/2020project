@@ -3,8 +3,8 @@
 #include <string>
 #include "..\common\Vector2.h"
 #include "..\Obj.h"
-
-
+#include <map>
+#include "../common/Input/Controller.h"
 
 class BaseScene;
 
@@ -36,10 +36,13 @@ public:
 	virtual ~BaseScene();
 	virtual unique_Base Update(unique_Base own) = 0;					// 純粋仮想関数
 	virtual void RunActQue(std::vector<ActQueT> actList);				// ファンク活動キュー
+	virtual void BaseDraw(void) = 0;					                // 更新
 
 protected:
 	void FadeInit(std::string fadeType);								// Fade初期化
 	bool FadeUpdate(void);												// Fade更新
+	std::map<conType, std::unique_ptr<Controller>> controller;
+
 private:
 	int _fadeScrID;														// Fade描画ID
 	std::string _fadeType;												// Fadeタイプ

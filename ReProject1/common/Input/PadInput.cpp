@@ -5,7 +5,7 @@ conType PadInput::GetConType(void)
 	return conType();
 }
 
-bool PadInput::SetUp(int no)
+bool PadInput::SetUp(void)
 {
 	return false;
 }

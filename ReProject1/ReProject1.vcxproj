@@ -161,10 +161,12 @@
     <ClCompile Include="common\Input\KeyInput.cpp" />
     <ClCompile Include="common\Number.cpp" />
     <ClCompile Include="common\TimeCount.cpp" />
+    <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene\MeanScene.cpp" />
     <ClCompile Include="Scene\SceneMng.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
   </ItemGroup>
@@ -193,9 +195,11 @@
     <ClInclude Include="common\Number.h" />
     <ClInclude Include="common\TimeCount.h" />
     <ClInclude Include="common\Vector2.h" />
+    <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Scene\MeanScene.h" />
     <ClInclude Include="Scene\SceneMng.h" />
     <ClInclude Include="Scene\TitleScene.h" />
   </ItemGroup>

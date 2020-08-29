@@ -59,7 +59,7 @@ void Enemy::Update(void)
 	//}
 	if (_type == ENEMY_TYPE::ÉIÅ[ÉN)
 	{
-		if (rand() % 10==0)
+		if (rand() % 60*2==0)
 		{
 			IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 

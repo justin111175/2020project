@@ -49,6 +49,7 @@ private:
 	void Camera(void);
 
 	MeanID meanID_;
+
 	Status_ID status_;
 	
 	MeanState meanState_;

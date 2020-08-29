@@ -28,11 +28,30 @@ void Player::Update(void)
 {	
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 	_dbgDrawFormatString(0, 50, 0xFFFFFF, "プレイヤーの座標 X:%d,Y:%d", _pos.x, _pos.y);
-	//_dbgDrawFormatString(0, 100, 0xFFFFFF, "Mapの座標 X:%f,Y:%f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
+	_dbgDrawFormatString(0, 100, 0xFFFFFF, "Mapの座標 X:%f,Y:%f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 	_status[Status_ID::HP] = 100 + _status[Status_ID::体力] * 1.7+ _status[Status_ID::筋力]*0.7;
 	_status[Status_ID::スタミナ] = 100 + _status[Status_ID::持久力] * 1.7;
 	_status[Status_ID::攻撃力] = 10 + _status[Status_ID::筋力] * 1.7 + _status[Status_ID::敏捷] * 0.7;
 	_status[Status_ID::防御力] = 10 + _status[Status_ID::持久力] * 1.7 + _status[Status_ID::筋力] * 0.7;
+
+
+
+	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図5)
+	{
+		//if (_pos.y > 640)
+		//{
+		//	stateDir(STATE::NORMAL, DIR_ID::UP);
+
+
+
+		//	//_runFlag = false;
+
+		//	
+
+		//}
+
+	}
+
 
 	//auto test = [&](int no) {
 	//	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
@@ -825,7 +844,7 @@ void Player::ModeInit(void)
 
 		IpSceneMng.AddDrawQue({ "ステータス",Pos(MeanID::ステータス), {1.0f,1.0f },20,0,LAYER::UI });
 		IpSceneMng.AddDrawQue({ "保存",Pos(MeanID::保存), {1.0f,1.0f },20,0,LAYER::UI });
-		IpSceneMng.AddDrawQue({ "終了",Pos(MeanID::終了),{ 1.0f,1.0f },20,0,LAYER::UI });
+		IpSceneMng.AddDrawQue({ "ゲーム終了",Pos(MeanID::終了),{ 1.0f,1.0f },20,0,LAYER::UI });
 
 
 

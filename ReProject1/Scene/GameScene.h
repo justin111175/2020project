@@ -14,6 +14,7 @@ enum class CHIP_TYPE
 	地図2,
 	地図3,
 	地図4,
+	地図5,
 	MAX
 };
 
@@ -32,6 +33,8 @@ public:
 	GameScene();
 	~GameScene();
 	unique_Base Update(unique_Base own) override;					// 更新
+	void BaseDraw(void) override;					                // 更新
+
 private:
 	friend FuncCheck;
 	friend FuncBullet;

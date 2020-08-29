@@ -21,24 +21,17 @@ TitleScene::~TitleScene()
 unique_Base TitleScene::Update(unique_Base own)
 {	
 
-	
+	BaseDraw();
+
 	if (!FadeUpdate())
 	{
-		for (auto data : _objList)
-		{
-			(*data).Update();
-		}
+
+		MeanCtl();
+
 	}
 
-	for (auto data : _objList)
-	{
 
-		(*data).Draw();
-	}
 
-	MeanCtl();
-
-	Draw();
 
 
 
@@ -56,6 +49,20 @@ unique_Base TitleScene::Update(unique_Base own)
 		_objList.end());
 
 	return std::move(own);
+
+}
+
+void TitleScene::BaseDraw(void)
+{
+	
+	
+	for (auto data : _objList)
+	{
+
+		(*data).Draw();
+	}
+	Draw();
+
 
 }
 

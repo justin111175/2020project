@@ -7,7 +7,7 @@ class PadInput :
 {
 
 	conType GetConType(void) override;
-	bool SetUp(int no) override;
+	bool SetUp(void) override;
 	void Updata(void) override;
 private:
 	std::array<char, 256> _keyData;

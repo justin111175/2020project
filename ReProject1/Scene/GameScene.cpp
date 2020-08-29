@@ -8,8 +8,9 @@
 #include "..\Enemy.h"
 #include "..\Iteam.h"
 #include "..\common\_debug\_DebugDispOut.h"
-
-
+#include "../common/Input/KeyInput.h"
+#include "GameOverScene.h"
+#include "MeanScene.h"
 GameScene::GameScene()
 {
 	IpImageMng.GetID("ÉvÉåÉCÉÑÅ[ï‡Ç≠", "image/Player/walk.png", { 32,32 }, { 3,4 });
@@ -35,7 +36,9 @@ GameScene::GameScene()
 	IpSceneMng._changeFlag = false;
 
 
-	
+	controller.emplace(conType::Key, std::make_unique<KeyInput>());
+	controller[conType::Key]->SetUp();
+
 
 
 	_Init[IpSceneMng._chipNo.first]();
@@ -68,42 +71,56 @@ unique_Base GameScene::Update(unique_Base own)
 		}
 	}
 
-	for (auto data : _objList)
-	{
 
-		(*data).Draw();
+	BaseDraw();
+
+	auto plObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj& obj) { return (*obj)._unitID == UNIT_ID::PLAYER; });
+
+
+	if (CheckHitKey(KEY_INPUT_T))
+	{
+		/*return std::make_unique<MeanScene>(std::move(own), plObj);*/
+
 	}
 
-	//IpSceneMng.AddDrawQue({ IMAGE_ID("block")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG});
-	
-	
-	_Draw[IpSceneMng._chipNo.first]();
-	auto count = std::count_if(_objList.begin(), _objList.end(), [](sharedObj& obj) { return (*obj)._unitID == UNIT_ID::ENEMY; });
-	if (count < 5)
+	if ((*plObj)->isDead())
 	{
-		if (IpSceneMng.frames() % 1800 == 0)
-		{
-			//ìGëùâ¡Å|ÉâÉÄÉ_éÆ
-			auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2 size, Vector2Dbl exrate) {
-				MoveState tmpMoveState;
-				tmpMoveState.emplace_back(MOVE_TYPE::Normal, Vector2{ 0,0 });
+		return std::make_unique<GameOverScene>(std::move(own));
+	}
 
-				EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
-				_objList.emplace_back(new Enemy(data));
-			};
-			if (IpSceneMng._data[672 / 32][32 / 32] != 4)
+
+	auto count = std::count_if(_objList.begin(), _objList.end(), [](sharedObj& obj) { return (*obj)._unitID == UNIT_ID::ENEMY; });
+	
+
+	if (IpSceneMng._chipNo.first == CHIP_TYPE::ínê}1)
+	{
+		if (count < 5)
+		{
+			if (IpSceneMng.frames() % 180 == 0)
 			{
-				for (int x = 0; x < 1; x++)
+				//ìGëùâ¡Å|ÉâÉÄÉ_éÆ
+				auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2 size, Vector2Dbl exrate) {
+					MoveState tmpMoveState;
+					tmpMoveState.emplace_back(MOVE_TYPE::Normal, Vector2{ 0,0 });
+
+					EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
+					_objList.emplace_back(new Enemy(data));
+				};
+				if (IpSceneMng._data[672 / 32][32 / 32] != 4)
 				{
-					for (int y = 0; y < 1; y++)
+					for (int x = 0; x < 1; x++)
 					{
-						EnemyAdd(ENEMY_TYPE::ÉRÉEÉÇÉä, _objList, { 32 ,672 }, { 32,32}, { 1.0f,1.0f });
+						for (int y = 0; y < 1; y++)
+						{
+							EnemyAdd(ENEMY_TYPE::ÉRÉEÉÇÉä, _objList, { 32 ,672 }, { 32,32}, { 1.0f,1.0f });
+						}
 					}
 				}
-			}
 
+			}
 		}
 	}
+
 
 
 
@@ -115,6 +132,18 @@ unique_Base GameScene::Update(unique_Base own)
 		_objList.end());
 	
 	return std::move(own);
+}
+
+void GameScene::BaseDraw(void)
+{
+	for (auto data : _objList)
+	{
+
+		(*data).Draw();
+	}
+
+	_Draw[IpSceneMng._chipNo.first]();
+
 }
 
 void GameScene::FuncInit(void)
@@ -479,13 +508,13 @@ void GameScene::MapInit(void)
 			IpSceneMng.mapPos = { 160,520 };
 
 		}
-		//else
-		//{
-		//	_objList.emplace_back(new Player({ 704,64 }, { 32,32 }, { 1.0f,1.0f }));
-		//	IpSceneMng.mapPos = { 32,0 };
+		else
+		{
+			_objList.emplace_back(new Player({ 416,64 }, { 32,32 }, { 1.0f,1.0f }));
+			IpSceneMng.mapPos = { 16,0 };
 
 
-		//}
+		}
 
 		FloorState Flrdata;
 		IteamState Itmdata;
@@ -527,6 +556,91 @@ void GameScene::MapInit(void)
 
 
 			}
+		}
+
+
+
+		////ìGëùâ¡Å|ÉâÉÄÉ_éÆ
+		//auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate) {
+		//	MoveState tmpMoveState;
+		//	tmpMoveState.emplace_back(DIR_ID::RIGHT, Vector2Dbl{ 0,0 });
+		//	tmpMoveState.emplace_back(DIR_ID::DOWN, Vector2Dbl{ 0,0 });
+		//	tmpMoveState.emplace_back(DIR_ID::LEFT, Vector2Dbl{ 0,0 });
+		//	tmpMoveState.emplace_back(DIR_ID::UP, Vector2Dbl{ 0,0 });
+
+		//	EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
+		//	_objList.emplace_back(new Enemy(data));
+		//};
+
+		//for (int x = 0; x < 1; x++)
+		//{
+		//	for (int y = 0; y < 1; y++)
+		//	{
+		//		EnemyAdd(ENEMY_TYPE::ÉRÉEÉÇÉä, _objList, { 400 + x * 30.0,300 + y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
+		//	}
+		//}
+		return true;
+
+
+	});
+
+	_Init.try_emplace(CHIP_TYPE::ínê}5, [&]() {
+
+		IpSceneMng.mapSize = { 800,800 };
+		int blocksize = 32;
+
+		Vector2 ChipMax = IpSceneMng.mapSize / blocksize;
+		// ï`âÊÇì«Ç›çûÇﬁ
+		IpSceneMng._dataBase.resize((__int64)ChipMax.x * ChipMax.y);
+		for (size_t no = 0; no < ChipMax.y; no++)
+		{
+			IpSceneMng._data.emplace_back(&IpSceneMng._dataBase[no * ChipMax.x]);
+		}
+
+
+		IpImageMng.GetID("Map005", "image/Map005.png", IpSceneMng.mapSize, { 1,1 });
+
+
+		// csvÉtÉ@ÉCÉãÇì«Ç›çûÇﬁ
+		int type = NULL;
+		int y = 0;
+		int x = 0;
+
+		FILE* fp = NULL;
+		fopen_s(&fp, "csv/5.csv", "rb");
+		while (fscanf_s(fp, "%d", &type) != EOF)
+		{
+			IpSceneMng._dataBase[x] = type;
+			x++;
+		}
+
+
+
+
+		_objList.emplace_back(new Player({ 12*32,23*32 }, { 32,32 }, { 1.0f,1.0f }));
+		IpSceneMng.mapPos = { 0,200 };
+
+		
+
+
+		FloorState Flrdata;
+		IteamState Itmdata;
+
+		RemoveState RemovaData;
+
+		for (int x = 0; x < ChipMax.x * ChipMax.y; x++)
+		{
+			if (IpSceneMng._dataBase[x] == 1)
+			{
+				Flrdata = { FLOOR_TYPE::ìñÇΩÇËîªíË,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
+				_objList.emplace_back(new Floor(Flrdata));
+			}
+			if (IpSceneMng._dataBase[x] == 2)
+			{
+				RemovaData = { Remove_ID::test1,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
+				_objList.emplace_back(new Remove(RemovaData));
+			}
+
 		}
 
 
@@ -612,7 +726,19 @@ void GameScene::MapInit(void)
 
 	});
 
+	_Draw.try_emplace(CHIP_TYPE::ínê}5, []() {
+		IpSceneMng.AddDrawQue({ IMAGE_ID("Map005")[0], {0,0 }, { 0,0 }, { 1.0f,1.0f }, false, 0, 0, LAYER::BG });
+		for (int x = 0; x < (800 / 32); x++)
+		{
+			for (int y = 0; y < (800 / 32); y++)
+			{
+				_dbgDrawFormatString(-IpSceneMng.mapPos.x + x * 32, -IpSceneMng.mapPos.y + y * 32, 0xFFFFFF, "%d", IpSceneMng._data[y][x]);
 
+			}
+
+		}
+
+	});
 
 }
 
@@ -678,11 +804,23 @@ void GameScene::ChangeInit(void)
 		{
 			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}3;
 		}
-		//if ((*PlObj)->Pos() == Vector2(704, 60))
-		//{
-		//	IpSceneMng._chipNo.first = CHIP_TYPE::ínê}4;
-		//}
+		else
+		{
+			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}5;
+		}
+
 	});
+	_Change.try_emplace(CHIP_TYPE::ínê}5, [&]() {
+
+		auto PlObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj obj) {return (*obj)._unitID == UNIT_ID::PLAYER; });
+
+		if ((*PlObj)->Pos().y > IpSceneMng.mapSize.y / 2)
+		{
+			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}4;
+		}
+
+	});
+
 }
 
 
