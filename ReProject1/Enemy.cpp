@@ -117,28 +117,54 @@ void Enemy::Init(void)
 	_dead = false;
 	_unitID = UNIT_ID::ENEMY;
 	
-	int TYPE = 12 * static_cast<int>(_type);
-	AnimVector data;
-	for (auto dir : DIR_ID())
+	if (_type != ENEMY_TYPE::ボス)
 	{
-		int dirCnt = static_cast<int>(dir) * 3;
-		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+0], 10);
-		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+1], 20);
-		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+2], 30);
-		data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt+1], 40);
-		
-		SetAnim(STATE::NORMAL, dir, data);
-		
-		for (int i = 0; i < 24; i++)
+		int TYPE = 12 * static_cast<int>(_type);
+		AnimVector data;
+		for (auto dir : DIR_ID())
 		{
-			data.emplace_back(IMAGE_ID("blast")[i], i);
+			int dirCnt = static_cast<int>(dir) * 3;
+			data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt + 0], 10);
+			data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt + 1], 20);
+			data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt + 2], 30);
+			data.emplace_back(IMAGE_ID("モンスター歩く")[(__int64)TYPE + dirCnt + 1], 40);
+
+			SetAnim(STATE::NORMAL, dir, data);
+
+			for (int i = 0; i < 24; i++)
+			{
+				data.emplace_back(IMAGE_ID("blast")[i], i);
+			}
+			data.emplace_back(-1, 25);
+			SetAnim(STATE::DETH, dir, data);
+
 		}
-		data.emplace_back(-1, 25);
-		SetAnim(STATE::DETH, dir, data);
-
+		enemyMode_ = EnemyMode::自由移動;
 	}
-	enemyMode_ = EnemyMode::自由移動;
+	else
+	{
 
+
+		AnimVector data;
+
+			data.emplace_back(IMAGE_ID("ボス")[0], 10);
+			data.emplace_back(IMAGE_ID("ボス")[1], 20);
+			data.emplace_back(IMAGE_ID("ボス")[2], 30);
+			data.emplace_back(IMAGE_ID("ボス")[1], 40);
+			SetAnim(STATE::NORMAL,  data);
+
+		
+
+			for (int i = 0; i < 24; i++)
+			{
+				data.emplace_back(IMAGE_ID("blast")[i], i);
+			}
+			data.emplace_back(-1, 25);
+			SetAnim(STATE::DETH, data);
+
+		
+		enemyMode_ = EnemyMode::自由移動;
+	}
 
 
 	switch (_type)
@@ -164,6 +190,11 @@ void Enemy::Init(void)
 	case ENEMY_TYPE::ゴースト:
 		break;
 	case ENEMY_TYPE::魔族:
+		break;
+	case ENEMY_TYPE::ボス:
+		_status.try_emplace(Status_ID::HP, 100);
+		//_status.try_emplace(Status_ID::最大HP, 100);
+		_experience.try_emplace(0, 30);
 		break;
 	case ENEMY_TYPE::MAX:
 		break;

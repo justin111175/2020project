@@ -88,9 +88,23 @@ unique_Base GameScene::Update(unique_Base own)
 		return std::make_unique<GameOverScene>(std::move(own));
 	}
 
+	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図5)
+	{
+		auto bossObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj& obj) { return (*obj)._unitID == UNIT_ID::ENEMY; });
+
+
+		if ((*bossObj)->isDead())
+		{
+			return std::make_unique<GameOverScene>(std::move(own));
+		}
+	}
+
 
 	auto count = std::count_if(_objList.begin(), _objList.end(), [](sharedObj& obj) { return (*obj)._unitID == UNIT_ID::ENEMY; });
 	
+
+
+
 
 	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図1)
 	{
@@ -599,6 +613,8 @@ void GameScene::MapInit(void)
 
 
 		IpImageMng.GetID("Map005", "image/Map005.png", IpSceneMng.mapSize, { 1,1 });
+		IpImageMng.GetID("ボス", "image/Monsters/boss.png", {120,120}, { 3,4 });
+		//IpImageMng.GetID("モンスター歩く", "image/Monsters/walk.png", { 32,32 }, { 3,32 });
 
 
 		// csvファイルを読み込む
@@ -645,25 +661,25 @@ void GameScene::MapInit(void)
 
 
 
-		////敵増加－ラムダ式
-		//auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2Dbl pos, Vector2Dbl size, Vector2Dbl exrate) {
-		//	MoveState tmpMoveState;
-		//	tmpMoveState.emplace_back(DIR_ID::RIGHT, Vector2Dbl{ 0,0 });
-		//	tmpMoveState.emplace_back(DIR_ID::DOWN, Vector2Dbl{ 0,0 });
-		//	tmpMoveState.emplace_back(DIR_ID::LEFT, Vector2Dbl{ 0,0 });
-		//	tmpMoveState.emplace_back(DIR_ID::UP, Vector2Dbl{ 0,0 });
+		//敵増加－ラムダ式
+				//敵増加－ラムダ式
+		auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2 size, Vector2Dbl exrate) {
+			MoveState tmpMoveState;
+			tmpMoveState.emplace_back(MOVE_TYPE::Stay, Vector2{ 0,0 });
 
-		//	EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
-		//	_objList.emplace_back(new Enemy(data));
-		//};
+			EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
+			_objList.emplace_back(new Enemy(data));
+		};
 
-		//for (int x = 0; x < 1; x++)
-		//{
-		//	for (int y = 0; y < 1; y++)
-		//	{
-		//		EnemyAdd(ENEMY_TYPE::コウモリ, _objList, { 400 + x * 30.0,300 + y * 30.0 }, { 48.0,48.0 }, { 1.0f,1.0f });
-		//	}
-		//}
+		for (int x = 0; x < 1; x++)
+		{
+			for (int y = 0; y < 1; y++)
+			{
+				EnemyAdd(ENEMY_TYPE::ボス, _objList, { 384 ,32 }, { 120,120 }, { 1.0f,1.0f });
+			}
+		}
+		
+
 		return true;
 
 

@@ -172,43 +172,6 @@ void EnemyMove::Normal(void)
 
 	};
 
-	
-
-
-	//auto CheckMove = [&](int no) {
-	//	Vector2	Pos = { static_cast<int>((_pos.x + _size.x - 1) / 32),static_cast<int>(_pos.y / 32) };
-
-	//	if (IpSceneMng._data[Pos.y][Pos.x - 1] == no)
-	//	{
-	//		_pData._bit.LEFT = 0;
-	//		return true;
-	//	}
-
-	//	Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y - 1) / 32) };
-	//	if (IpSceneMng._data[Pos.y - 1][Pos.x] == no)
-	//	{
-	//		_pData._bit.UP = 0;
-	//		return true;
-
-	//	}
-
-	//	Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
-	//	if (IpSceneMng._data[Pos.y][Pos.x + 1] == no)
-	//	{
-	//		_pData._bit.RIGHT = 0;
-	//		return true;
-
-
-	//	}
-	//	if (IpSceneMng._data[Pos.y + 1][Pos.x] == no)
-	//	{
-	//		_pData._bit.DOWN = 0;
-	//		return true;
-
-	//	}
-	//	return false;
-
-	//};
 	int list[] = { 0,1,4 };
 	for (int i = 0;i < 2; i++)
 	{

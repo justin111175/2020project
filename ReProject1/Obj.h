@@ -30,6 +30,7 @@ enum class UNIT_ID
 	伝送,
 	石,
 	スウィッチ,
+	ボス,
 	//LevelUp,						// レベルアップ
 	メニュー
 };

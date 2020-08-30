@@ -13,6 +13,7 @@ enum class ENEMY_TYPE		//敵タイプ
 	スカルマン,
 	ゴースト,
 	魔族,
+	ボス,
 	MAX
 };
 
