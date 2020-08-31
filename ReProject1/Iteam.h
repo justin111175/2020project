@@ -7,6 +7,7 @@ enum class ITEAM_TYPE
 	石, 
 	メニュー,
 	スウィッチ,
+	ドラゴン床,
 	MAX
 };
 enum class ITEAM_STATE
@@ -34,7 +35,6 @@ private:
 	void StoneMove(void);
 	void Init(void);												// 初期化
 	ITEAM_TYPE _type;												// 種類
-
 
 };
 

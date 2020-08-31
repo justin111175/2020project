@@ -128,6 +128,7 @@ void Player::SetDir(InputID id)
 			_runFlag = true;
 
 		}
+		
 		break;
 	case InputID::Down:
 		stateDir(STATE::NORMAL, DIR_ID::DOWN);
@@ -329,14 +330,27 @@ void Player::Move(void)
 
 	auto CheckUP = [&](int no) {
 		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y - 4) / 32) };
-		if (IpSceneMng._data[Pos.y - 1][Pos.x] == no)
+		if (_pos.y > 0)
+		{
+			if (IpSceneMng._data[Pos.y - 1][Pos.x] == no)
+			{
+
+				_pData._bit.UP = 0;
+				return true;
+
+			
+			
+
+
+
+			}
+		}
+		else
 		{
 			_pData._bit.UP = 0;
-
-
 			return true;
-
 		}
+
 		return false;
 
 	};

@@ -32,7 +32,7 @@ void Remove::Init(void)
 	AnimVector data;
 	_zorder = -1;
 	_unitID = UNIT_ID::“`‘—;
-	data.emplace_back(IMAGE_ID("block")[2], 30);
+	//data.emplace_back(IMAGE_ID("block")[2], 30);
 	SetAnim(STATE::NORMAL, data);
 
 

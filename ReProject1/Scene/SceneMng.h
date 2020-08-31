@@ -83,7 +83,8 @@ public:
 	std::vector<int> _dataBase;
 	std::vector<int*> _data;
 
-
+	int rennsaFlag_;
+	int mingameFlag_;
 	int _blendCnt;												// ブレンド用カント
 	const int frames(void)const;								// フレーム数のゲット関数
 	const Vector2 ScreenSize;									// 全画面サイズ

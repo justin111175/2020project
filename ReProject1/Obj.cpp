@@ -153,6 +153,11 @@ bool Obj::Pos(Vector2 pos)
 	return true;
 }
 
+const STATE Obj::GetState(void)
+{
+	return _state;
+}
+
 Vector2 Obj::posOldGet(void)
 {
 
@@ -179,6 +184,11 @@ bool Obj::RunFlag(bool flag)
 {
 	_runFlag = flag;
 	return true;
+}
+
+const DIR_ID Obj::GetDir(void)
+{
+	return _dir;
 }
 
 

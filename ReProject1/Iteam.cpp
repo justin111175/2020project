@@ -1,7 +1,7 @@
 #include "Iteam.h"
 #include "common/ImageMng.h"
 #include "Scene/SceneMng.h"
-
+#include <Dxlib.h>
 Iteam::Iteam()
 {
 	Init();
@@ -19,7 +19,7 @@ Iteam::Iteam(IteamState& state)
 	_pos = std::move(std::get<static_cast<int>(ITEAM_STATE::VECTOR)>(state));
 	_size = std::move(std::get<static_cast<int>(ITEAM_STATE::SIZE)>(state));
 
-
+	IpSceneMng.rennsaFlag_ = false;
 	Init();
 
 }
@@ -31,7 +31,31 @@ void Iteam::Update(void)
 		StoneMove();
 
 	}
-	stateDir(STATE::NORMAL, _dir);
+	else
+	{
+		IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+		if (_type == ITEAM_TYPE::スウィッチ)
+		{
+			if (_state==STATE::DETH)
+			{
+
+				IpSceneMng.rennsaFlag_ = true;
+
+			
+			}
+		}
+		if (_type == ITEAM_TYPE::ドラゴン床)
+		{
+			IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+
+			if (IpSceneMng.rennsaFlag_ == true)
+			{
+				stateDir(STATE::DETH);
+
+			}
+		}
+
+	}
 
 }
 
@@ -48,14 +72,7 @@ void Iteam::StoneMove(void)
 
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 
-	//if (static_cast<int>(_pos.x % 32) == 0)
-	//{
-	//	if (static_cast<int>(_pos.y % 32) == 0)
-	//	{
-	//		_runFlag = false;
 
-	//	}
-	//}
 	auto CheckUP = [&](int no) {
 		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>((_pos.y + _size.y - 4) / 32) };
 		if (IpSceneMng._data[Pos.y - 1][Pos.x] == no)
@@ -197,7 +214,25 @@ void Iteam::Init(void)
 		SetAnim(STATE::NORMAL, data);
 
 
+		data.emplace_back(IMAGE_ID("switch")[86], 30);
+		data.emplace_back(IMAGE_ID("switch")[85], 60);
+		data.emplace_back(IMAGE_ID("switch")[84], 90);
+		data.emplace_back(IMAGE_ID("switch")[85], 120);
+		data.emplace_back(IMAGE_ID("switch")[86], 150);
+		//data.emplace_back(-1, 25);
+
+		SetAnim(STATE::DETH, data);
+
+		break;
+
+	case ITEAM_TYPE::ドラゴン床:
+		_unitID = UNIT_ID::ドラゴン床;
+		data.emplace_back(-1, 25);
+		SetAnim(STATE::NORMAL, data);
 		
+		data.emplace_back(IMAGE_ID("ドラゴン床")[0], 30);
+		SetAnim(STATE::DETH, data);
+
 
 		break;
 	default:

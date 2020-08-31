@@ -24,12 +24,6 @@ class GameScene :
 {
 public:
 
-	static GameScene& GetInstance()
-	{
-		static GameScene s_Instance;
-		return s_Instance;
-	}
-
 	GameScene();
 	~GameScene();
 	unique_Base Update(unique_Base own) override;					// çXêV

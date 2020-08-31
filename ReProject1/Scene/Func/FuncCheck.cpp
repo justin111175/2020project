@@ -58,23 +58,10 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 		{
 			if ((obj->_unitID == unitID) && (*obj).isAlive())
 			{	
-				//IpSceneMng.mapPos
-				//_dbgDrawBox(-IpSceneMng.mapPos.x+actQue.second.Pos().x, -IpSceneMng.mapPos.y + actQue.second.Pos().y,
-				//	-IpSceneMng.mapPos.x + actQue.second.Pos().x + actQue.second.sizeGet().x,
-				//	-IpSceneMng.mapPos.y + actQue.second.Pos().y + actQue.second.sizeGet().y,
-				//	0xFFFFFF, true);
+
 				_dbgDrawCircle(-IpSceneMng.mapPos.x + actQue.second.Pos().x, -IpSceneMng.mapPos.y + actQue.second.Pos().y, 5, 0xFFFFFF, true);
 				_dbgDrawCircle(-IpSceneMng.mapPos.x+ChangePos((*obj).Pos(), (*obj).sizeGet()).x, -IpSceneMng.mapPos.y+ChangePos((*obj).Pos(), (*obj).sizeGet()).y, (*obj).sizeGet().x / 2, 0xFFFFFF, true);
-				//actQue.second.
-
-
-/*				if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::左上))
-				{
-					actQue.second.SetAlive(false);
-					(*obj).SetAlive(false);
-					return true;
-
-				}	*/			
+		
 
 				if (CheckCircle(actQue.second.Pos(), 5, ChangePos((*obj).Pos(), (*obj).sizeGet()), (*obj).sizeGet().x / 2))
 				{
@@ -149,6 +136,59 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 
 			}
 		}
+		return false;
+	case UNIT_ID::スウィッチ:
+		unitID = UNIT_ID::石;
+		//if ((unitID == UNIT_ID::PLAYER) || (unitID == UNIT_ID::石))
+		{
+			for (auto obj : ((GameScene*)scene)->_objList)
+			{
+				if ((obj->_unitID == unitID) && (*obj).isAlive())
+				{
+
+					if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::左上))
+					{
+
+						//actQue.second.DIR((*obj).DIR());
+						actQue.second.stateDir(STATE::DETH);
+						//(*obj).Pos((*obj).posOldGet());
+						return true;
+
+					}
+					else
+					{
+						actQue.second.stateDir(STATE::NORMAL);
+
+					}
+
+
+				}
+			}
+		}
+
+		return false;
+	case UNIT_ID::ドラゴン床:
+		unitID = UNIT_ID::PLAYER;
+		//if ((unitID == UNIT_ID::PLAYER) || (unitID == UNIT_ID::石))
+		{
+			for (auto obj : ((GameScene*)scene)->_objList)
+			{
+				if ((obj->_unitID == unitID) && actQue.second.GetState()==STATE::DETH)
+				{
+
+					if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::左上))
+					{
+						IpSceneMng.mingameFlag_ = true;
+						return true;
+
+					}
+
+
+
+				}
+			}
+		}
+
 		return false;
 	default:
 		break;

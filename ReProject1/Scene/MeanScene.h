@@ -6,6 +6,13 @@
 #include "../Player.h"
 
 
+enum class DiffIndex
+{
+	サルでもできる,
+	少し難しいかも,
+	もしかして君は神様
+};
+
 class MeanScene :
     public BaseScene
 {
@@ -25,6 +32,6 @@ private:
 	MeanID meanID_;
 
 	int _screenID;
-
+	DiffIndex diffIndex_;
 };
 

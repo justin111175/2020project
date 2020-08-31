@@ -31,6 +31,7 @@ enum class UNIT_ID
 	石,
 	スウィッチ,
 	ボス,
+	ドラゴン床,
 	//LevelUp,						// レベルアップ
 	メニュー
 };
@@ -93,6 +94,7 @@ public:
 	Vector2 Pos(void);											//今の座標
 	bool Pos(Vector2 pos);
 
+	const STATE GetState(void);
 	Vector2 posOldGet(void);											//昔の座標
 	Vector2 sizeGet(void);											//大きさ
 	DIR_ID DIR(void);
@@ -109,6 +111,7 @@ public:
 
 	std::map < DIR_ID, bool> _dirFlag;									// true:移動、false：停止
 	
+	const DIR_ID GetDir(void);														
 
 	Vector2 _speed;											//移動速度
 
@@ -120,7 +123,6 @@ private:
 
 	std::map <STATE, AnimVector> _animMap[static_cast<int>(DIR_ID::MAX)];								// キー、アニメフレーム
 
-	STATE _state;														// 状態
 
 	unsigned int _animFrame;											// フレーム
 	unsigned int _animCount;											// アニメカント
@@ -145,6 +147,7 @@ protected:
 	bool _turnFlag;
 	
 	bool _repelFlag;//撃退用
+	STATE _state;														// 状態
 
 };
 

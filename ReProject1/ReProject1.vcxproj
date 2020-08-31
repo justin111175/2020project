@@ -149,6 +149,7 @@
     <ClCompile Include="EnemyMove.cpp" />
     <ClCompile Include="id\DIR_ID.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="Scene\MingameScene.cpp" />
     <ClCompile Include="Scene\Func\FuncBullet.cpp" />
     <ClCompile Include="Scene\Func\FuncCheck.cpp" />
     <ClCompile Include="id\Layer_id.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="EnemyMove.h" />
     <ClInclude Include="id\DIR_ID.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="Scene\MingameScene.h" />
     <ClInclude Include="Scene\Func\FuncBullet.h" />
     <ClInclude Include="Scene\Func\FuncCheck.h" />
     <ClInclude Include="id\Layer_id.h" />

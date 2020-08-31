@@ -11,6 +11,8 @@
 #include "../common/Input/KeyInput.h"
 #include "GameOverScene.h"
 #include "MeanScene.h"
+#include "MingameScene.h"
+
 GameScene::GameScene()
 {
 	IpImageMng.GetID("ÉvÉåÉCÉÑÅ[ï‡Ç≠", "image/Player/walk.png", { 32,32 }, { 3,4 });
@@ -27,6 +29,8 @@ GameScene::GameScene()
 	IpImageMng.GetID("other", "image/other.png", { 32,32 }, { 12,8 });
 	IpImageMng.GetID("switch", "image/switch.png", { 32,32 }, { 12,8 });
 	IpImageMng.GetID("íe", "image/shot.png", { 20,10 }, { 1,1 });
+	
+	IpImageMng.GetID("ÉhÉâÉSÉìè∞", "image/floor.png", { 64,64 }, { 1,1 });
 
 	MapInit();
 	ChangeInit();
@@ -34,6 +38,7 @@ GameScene::GameScene()
 
 
 	IpSceneMng._changeFlag = false;
+	IpSceneMng.mingameFlag_ = false;
 
 
 	controller.emplace(conType::Key, std::make_unique<KeyInput>());
@@ -56,11 +61,14 @@ unique_Base GameScene::Update(unique_Base own)
 	{
 		IpSceneMng._chipNo.second = IpSceneMng._chipNo.first;
 		_Change[IpSceneMng._chipNo.first]();
-		//_Change[CHIP_TYPE::ínê}3]();
 
 		Clear();
 		return std::make_unique<GameScene>();
 
+	}
+	if (IpSceneMng.mingameFlag_)
+	{
+		return std::make_unique<MeanScene>(std::move(own));
 	}
 
 	if (!FadeUpdate())
@@ -79,7 +87,7 @@ unique_Base GameScene::Update(unique_Base own)
 
 	if (CheckHitKey(KEY_INPUT_T))
 	{
-		/*return std::make_unique<MeanScene>(std::move(own), plObj);*/
+		return std::make_unique<MeanScene>(std::move(own));
 
 	}
 
@@ -566,6 +574,15 @@ void GameScene::MapInit(void)
 			{
 
 				Itmdata = { ITEAM_TYPE::êŒ,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{32,32} };
+				_objList.emplace_back(new Iteam(Itmdata));
+
+
+			}
+
+			if (IpSceneMng._dataBase[x] == 10)
+			{
+
+				Itmdata = { ITEAM_TYPE::ÉhÉâÉSÉìè∞,{blocksize * (x % ChipMax.x),blocksize * (x / ChipMax.x)},{64,64} };
 				_objList.emplace_back(new Iteam(Itmdata));
 
 
