@@ -11,23 +11,28 @@ EnemyMove::EnemyMove(Vector2& pos, double& rad, Vector2& size, DIR_ID& dir, bool
 	_size(size), 
 	_dir(dir),
 	_runFlag(runFlag)
+
 {
+
 	_unitID = UNIT_ID::ENEMY;
 	_move = nullptr;
 	_runFlag = false;
 	_aimCnt = -1;
+	actFlag = false;
 }
 
 EnemyMove::~EnemyMove()
 {
 }
 
-void EnemyMove::Update(void)
+void EnemyMove::Update(sharedObj& plObj)
 {
 	// 関数ポインタはnullptrだかどうか、確認する
 	if (_move != nullptr)
 	{
+		plObj_ = plObj;
 		// 関数ポインタ自分自身を呼ぶ	:	this->*_move();エラーが出る原因は_move()の優先度が高いことです
+
 		(this->*_move)();
 	}
 
@@ -91,6 +96,15 @@ void EnemyMove::SetMovePrg(void)
 
 	case MOVE_TYPE::Stay:
 		_move = &EnemyMove::Saty;
+		break;
+	case MOVE_TYPE::Boss:
+		_move = &EnemyMove::BossMove;
+		break;
+	case MOVE_TYPE::RetPos:
+		_move = &EnemyMove::RetPos;
+		break;
+	case MOVE_TYPE::Act1:
+		_move = &EnemyMove::Actack1;
 		break;
 	default:
 		//AST();
@@ -349,6 +363,44 @@ void EnemyMove::Normal(void)
 void EnemyMove::Saty(void)
 {
 
+
+}
+
+void EnemyMove::RetPos(void)
+{
+
+	Vector2 tmp = _endPos - _pos;
+	int Long = tmp.x * tmp.x + tmp.y * tmp.y;
+
+	if (tmp.x * tmp.x+tmp.y*tmp.y < 20 * 20)
+	{
+		_pos = _endPos;
+		SetMovePrg();
+
+	}
+	else
+	{
+		_pos += tmp / 20;
+
+	}
+
+}
+
+void EnemyMove::Actack1(void)
+{
+	actFlag = true;
+}
+
+void EnemyMove::BossMove(void)
+{
+	//Vector2 tmp =_endPos - _pos;
+	//
+	//
+	//_pos += tmp / 100;
+	//if (_pos == _endPos)
+	//{
+	//	SetMovePrg();
+	//}
 
 }
 

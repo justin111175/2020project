@@ -28,7 +28,7 @@ Floor::Floor(FloorState & state)
 
 }
 
-void Floor::Update(void)
+void Floor::Update(sharedObj& plObj)
 {
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 

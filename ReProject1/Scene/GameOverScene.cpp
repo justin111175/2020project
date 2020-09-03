@@ -46,7 +46,7 @@ unique_Base GameOverScene::Update(unique_Base own)
 				case InputID::Z:
 					IpSceneMng.mapPos = { 0,0 };
 
-					//return std::make_unique<MingameScene>();
+					return std::make_unique<TitleScene>();
 
 					break;
 				}

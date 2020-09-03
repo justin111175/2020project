@@ -27,7 +27,7 @@ public:
 	Remove(RemoveState & state);
 	~Remove();
 
-	void Update(void) override;							// 更新
+	void Update(sharedObj& plObj) override;							// 更新
 
 
 private:

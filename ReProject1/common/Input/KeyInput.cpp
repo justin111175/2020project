@@ -15,6 +15,7 @@ bool KeyInput::SetUp(void)
 		{InputID::Left,KEY_INPUT_LEFT},
 		{InputID::Right,KEY_INPUT_RIGHT},
 		{InputID::Z,KEY_INPUT_Z},
+		{InputID::X,KEY_INPUT_X},
 		{InputID::Esc,KEY_INPUT_ESCAPE}
 	};
 	

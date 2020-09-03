@@ -13,11 +13,12 @@ class Bullet :
 public:
 	Bullet();
 	Bullet(UNIT_ID unitID, Vector2 pos, DIR_ID movetype, Vector2 size);
+	Bullet(UNIT_ID unitID, Vector2 pos, double rad);
 	~Bullet();
 
 private:
 	void Init(void);
-	void Update(void) override;
+	void Update(sharedObj& plObj) override;
 	bool DestroyPrpc(void);
 	DIR_ID movetype_;
 };

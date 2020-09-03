@@ -58,6 +58,23 @@ Bullet::Bullet(UNIT_ID unitID, Vector2 pos, DIR_ID movetype, Vector2 size)
 
 }
 
+Bullet::Bullet(UNIT_ID unitID, Vector2 pos, double rad)
+{
+
+	_unitID = unitID;
+	_size = { 20,10 };
+	_exrate = { 1.0f,1.0f };
+
+
+
+	Init();
+
+	//íeî≠éÀÇÃäpìxÇ∆èâä˙ç¿ïW
+	
+	_pos = pos;
+	_posOld = _pos;
+}
+
 
 Bullet::~Bullet()
 {
@@ -66,38 +83,43 @@ Bullet::~Bullet()
 
 
 
-void Bullet::Update(void)
+void Bullet::Update(sharedObj& plObj)
 {
 	
 	//íeà⁄ìÆ
 	_pos.x += static_cast<int>(cos(_rad)*BulletSpeed);
 	_pos.y += static_cast<int>(sin(_rad)*BulletSpeed);
-	//switch (movetype_)
-	//{
-	//case DIR_ID::DOWN:
-	//	_pos.y += BulletSpeed;
-	//	break;
-	//case DIR_ID::LEFT:
-	//	_pos.x -= BulletSpeed;
-	//	break;
-	//case DIR_ID::RIGHT:
-	//	_pos.x += BulletSpeed;
-	//	break;
-	//case DIR_ID::UP:
-	//	_pos.y -= BulletSpeed;
-	//	break;
 
-	//default:
-	//	break;
-	//}
 	//íeÇÃìñÇΩÇËîªíË
-	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
 	
+
+
+
 	//ÉvÉåÉCÉÑÅ[Ç©ÇÁÇÃãóó£200à»å„è¡é∏
-	if ((((_posOld.y-_pos.y)* (_posOld.y - _pos.y))+ ((_posOld.x - _pos.x) * (_posOld.x - _pos.x)))>200.0*200.0)
+
+	if (_unitID == UNIT_ID::PLaB)
 	{
-		SetAlive(false);
+		_status[Status_ID::çUåÇóÕ] = plObj->_status[Status_ID::çUåÇóÕ];
+		if ((((_posOld.y-_pos.y)* (_posOld.y - _pos.y))+ ((_posOld.x - _pos.x) * (_posOld.x - _pos.x)))>200.0*200.0)
+		{
+			SetAlive(false);
+		}
+		IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+
 	}
+	else
+	{
+		_status[Status_ID::çUåÇóÕ] = 20;
+
+		if ((((_posOld.y - _pos.y) * (_posOld.y - _pos.y)) + ((_posOld.x - _pos.x) * (_posOld.x - _pos.x))) > 400 * 400)
+		{
+			SetAlive(false);
+		}
+		IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
+
+	}
+
+
 
 
 	DestroyPrpc();
@@ -118,6 +140,10 @@ void Bullet::Init(void)
 	data.reserve(1);
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
+
+
+	_status.try_emplace(Status_ID::çUåÇóÕ, 1);
+
 
 	stateDir(STATE::NORMAL,DIR_ID::DOWN);
 }

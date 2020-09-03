@@ -24,7 +24,7 @@ Iteam::Iteam(IteamState& state)
 
 }
 
-void Iteam::Update(void)
+void Iteam::Update(sharedObj& plObj)
 {
 	if (_type== ITEAM_TYPE::êŒ)
 	{

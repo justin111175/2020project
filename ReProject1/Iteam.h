@@ -29,7 +29,7 @@ public:
 	Iteam();
 	Iteam(IteamState& state);
 
-	void Update(void) override;							// 更新
+	void Update(sharedObj& plObj) override;							// 更新
 	~Iteam();
 private:
 	void StoneMove(void);

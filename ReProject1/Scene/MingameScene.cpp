@@ -96,6 +96,9 @@ unique_Base MingameScene::Update(unique_Base own)
 		if (isClear())
 		{
 			IpSceneMng._chipNo.first = CHIP_TYPE::ínê}5;
+			IpSceneMng._dataBase.clear();
+			IpSceneMng._data.clear();
+
 			return std::make_unique<GameScene>();
 
 		}

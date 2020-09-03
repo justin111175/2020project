@@ -31,15 +31,18 @@ public:
 	Player();
 	Player(Vector2&& pos, Vector2&& size, Vector2Dbl&& exrate);
 	~Player();
-	void Update(void) override;									// 更新
+	void Update(sharedObj& plObj) override;									// 更新
 
 
 	void SetDir(InputID id);
 	void MeanCtl(InputID id);
-
+	void UIDraw(void);
+	void Gekitai(double rad);
 	bool _meanFlag;
 private:
-
+	void Save(void);
+	void Read(void);
+	void StatusUpdata(void);
 	void ModeInit(void);
 	ModeState modeState_;
 	
@@ -58,5 +61,8 @@ private:
 	std::map<ModeState, std::function<void(void)>> ModeInit_;
 
 	void StateInit(void);
+	float HpRatio;
+	float MpRatio;
+
 };
 

@@ -19,7 +19,7 @@ Remove::~Remove()
 {
 }
 
-void Remove::Update(void)
+void Remove::Update(sharedObj& plObj)
 {
 
 

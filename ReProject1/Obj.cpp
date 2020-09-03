@@ -108,6 +108,8 @@ bool Obj::SetRepel(bool repel)
 
 
 
+
+
 bool Obj::SetAnim(const STATE state, AnimVector& data)
 {
 	return (_animMap[static_cast<int>(_dir)].try_emplace(state, std::move(data))).second;
@@ -156,6 +158,17 @@ bool Obj::Pos(Vector2 pos)
 const STATE Obj::GetState(void)
 {
 	return _state;
+}
+
+const double Obj::GetRad(void)
+{
+	return _rad;
+}
+
+bool Obj::SetRad(double rad)
+{
+	_rad = rad;
+	return true;;
 }
 
 Vector2 Obj::posOldGet(void)

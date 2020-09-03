@@ -14,44 +14,22 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 	};
 	switch (actQue.second._unitID)
 	{
-	case UNIT_ID::ENEMY:
-		unitID = UNIT_ID::PLAYER;
-		for (auto obj : ((GameScene*)scene)->_objList)
-		{
-			if ((obj->_unitID == unitID) && (*obj).isAlive())
-			{
-				//if (CheckBox(actQue.second.Pos(), actQue.second.sizeGet(), (*obj).Pos(), (*obj).sizeGet(), TYPE::左上))
-				//{
-				//	//actQue.second.RunFlag(false);
-				//	return true;
+	//case UNIT_ID::ENEMY:
+	//	unitID = UNIT_ID::PLAYER;
+	//	for (auto obj : ((GameScene*)scene)->_objList)
+	//	{
+	//		if ((obj->_unitID == unitID) && (*obj).isAlive())
+	//		{
+	//			if (CheckCircle(actQue.second.Pos(), 5, ChangePos((*obj).Pos(), (*obj).sizeGet()), (*obj).sizeGet().x / 2))
+	//			{
+	//
 
-				//}
-				//actQue.second.RunFlag(true);
-
-				//Vector2 Long = { actQue.second.Pos().x - (*obj).Pos().x,  actQue.second.Pos().y - (*obj).Pos().y };
-				//if (Long.x * Long.x + Long.y * Long.y < 40 * 40)
-				//{
-				//	actQue.second.enemyMode_ = EnemyMode::止まる;
-				//	actQue.second._funcPos = (*obj).Pos();
-				//	return true;
-				//}
-
-				//if (Long.x * Long.x + Long.y * Long.y < 100 * 100)
-				//{
-				//	actQue.second.enemyMode_ = EnemyMode::プレイヤー発見;
-				//	actQue.second._funcPos = (*obj).Pos();
-				//	return true;
-				//}
-				//else
-				//{
-				//	actQue.second.enemyMode_ = EnemyMode::自由移動;
-
-				//}
+	//			}
 
 
-			}
-		}
-		return false;
+	//		}
+	//	}
+	//	return false;
 	case UNIT_ID::PLaB:
 		unitID = UNIT_ID::ENEMY;
 		for (auto obj : ((GameScene*)scene)->_objList)
@@ -65,9 +43,11 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 
 				if (CheckCircle(actQue.second.Pos(), 5, ChangePos((*obj).Pos(), (*obj).sizeGet()), (*obj).sizeGet().x / 2))
 				{
+					(*obj)._status[Status_ID::HP] -= actQue.second._status[Status_ID::攻撃力];
 					actQue.second.SetAlive(false);
-					(*obj).SetAlive(false);
+
 					return true;
+
 
 				}
 
@@ -87,7 +67,38 @@ bool FuncCheck::operator()(ActQueT& actQue, void* scene)
 				if (CheckCircle(actQue.second.Pos(), 5, ChangePos((*obj).Pos(), (*obj).sizeGet()), (*obj).sizeGet().x / 2))
 				{
 					actQue.second.SetAlive(false);
-					(*obj).SetAlive(false);
+					if ((*obj).tateFlag_)
+					{
+						if ((*obj)._status[Status_ID::スタミナ] > actQue.second._status[Status_ID::攻撃力])
+						{
+							(*obj)._status[Status_ID::スタミナ] -= actQue.second._status[Status_ID::攻撃力];
+							(*obj)._cnt = 10;
+
+							(*obj).gekitaiFlag_ = true;
+						}
+						else
+						{
+							(*obj)._status[Status_ID::HP] -= actQue.second._status[Status_ID::攻撃力];
+
+							(*obj)._status[Status_ID::スタミナ] = 0;
+							(*obj).tateFlag_ = false;
+							(*obj)._cnt = 60;
+							(*obj).gekitaiFlag_ = true;
+
+						}
+					}
+					else
+					{
+						if (!(*obj).gekitaiFlag_)
+						{
+							(*obj)._status[Status_ID::HP] -= actQue.second._status[Status_ID::攻撃力];
+							(*obj)._cnt = 60;
+							(*obj).gekitaiFlag_ = true;
+
+						}
+					}
+
+
 					return true;
 
 				}

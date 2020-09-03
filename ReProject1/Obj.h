@@ -72,7 +72,7 @@ class Obj
 {
 public:
 	Obj();
-	virtual void Update(void) = 0;								// 純粋仮想関数
+	virtual void Update(sharedObj &plObj) = 0;								// 純粋仮想関数
 	void Draw(void);
 	void Draw(int id);
 	virtual ~Obj();
@@ -95,6 +95,9 @@ public:
 	bool Pos(Vector2 pos);
 
 	const STATE GetState(void);
+	const double GetRad(void);
+	bool SetRad(double rad);
+
 	Vector2 posOldGet(void);											//昔の座標
 	Vector2 sizeGet(void);											//大きさ
 	DIR_ID DIR(void);
@@ -108,7 +111,7 @@ public:
 	std::map<Status_ID, int> _statusOld;									//ステータス用
 
 
-
+	int BCnt;
 	std::map < DIR_ID, bool> _dirFlag;									// true:移動、false：停止
 	
 	const DIR_ID GetDir(void);														
@@ -118,6 +121,10 @@ public:
 	EnemyMode enemyMode_;
 	Vector2 _funcPos;
 
+	double funcRad_;
+	double gekitaiFlag_;
+	int _cnt;
+	bool tateFlag_;
 private:
 
 

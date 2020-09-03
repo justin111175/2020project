@@ -25,14 +25,15 @@ Enemy::Enemy(EnemyState& state)
 }
 
 // 更新
-void Enemy::Update(void)
+void Enemy::Update(sharedObj& plObj)
 {	
 	if (isAlive())
 	{
 		if (_status[Status_ID::HP] <= 0)
 		{
+			(*plObj)._experience[0] += _experience[0];
+
 			SetAlive(false);
-			//(*plObj)._experience[(*plObj)._level] -= _experience[0];
 
 		}
 	}	
@@ -49,14 +50,7 @@ void Enemy::Update(void)
 
 
 
-	//auto HpRatio = 1.0f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
-	//Vector2Dbl HpPos = { _pos.x + _size.x / 2 - 30 ,_pos.y - 10 };
 
-	//if (_status[Status_ID::HP] != _status[Status_ID::最大HP])
-	//{ 
-	//	IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP_BAR")[0], {HpPos.x,HpPos.y},{0,0},{1.0f,0.5f},false,0,1,LAYER::CHAR });
-	//	IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP")[0], {HpPos.x,HpPos.y},{0,0},{HpRatio,0.5f},false,0,2,LAYER::CHAR });
-	//}
 	if (_type == ENEMY_TYPE::オーク)
 	{
 		if (rand() % 60*2==0)
@@ -66,9 +60,17 @@ void Enemy::Update(void)
 		}
 
 	}
-
-	_moveCtl.Update();
+	_moveCtl.Update(plObj);
 	
+	auto HpRatio = 1.0f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
+	Vector2 HpPos = { _pos.x + _size.x / 2 - 30 ,_pos.y - 10 };
+
+	if (_status[Status_ID::HP] != _status[Status_ID::最大HP])
+	{
+		IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP_BAR")[0], {HpPos.x,HpPos.y},{0,0},{1.0f,0.5f},false,0,1,LAYER::CHAR });
+		IpSceneMng.AddDrawQue({ IMAGE_ID("敵HP")[0], {HpPos.x,HpPos.y},{0,0},{HpRatio,0.5f},false,0,2,LAYER::CHAR });
+	}
+
 	switch (_dir)
 	{
 	case DIR_ID::DOWN:
@@ -171,6 +173,7 @@ void Enemy::Init(void)
 	{
 	case ENEMY_TYPE::コウモリ:
 		_status.try_emplace(Status_ID::HP, 100);
+		_status.try_emplace(Status_ID::最大HP, 100);
 		//_status.try_emplace(Status_ID::最大HP, 100);
 		_experience.try_emplace(0, 30);
 		break;
@@ -178,8 +181,7 @@ void Enemy::Init(void)
 		break;
 	case ENEMY_TYPE::オーク:
 		_status.try_emplace(Status_ID::HP, 100);
-		//_status.try_emplace(Status_ID::最大HP, 100);
-		_experience.try_emplace(0, 30);
+		_status.try_emplace(Status_ID::最大HP, 100);		_experience.try_emplace(0, 60);
 		break;
 	case ENEMY_TYPE::ミノタウロス:
 		break;
@@ -192,9 +194,9 @@ void Enemy::Init(void)
 	case ENEMY_TYPE::魔族:
 		break;
 	case ENEMY_TYPE::ボス:
-		_status.try_emplace(Status_ID::HP, 100);
-		//_status.try_emplace(Status_ID::最大HP, 100);
-		_experience.try_emplace(0, 30);
+		_status.try_emplace(Status_ID::HP, 1000);
+		_status.try_emplace(Status_ID::最大HP, 1000);
+		_experience.try_emplace(0, 100);
 		break;
 	case ENEMY_TYPE::MAX:
 		break;

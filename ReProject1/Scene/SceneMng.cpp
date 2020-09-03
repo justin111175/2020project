@@ -261,24 +261,24 @@ void SceneMng::Draw(void)
 		DrawRotaGraph(ScreenSize.x/2, ScreenSize.y/2, 1.0, 0, _screenID[layer_id], true);
 	}
 
-	for (int y = 0; y < 75; y++)
-	{
-		for (int x = 0; x < 75; x++)
-		{
-			//画面にマスを描画する
-			DrawBox(-IpSceneMng.mapPos.x + x * 32, -IpSceneMng.mapPos.y + y * 32			//左上
-				, -IpSceneMng.mapPos.x + (x + 1) * 32, -IpSceneMng.mapPos.y + (y + 1) * 32  //右下
-				, GetColor(128, 128, 128)   //線の色
-				, false);   //塗りつぶす？
+	//for (int y = 0; y < 75; y++)
+	//{
+	//	for (int x = 0; x < 75; x++)
+	//	{
+	//		//画面にマスを描画する
+	//		DrawBox(-IpSceneMng.mapPos.x + x * 32, -IpSceneMng.mapPos.y + y * 32			//左上
+	//			, -IpSceneMng.mapPos.x + (x + 1) * 32, -IpSceneMng.mapPos.y + (y + 1) * 32  //右下
+	//			, GetColor(128, 128, 128)   //線の色
+	//			, false);   //塗りつぶす？
 
 
-			////画面にマスの番号を描画する
-			//DrawFormatString(-IpSceneMng.mapPos.x + x * 32 + 1
-			//	, -IpSceneMng.mapPos.y + y * 32
-			//	, GetColor(0, 128, 0)
-			//	, "%02X", x + y * 32);
-		}
-	}
+	//		////画面にマスの番号を描画する
+	//		//DrawFormatString(-IpSceneMng.mapPos.x + x * 32 + 1
+	//		//	, -IpSceneMng.mapPos.y + y * 32
+	//		//	, GetColor(0, 128, 0)
+	//		//	, "%02X", x + y * 32);
+	//	}
+	//}
 	
 
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);

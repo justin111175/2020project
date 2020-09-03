@@ -30,7 +30,16 @@ GameScene::GameScene()
 	IpImageMng.GetID("switch", "image/switch.png", { 32,32 }, { 12,8 });
 	IpImageMng.GetID("íe", "image/shot.png", { 20,10 }, { 1,1 });
 	
+	IpImageMng.GetID("èÇ", "image/shield.png", { 20,24 }, { 1,1 });
+	
 	IpImageMng.GetID("ÉhÉâÉSÉìè∞", "image/floor.png", { 64,64 }, { 1,1 });
+	IpImageMng.GetID("Bar", "image/bar.png", { 510,66 }, { 1,1 });
+
+	IpImageMng.GetID("HP", "image/gaugeB.png", { 325,22 }, { 1,1 });
+	IpImageMng.GetID("MP", "image/gaugeB (1).png", { 325,22 }, { 1,1 });
+	
+	IpImageMng.GetID("ìGHP", "image/EnemyHp.png", { 60,18 }, { 1,1 });
+	IpImageMng.GetID("ìGHP_BAR", "image/EnemyHpBar.png", { 60,18 }, { 1,1 });
 
 	MapInit();
 	ChangeInit();
@@ -71,18 +80,21 @@ unique_Base GameScene::Update(unique_Base own)
 		return std::make_unique<MeanScene>(std::move(own));
 	}
 
+	
+	auto plObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj& obj) { return (*obj)._unitID == UNIT_ID::PLAYER; });
+
+
 	if (!FadeUpdate())
 	{
 		for (auto data : _objList)
 		{
-			(*data).Update();
+			(*data).Update(*plObj);
 		}
 	}
 
 
 	BaseDraw();
 
-	auto plObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj& obj) { return (*obj)._unitID == UNIT_ID::PLAYER; });
 
 
 	if (CheckHitKey(KEY_INPUT_T))
@@ -123,7 +135,7 @@ unique_Base GameScene::Update(unique_Base own)
 				//ìGëùâ¡Å|ÉâÉÄÉ_éÆ
 				auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2 size, Vector2Dbl exrate) {
 					MoveState tmpMoveState;
-					tmpMoveState.emplace_back(MOVE_TYPE::Normal, Vector2{ 0,0 });
+					tmpMoveState.emplace_back(MOVE_TYPE::Normal, Vector2{0 ,0 });
 
 					EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
 					_objList.emplace_back(new Enemy(data));
@@ -682,7 +694,8 @@ void GameScene::MapInit(void)
 				//ìGëùâ¡Å|ÉâÉÄÉ_éÆ
 		auto EnemyAdd = [](ENEMY_TYPE E_type, std::vector<sharedObj>& _objList, Vector2 pos, Vector2 size, Vector2Dbl exrate) {
 			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(MOVE_TYPE::Stay, Vector2{ 0,0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::RetPos, Vector2{ 384,288 });
+			tmpMoveState.emplace_back(MOVE_TYPE::Act1, Vector2{ 384,288 });
 
 			EnemyState data = { E_type,{pos.x,pos.y}, { size.x,size.y },{exrate.x,exrate.y},tmpMoveState };
 			_objList.emplace_back(new Enemy(data));

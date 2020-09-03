@@ -14,9 +14,14 @@ bool FuncBullet::operator()(ActQueT &actQue, void* scene)
 	{
 	case UNIT_ID::ENEMY:
 		unitID = UNIT_ID::EyB;
+		
+		break;
+	case UNIT_ID::ƒ{ƒX:
+		unitID = UNIT_ID::EyB;
 		break;
 	case UNIT_ID::PLAYER:
 		unitID = UNIT_ID::PLaB;
+
 		break;
 	}
 
@@ -25,6 +30,7 @@ bool FuncBullet::operator()(ActQueT &actQue, void* scene)
 
 
 		((GameScene*)scene)->_objList.emplace_back(new Bullet(unitID, actQue.second.Pos(), actQue.second.DIR(), actQue.second.sizeGet()));
+		
 		return true;
 	}
 

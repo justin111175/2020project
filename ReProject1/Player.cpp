@@ -18,67 +18,56 @@ Player::Player(Vector2&& pos, Vector2&& size, Vector2Dbl&& exrate)
 	_zorder = 1;
 
 	Init();
+	Read();
 }
 
 Player::~Player()
 {
+	Save();
 }
 
-void Player::Update(void)
+void Player::Update(sharedObj& plObj)
 {	
 	IpSceneMng.AddActQue({ ACT_QUE::CHECK , *this });
-	_dbgDrawFormatString(0, 50, 0xFFFFFF, "プレイヤーの座標 X:%d,Y:%d", _pos.x, _pos.y);
-	_dbgDrawFormatString(0, 100, 0xFFFFFF, "Mapの座標 X:%f,Y:%f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
-	_status[Status_ID::HP] = 100 + _status[Status_ID::体力] * 1.7+ _status[Status_ID::筋力]*0.7;
-	_status[Status_ID::スタミナ] = 100 + _status[Status_ID::持久力] * 1.7;
-	_status[Status_ID::攻撃力] = 10 + _status[Status_ID::筋力] * 1.7 + _status[Status_ID::敏捷] * 0.7;
-	_status[Status_ID::防御力] = 10 + _status[Status_ID::持久力] * 1.7 + _status[Status_ID::筋力] * 0.7;
+	//_dbgDrawFormatString(0, 50, 0xFFFFFF, "プレイヤーの座標 X:%d,Y:%d", _pos.x, _pos.y);
+	//_dbgDrawFormatString(0, 100, 0xFFFFFF, "Mapの座標 X:%f,Y:%f", IpSceneMng.mapPos.x, IpSceneMng.mapPos.y);
 
-
-
-	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図5)
+	if (_status[Status_ID::スタミナ] < _status[Status_ID::最大スタミナ])
 	{
-		//if (_pos.y > 640)
-		//{
-		//	stateDir(STATE::NORMAL, DIR_ID::UP);
+		
+		if (!tateFlag_)
+		{
+			_status[Status_ID::スタミナ]++;
 
-
-
-		//	//_runFlag = false;
-
-		//	
-
-		//}
-
+		}
+		
 	}
+	else
+	{
+		_status[Status_ID::スタミナ] = _status[Status_ID::最大スタミナ];
+	}
+	Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
 
 
-	//auto test = [&](int no) {
-	//	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
-	//	{
-	//		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+	if (isAlive())
+	{
+		if (_status[Status_ID::HP] <= 0)
+		{
+			SetAlive(false);
+			//(*plObj)._experience[(*plObj)._level] -= _experience[0];
 
-	//			if (IpSceneMng._data[Pos.y][Pos.x] == no)
-	//			{
-	//				return true;
-	//			}
-	//			else
-	//			{
-	//				return false;
-	//			}
-	//		
-	//	}
-	//
-	//
-	//};
-	//
-		Vector2 Pos = { static_cast<int>((_pos.x) / 32),static_cast<int>(_pos.y / 32) };
+		}
+	}
 
 	if (DestroyPrpc())
 	{
 		IpSceneMng._data[Pos.y][Pos.x] = -1;
 		return;
 	}
+
+	
+
+
 	if (IpSceneMng._chipNo.first == CHIP_TYPE::地図3)
 	{
 		if (IpSceneMng._data[Pos.y][Pos.x] == 5 || IpSceneMng._data[Pos.y][Pos.x] == 6 || IpSceneMng._data[Pos.y][Pos.x] == 7 || IpSceneMng._data[Pos.y][Pos.x] == 8)
@@ -93,16 +82,23 @@ void Player::Update(void)
 		}
 	}
 
-	//if (CheckHitKey(KEY_INPUT_Z))
-	//{
-	//	IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+	if (CheckHitKey(KEY_INPUT_U))
+	{
+		_status[Status_ID::スタミナ]++;
 
-	//}
+	}
 
-
+	UIDraw();
 
 	ModeInit_[modeState_]();
 
+
+
+	if (tateFlag_)
+	{
+		IpSceneMng.AddDrawQue({ IMAGE_ID("盾")[0], {_pos.x+_size.x/2-10,_pos.y}, { 0,0 }, {1.0f,1.0f}, false, 0, 10, LAYER::CHAR });
+
+	}
 
 
 	(*controller)();
@@ -204,10 +200,6 @@ void Player::MeanCtl(InputID id)
 				meanID_ = MeanID::ステータス;
 			}
 			break;
-		case InputID::Left:
-			break;
-		case InputID::Right:
-			break;
 		case InputID::Z:
 			if (meanState_ == MeanState::外)
 			{
@@ -294,6 +286,9 @@ void Player::MeanCtl(InputID id)
 			{
 				_status = _statusOld;
 				_experience[0] = _experience[-1];
+				StatusUpdata();
+				Save();
+
 				meanState_ = MeanState::外;
 			}
 
@@ -305,15 +300,57 @@ void Player::MeanCtl(InputID id)
 
 }
 
+void Player::UIDraw(void)
+{
+
+
+	IpSceneMng.AddDrawQue({ IMAGE_ID("test")[0], {0 ,0},{0,0},{1.0f,0.4f},false,0,0,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("プレイヤー歩く")[0], {220 ,0},{0,0},{2.5f,2.8f},false,0,1,LAYER::UI });
+
+
+	HpRatio = 0.4f * static_cast<float>(_status[Status_ID::HP]) / static_cast<float>(_status[Status_ID::最大HP]);
+	MpRatio = 0.4f * static_cast<float>(_status[Status_ID::スタミナ]) / static_cast<float>(_status[Status_ID::最大スタミナ]);
+
+	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {20 ,30},{0,0},{0.4f,0.4f},false,0,2,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("HP")[0], {78 ,38},{0,0},{ HpRatio,0.3f},false,0,1,LAYER::UI });
+	IpSceneMng.AddDrawQue({ "HP     /",{51,23}, {1.0f,1.0f},20,0,LAYER::UI });
+	number.Draw({ 120, 28 }, { 0.15f,0.15f }, _status[Status_ID::HP],0);
+	number.Draw({ 190, 28 }, { 0.15f,0.15f }, _status[Status_ID::最大HP],0);
+
+
+	IpSceneMng.AddDrawQue({ IMAGE_ID("Bar")[0], {30 ,65},{0,0},{0.4f,0.4f},false,0,2,LAYER::UI });
+	IpSceneMng.AddDrawQue({ IMAGE_ID("MP")[0], {88 ,73},{0,0},{ MpRatio,0.3f},false,0,1,LAYER::UI });
+	IpSceneMng.AddDrawQue({ "MP     /",{61,60},  {1.0f,1.0f},20,0,LAYER::UI });
+	number.Draw({ 130, 63 }, { 0.15f,0.15f }, _status[Status_ID::スタミナ],0);
+	number.Draw({ 200, 63 }, { 0.15f,0.15f }, _status[Status_ID::最大スタミナ],0);
+
+	IpSceneMng.AddDrawQue({ "G : ",{71,90},  {1.0f,1.0f},20,0,LAYER::UI });
+
+	number.Draw({ 210, 95 }, { 0.15f,0.15f }, _experience[0],0);
+}
+
+void Player::Gekitai(double rad)
+{
+
+	if (gekitaiFlag_)
+	{
+		_pos.x += static_cast<int>(cos(_rad) * 10);
+		_pos.y += static_cast<int>(sin(_rad) *10);
+	}
+	
+
+}
+
+
+
 
 
 void Player::Move(void)
 {
-	
+	tateFlag_ = false;
+
 	_pData._bit = { 1,1,1,1 };
 	//_runFlag = false;
-
-
 	if (static_cast<int>(_pos.x % 32) == 0)
 	{
 		if (static_cast<int>(_pos.y % 32) == 0)
@@ -337,11 +374,6 @@ void Player::Move(void)
 
 				_pData._bit.UP = 0;
 				return true;
-
-			
-			
-
-
 
 			}
 		}
@@ -422,30 +454,60 @@ void Player::Move(void)
 			}
 			else
 			{
-				if (data.first == InputID::Z)
+
+
+				switch (data.first)
 				{
+				case InputID::Z:
 					if (data.second[static_cast<int>(Trg::Now)] && !data.second[static_cast<int>(Trg::Old)])
 					{
+						if (_status[Status_ID::スタミナ] > 20)
+						{
+							_status[Status_ID::スタミナ] -= 20;
+							IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
 
-						IpSceneMng.AddActQue({ ACT_QUE::SHOT , *this });
+						}
 					}
+					break;
+				case InputID::X:
+					if (data.second[static_cast<int>(Trg::Now)])
+					{
+						if (_status[Status_ID::スタミナ] > 0)
+						{
+							tateFlag_ = true;
+
+						}
+						else
+						{
+							tateFlag_ = false;
+						}
+					}
+
+
+					break;
+				default:
+
+
+					break;
 				}
 			}
 
 
+					if (static_cast<int>(_pos.x % 32) == 0)
+					{
+						if (static_cast<int>(_pos.y % 32) == 0)
+						{
+							SetDir(data.first);
 
-			if (static_cast<int>(_pos.x % 32) == 0)
-			{
-				if (static_cast<int>(_pos.y % 32) == 0)
-				{
-					SetDir(data.first);
+						}
+					}
 
-				}
-			}
 
 		}
 	}
 
+
+					
 
 
 
@@ -560,8 +622,8 @@ void Player::Init(void)
 
 	_unitID = UNIT_ID::PLAYER;
 	modeState_ = ModeState::普通;
-
-
+	gekitaiFlag_ = false;
+	tateFlag_ = false;
 	AnimVector data;
 
 	for (auto dir : DIR_ID())
@@ -603,7 +665,7 @@ void Player::Init(void)
 	SetAnim(STATE::NORMAL, DIR_ID::DOWN,data);
 
 
-
+	StatusUpdata();
 
 }
 
@@ -673,7 +735,9 @@ void Player::StateInit(void)
 		_status.try_emplace(Status_ID::レベル, 1);
 		
 		_status.try_emplace(Status_ID::HP, 1);
+		_status.try_emplace(Status_ID::最大HP, 1);
 		_status.try_emplace(Status_ID::スタミナ, 1);
+		_status.try_emplace(Status_ID::最大スタミナ, 1);
 		_status.try_emplace(Status_ID::攻撃力, 1);
 		_status.try_emplace(Status_ID::防御力, 1);
 
@@ -690,7 +754,9 @@ void Player::StateInit(void)
 		_statusOld.try_emplace(Status_ID::レベル, 1);
 
 		_statusOld.try_emplace(Status_ID::HP, 1);
-		_statusOld.try_emplace(Status_ID::スタミナ, 1);
+		_statusOld.try_emplace(Status_ID::最大HP, 1);
+
+		_statusOld.try_emplace(Status_ID::最大スタミナ, 1);
 		_statusOld.try_emplace(Status_ID::攻撃力, 1);
 		_statusOld.try_emplace(Status_ID::防御力, 1);
 
@@ -700,29 +766,104 @@ void Player::StateInit(void)
 		_statusOld.try_emplace(Status_ID::筋力, 3);
 		_statusOld.try_emplace(Status_ID::敏捷, 4);
 		_statusOld.try_emplace(Status_ID::回復, 5);
+		for (int x = -1; x < 99; x++)
+		{
+			_experience.try_emplace(x, 100 * x);
 
+		}
+		_experience[0] = 9999;
+		_experience[-1] = 0;
 
 	}
 	
 
 
-	for (int x = -1; x < 99; x++)
+
+	
+
+}
+void Player::Save(void)
+{
+
+	FILE* fp = NULL;
+	if (fopen_s(&fp, "player.dat", "wb") == 0)
 	{
-		_experience.try_emplace(x, 100 * x);
+		for (auto i : _status)
+		{
+			fwrite(&_status[i.first], sizeof(&_status[i.first]), 1, fp);
+		}
+		for (auto i : _statusOld)
+		{
+			fwrite(&_statusOld[i.first], sizeof(&_statusOld[i.first]), 1, fp);
+
+		}
+		fwrite(&_experience[0], sizeof(&_experience[0]), 1, fp);
+
+		fclose(fp);
 
 	}
-	_experience[0] = 9999;
-	_experience[-1] = 0;
-	
+	meanState_ = MeanState::外;
+	meanID_ = MeanID::ステータス;
+	modeState_ = ModeState::普通;
+}
+void Player::Read(void)
+{
+	StateInit();
+
+	FILE* fp = NULL;
+	if (fopen_s(&fp, "player.dat", "rb") == 0)
+	{
+		for (auto i : _status)
+		{
+			fread(&_status[i.first], sizeof(&_status[i.first]), 1, fp);
+		}
+		for (auto i : _statusOld)
+		{
+			fread(&_statusOld[i.first], sizeof(&_statusOld[i.first]), 1, fp);
+
+		}
+		fread(&_experience[0], sizeof(&_experience[0]), 1, fp);
+
+		fclose(fp);
+	}
+
+
+}
+void Player::StatusUpdata(void)
+{
+
+	_status[Status_ID::最大HP] = 100 + _status[Status_ID::体力] * 1.7 + _status[Status_ID::筋力] * 0.7;
+	_status[Status_ID::HP] = _status[Status_ID::最大HP];
+
+	_status[Status_ID::最大スタミナ] = 100 + _status[Status_ID::持久力] * 1.7;
+	_status[Status_ID::スタミナ] = _status[Status_ID::最大スタミナ];
+
+	_status[Status_ID::攻撃力] = 10 + _status[Status_ID::筋力] * 1.7 + _status[Status_ID::敏捷] * 0.7;
+	_status[Status_ID::防御力] = 10 + _status[Status_ID::持久力] * 1.7 + _status[Status_ID::筋力] * 0.7;
+
+
 
 }
 void Player::ModeInit(void)
 {
 	ModeInit_.try_emplace(ModeState::普通, [&]() {
-		Move();
-	
+		
+		if (gekitaiFlag_)
+		{			
+			if (--_cnt <= 0)
+			{
+				gekitaiFlag_ = false;
+			}
+		}
+		else
+		{
+			Move();
+
+		}
+
 	
 	});
+
 	ModeInit_.try_emplace(ModeState::強制移動, [&]() {
 
 		if (static_cast<int>(_pos.x % 32) == 0)
@@ -917,8 +1058,8 @@ void Player::ModeInit(void)
 
 				number.Draw({ 330, 155 }, { 0.2f,0.2f }, _statusOld[Status_ID::レベル], 0);
 
-				number.Draw({ 620,155 }, { 0.2f,0.2f }, _statusOld[Status_ID::HP], 0);
-				number.Draw({ 620,185 }, { 0.2f,0.2f }, _statusOld[Status_ID::スタミナ], 0);
+				number.Draw({ 620,155 }, { 0.2f,0.2f }, _statusOld[Status_ID::最大HP], 0);
+				number.Draw({ 620,185 }, { 0.2f,0.2f }, _statusOld[Status_ID::最大スタミナ], 0);
 				number.Draw({ 620,215 }, { 0.2f,0.2f }, _statusOld[Status_ID::攻撃力], 0);
 				number.Draw({ 620,245 }, { 0.2f,0.2f }, _statusOld[Status_ID::防御力], 0);
 
@@ -946,9 +1087,11 @@ void Player::ModeInit(void)
 
 
 
-
+				StatusUpdata();
 				break;
 			case MeanID::保存:
+				Save();
+
 				break;
 			case MeanID::終了:
 				DxLib_End();
